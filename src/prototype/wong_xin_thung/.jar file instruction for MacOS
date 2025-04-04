@@ -1,0 +1,13 @@
+Instruction of creating a .jar file
+1.	Navigate to Main class
+
+2.	Run the code
+
+3.	Open terminal and type this command:
+javac -d out -cp src src/prototype/wong_xin_thung/Main.java
+
+4.	Type this command:
+jar cfe SantoriniGame.jar prototype.wong_xin_thung.Main -C out .
+
+5.	Type this command:
+java -jar SantoriniGame.jar
