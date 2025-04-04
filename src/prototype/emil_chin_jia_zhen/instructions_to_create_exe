@@ -1,0 +1,22 @@
+This is the clear instructions on how I create an executable game
+
+Step 1: I opened the terminal and wrote javac -d out src/*.java in order to compile my java files.
+Step 2: I then copy all of the other packages from my main file (jframe) to the "out", this include "images" package.
+(make sure initially we do not have an "out" file already, can delete it if have initially, then make new "out" file.
+Step 3: Then I create a manifest file (MANIFEST.MF) using this prompt:
+
+Manifest-Version: 1.0
+Main-Class: Santorini
+
+Step 4: I then create the JAR file by typing jar cfm Game.jar MANIFEST.MF -C out . in the terminal.
+
+Step 1 - 4 is how I create a runnable JAR file.
+
+To test whether my Game.jar file can run with my full code or not, i write this command to test run: java -jar Game.jar
+
+Then, I used Launch4j and set my output file to Santorini_vers3.exe. After that, I selected the Game.jar that have just
+created from step 1-4 to the "Jar" section. Lastly, I build the generate the exe file named Santorini_vers3. Before that,
+I have tested the exe and it is working fine.
+
+In my code, I have used images, so in case the code wont run, change the path of the code to match with the path of image
+so that the code can work.
