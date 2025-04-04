@@ -1,0 +1,23 @@
+Instructions for Creating an Executable File in Java type from MacOS.
+
+Step 1: Compile the main class used.
+• Navigate to the project root. (FIT3077Santorini in my case).
+• Run the code
+javac -d out -cp src src/prototype/pee_yee_peen/Application.java
+• The compiled file will now be compiled and stored in the ‘out’ directory.
+
+Step 2: Create a JAR File
+• Run the code.
+jar cfe FIT3077Santorini.jar prototype.pee_yee_peen.Application -C out .
+
+Step 3: Check the functionality of the JAR file.
+• Run the code
+java -jar FIT3077Santorini.jar
+
+Step 4: Use jpackage to pack the ‘.jar’ file into an ‘.app’ file
+• Run the chunk of code below.
+jpackage --name FIT3077Santorini \
+--input out \
+--main-jar FIT3077Santorini.jar \
+--main-class prototype.pee_yee_peen.Application \
+--type app-image
