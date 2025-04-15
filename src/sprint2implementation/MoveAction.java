@@ -1,4 +1,4 @@
-package prototype.pee_yee_peen;
+package sprint2implementation;
 
 import javax.swing.*;
 

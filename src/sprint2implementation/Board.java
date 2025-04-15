@@ -1,4 +1,4 @@
-package prototype.pee_yee_peen;
+package sprint2implementation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +61,7 @@ public class Board extends JPanel {
     public void setTileImageIcon() {
         for (int currentRow = 0; currentRow < boardRows; currentRow++) {
             for (int currentColumn = 0; currentColumn < boardColumns; currentColumn++) {
-                Tile tile = new Tile("src/prototype/pee_yee_peen/pics/Empty_tile.png", currentRow, currentColumn);
+                Tile tile = new Tile("src/sprint2implementation/pics/Empty_tile.png", currentRow, currentColumn);
 
                 tileLocation[currentRow][currentColumn] = tile; // Store tile
                 add(tile);

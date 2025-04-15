@@ -1,4 +1,4 @@
-package prototype.pee_yee_peen;
+package sprint2implementation;
 import javax.swing.*;
 import java.awt.*;
 
@@ -31,16 +31,16 @@ public class Application
         layeredPane.add(gameBoard, JLayeredPane.PALETTE_LAYER);
 
         // Add Players into the game
-        Player player1 = new Player("Player 1", "src/prototype/pee_yee_peen/pics/player_1.png");
-        Player player2 = new Player("Player 2", "src/prototype/pee_yee_peen/pics/player_2.png");
+        Player player1 = new Player("Player 1", "src/sprint2implementation/pics/player_1.png");
+        Player player2 = new Player("Player 2", "src/sprint2implementation/pics/player_2.png");
 
-        player1.setPlayerPositionTower(1, "src/prototype/pee_yee_peen/pics/Lvl_1_player_1.png");
-        player1.setPlayerPositionTower(2, "src/prototype/pee_yee_peen/pics/Lvl_2_player_1.png");
-        player1.setPlayerPositionTower(3, "src/prototype/pee_yee_peen/pics/Lvl_3_player_1.png");
+        player1.setPlayerPositionTower(1, "src/sprint2implementation/pics/Lvl_1_player_1.png");
+        player1.setPlayerPositionTower(2, "src/sprint2implementation/pics/Lvl_2_player_1.png");
+        player1.setPlayerPositionTower(3, "src/sprint2implementation/pics/Lvl_3_player_1.png");
 
-        player2.setPlayerPositionTower(1, "src/prototype/pee_yee_peen/pics/Lvl_1_player_2.png");
-        player2.setPlayerPositionTower(2, "src/prototype/pee_yee_peen/pics/Lvl_2_player_2.png");
-        player2.setPlayerPositionTower(3, "src/prototype/pee_yee_peen/pics/Lvl_3_player_2.png");
+        player2.setPlayerPositionTower(1, "src/sprint2implementation/pics/Lvl_1_player_2.png");
+        player2.setPlayerPositionTower(2, "src/sprint2implementation/pics/Lvl_2_player_2.png");
+        player2.setPlayerPositionTower(3, "src/sprint2implementation/pics/Lvl_3_player_2.png");
 
         System.out.println(player1.getPlayerPositionTower());
 

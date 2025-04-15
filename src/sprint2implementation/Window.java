@@ -1,4 +1,4 @@
-package prototype.pee_yee_peen;
+package sprint2implementation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class Window
     public JLabel setBgLabel(Dimension currentScreenSize)
     {
         // Scale the background and set the background of the frame
-        Image bgImageIcon = new ImageIcon("src/prototype/pee_yee_peen/pics/ocean.jpg").getImage();
+        Image bgImageIcon = new ImageIcon("src/sprint2implementation/pics/ocean.jpg").getImage();
         Image scaledBgImage = bgImageIcon.getScaledInstance(currentScreenSize.width, currentScreenSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledBgImageIcon = new ImageIcon(scaledBgImage);
         JLabel bgLabel = new JLabel(scaledBgImageIcon);
