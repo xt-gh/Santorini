@@ -176,13 +176,6 @@ public class GameController {
         int currentRow = currentTile.getTileRow();
         int currentColumn = currentTile.getTileColumn();
 
-        Worker worker = currentTile.getWorker();
-
-        // Only check if the worker exists and belongs to the given player
-        if (worker == null || worker.getPlayer() != player) {
-            return true;
-        }
-
         // Check all 8 surrounding tiles
         for (int row = currentRow - 1; row <= currentRow + 1; row++) {
             for (int column = currentColumn - 1; column <= currentColumn + 1; column++) {
@@ -191,7 +184,7 @@ public class GameController {
                 if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) continue;
 
                 Tile neighborTile = gameBoard.getTileLocation(row, column);
-                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, worker);
+                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, currentTile.getWorker());
 
                 // If at least one move is valid, player is not stuck
                 if (testMove.isMoveSuccessful()) {

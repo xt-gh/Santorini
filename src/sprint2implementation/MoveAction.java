@@ -5,7 +5,6 @@ import javax.swing.*;
 public class MoveAction extends Action {
     private Tile fromTile;
     private Tile toTile;
-//    private Player player;
     private Worker worker;
     private boolean moveSuccessful;
 
@@ -14,7 +13,6 @@ public class MoveAction extends Action {
         this.fromTile = fromTile;
         this.toTile = toTile;
         this.worker = worker;
-//        this.player = worker.getPlayer();
         this.moveSuccessful = validateMove();
     }
 
