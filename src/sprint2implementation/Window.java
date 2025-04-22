@@ -17,6 +17,9 @@ public class Window
         newFrame.setSize(currentScreenSize.width, currentScreenSize.height);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action after the window is close
         newFrame.setTitle("Santorini");
+
+        ImageIcon applicationIcon = new ImageIcon("src/sprint2implementation/pics/frame_img_icon.jpg");
+        newFrame.setIconImage(applicationIcon.getImage());
     }
 
     public JLabel setBgLabel(Dimension currentScreenSize)
