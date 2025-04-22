@@ -1,12 +1,7 @@
 package sprint2implementation;
 
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Tile extends JButton {
     private Tower tower;
