@@ -2,9 +2,13 @@ package sprint2implementation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+
 
 public class Tile extends JButton {
     private Player player;
+    // worker should be arraylist
+    private List<Worker> workers;
     private Tower tower;
     private ImageIcon oriImageIcon;
     private ImageIcon currentIcon;
@@ -44,6 +48,16 @@ public class Tile extends JButton {
         return tileColumn;
     }
 
+
+
+    public List<Worker> getWorkers(){
+        return workers;
+    }
+
+    public void addWorker(Worker worker){
+        workers.add(worker);
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -60,6 +74,7 @@ public class Tile extends JButton {
     public void setTower(Tower tower) {
         this.tower = tower;
     }
+
 
     @Override
     public void setBounds(int x, int y, int width, int height) {
