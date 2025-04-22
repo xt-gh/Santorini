@@ -26,11 +26,21 @@ public class BuildAction extends Action {
     @Override
     public void execute() {
         if (buildSuccessful) {
-            tower.increaseLevel();
-            currentLevel = tower.getLevel();
-            targetTile.setTower(tower);
 
-            targetTile.updateIcon(tower.getTowerIcon(currentLevel));
+            // If the tower has not reached its maximum level yet, add a new level
+            if (!tower.isAtMaxLevel()) {
+                tower.addLevel();
+            }
+
+            // If the tower is at the maximum level but does not have a dome yet, place a dome
+            else if (!tower.hasDome())
+            {
+                tower.addDome();
+            }
+
+            // Update the tower object on the tile to reflect changes
+            targetTile.setTower(tower);
+            targetTile.updateIcon(tower.getCurrentIcon());
         }
     }
 
