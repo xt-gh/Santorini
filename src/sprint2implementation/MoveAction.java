@@ -41,38 +41,52 @@ public class MoveAction extends Action {
         return true;
     }
 
+
     @Override
     public void execute() {
-        Tower toTileTower = toTile.getTower();
-        Tower fromTileTower = fromTile.getTower();
-
         if (moveSuccessful) {
+
+            // Get the towers on the starting tiles and the destination tiles
+            Tower fromTower = fromTile.getTower();
+            Tower toTower = toTile.getTower();
+
+            // Clear the player from the starting tile
             fromTile.setWorker(null);
-            if (fromTileTower == null)
+
+            // Update the icon on the starting tile
+            if (fromTower == null)
             {
+                // If there is no tower, show an empty tile
                 fromTile.updateIcon(null);
             }
-            else {
-                fromTile.updateIcon(fromTileTower.getTowerLevels().get(fromTileTower.getLevel()));
+            else
+            {
+                // If there is a tower, show the current tower's image (without the worker)
+                fromTile.updateIcon(fromTower.getCurrentIcon());
             }
 
-            if (toTileTower == null)
-            {
-                toTile.updateIcon(worker.getPlayer().getPlayerIcon());
-            }
-            else {
-                ImageIcon playerOnTower = worker.getPlayer().getPlayerPositionTower().get(toTileTower.getLevel());
-                toTile.updateIcon(playerOnTower);
-            }
+            // Move the worker to the destination tile
             toTile.setWorker(worker);
 
-            if (toTileTower.getLevel() == 3)
-            {
+            // Update the icon on the destination tile
+            // Check if the tower on the destination tile does not have a dome
+            if (toTower == null || !toTower.hasDome()) {
+                int toLevel = getTowerLevel(toTower);
+
+                // Get the worker's icon that matches the level they're standing on
+                ImageIcon workerOnTower = worker.getPlayer().getPlayerPositionTower().getOrDefault(toLevel, worker.getPlayer().getPlayerIcon());
+
+                // Show the worker on that level
+                toTile.updateIcon(workerOnTower);
+            }
+
+
+            // Check winning condition: the worker has moved onto the topmost level without a dome
+            if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {
                 JOptionPane.showMessageDialog(null, "WIN!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
                 System.exit(0);
             }
         }
-
     }
 
     public boolean isMoveSuccessful() {
