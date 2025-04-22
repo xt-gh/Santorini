@@ -1,20 +1,55 @@
 package sprint2implementation;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Player {
     private ImageIcon playerIcon;
     private String name;
     private HashMap<Integer, ImageIcon> playerPositionTower = new HashMap<>();
+    private List<Worker> workers;
+    private int workerNum;
 
-    public Player(String name, String imagePath)
+    // 1. private worker array list
+    // 2. private int workerNum
+
+    public Player(String name, String imagePath, int workerNum) //3. pass in workerNum
     {
         this.name = name;
         setPlayerImageIcon(imagePath);
         playerPositionTower.put(0, new ImageIcon(imagePath));
+        this.workers = new ArrayList<>();
+        this.workerNum = workerNum;
+
+        initialiseWorkers();
 
     }
+
+    // 4. method: intialiseWorker
+    // for loop (workerNum)
+    // create objects of worker
+    // store the object worker in the worker arraylist
+    public void initialiseWorkers() {
+        for (int i = 0; i < workerNum; i++) {
+            Worker worker = new Worker(this);
+            addWorker(worker);
+        }
+    }
+
+    public List<Worker> getWorkers() {
+        return workers;
+    }
+    public void addWorker(Worker worker) {
+        workers.add(worker);
+    }
+
+    public void setWorkers(List<Worker> workers) {
+        this.workers = workers;
+    }
+
+
 
     public HashMap<Integer, ImageIcon> getPlayerPositionTower() {
         return playerPositionTower;
