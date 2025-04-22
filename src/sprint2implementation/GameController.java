@@ -10,6 +10,8 @@ public class GameController {
     private Player currentPlayer;
     private int currentPlayerIndex;
     private Tile selectedTile;
+
+    private Tile lastMovedTile;
     private boolean isBuildingPhase;
 
     public GameController(Board gameBoard, Player player1, Player player2) {
@@ -43,7 +45,8 @@ public class GameController {
         }
     }
 
-    private void initializeWorkers() {
+    private void initializeWorkers()
+    {
         // put all workers in an arraylist
         List<Worker> allWorkers = new ArrayList<>();
         for (Player player: players){
@@ -86,13 +89,22 @@ public class GameController {
                 }
 
             }
+
         } else {
+
             // Second click - move the piece
+            if (!isAdjacent(selectedTile, clickedTile)) {
+                JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
+                selectedTile = null;
+                return;
+            }
+
             MoveAction moveAction = new MoveAction(gameBoard, selectedTile, clickedTile, selectedTile.getWorker());
             moveAction.execute();
 
             if (moveAction.isMoveSuccessful()) {
                 isBuildingPhase = true;
+                lastMovedTile = clickedTile;
                 // Keep the selectedTile reference for building phase
                 System.out.println("Move successful, now in building phase");
                 JOptionPane.showMessageDialog(null, "Move successfully, now in building phase!", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
@@ -142,7 +154,8 @@ public class GameController {
                 System.out.println("Build failed");
                 JOptionPane.showMessageDialog(null, "Build failed!", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
+        }
+        else {
             System.out.println("Tile not adjacent");
             JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -196,9 +209,15 @@ public class GameController {
         return true;
     }
 
+//    public boolean isAdjacent(Tile tile1, Tile tile2) {
+//        int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
+//        int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
+//        return (dx <= 2 && dy <= 2);
+//    }
+
     public boolean isAdjacent(Tile tile1, Tile tile2) {
         int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
         int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
-        return (dx <= 2 && dy <= 2);
+        return (dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0);
     }
 }
