@@ -7,22 +7,18 @@ public class GameController {
     private Board gameBoard;
     // change Player instance variable to arraylist
     private List<Player>players;
-//    private Player player1;
-//    private Player player2;
     private Player currentPlayer;
     private int currentPlayerIndex;
     private Tile selectedTile;
     private boolean isBuildingPhase;
-    private Random random;
 
     public GameController(Board gameBoard, Player player1, Player player2) {
         this.gameBoard = gameBoard;
+        // store players as an arraylist
         this.players = new ArrayList<>();
+        // add the player1 and player2 into the array list
         players.add(player1);
         players.add(player2);
-//        this.player1 = player1;
-//        this.player2 = player2;
-//        this.currentPlayer = player1;
         this.currentPlayerIndex = 0;
         this.currentPlayer = players.get(currentPlayerIndex);
 
@@ -48,6 +44,7 @@ public class GameController {
     }
 
     private void initializeWorkers() {
+        // put all workers in an arraylist
         List<Worker> allWorkers = new ArrayList<>();
         for (Player player: players){
             allWorkers.addAll(player.getWorkers());
@@ -57,26 +54,23 @@ public class GameController {
         Random random = new Random();
 
         while(workerIndex < allWorkers.size()){
+            // randomly generate a number within the board rows and columns
             int row = random.nextInt(gameBoard.getBoardRows());
             int col = random.nextInt(gameBoard.getBoardColumns());
-            Tile tile = gameBoard.getTileLocation(row, col);
+            Tile tile = gameBoard.getTileLocation(row, col);    // set the row and col to the tile location
 
+            // if the tile is empty (no worker on the tile)
             if (tile.getWorkers() == null){
-                Worker worker = allWorkers.get(workerIndex);
-                Player player = worker.getPlayer();
-                gameBoard.placePlayerOnTile(row, col, player);
-                tile.setPlayer(player);
-                player.setWorkers(allWorkers);
+                Worker worker = allWorkers.get(workerIndex);    // get the current worker in the worker list
+                Player player = worker.getPlayer(); // get the player that owns the worker
+                gameBoard.placePlayerOnTile(row, col, player);  // place the player on the tile
+                tile.setPlayer(player); // mark the tile which owned by that player
+                player.setWorkers(allWorkers);  // set the updated worker list back to the player
 
                 workerIndex++;
             }
         }
-
-
-
-
     }
-
 
 
     private void handleMovementPhase(Tile clickedTile) {

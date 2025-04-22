@@ -12,10 +12,7 @@ public class Player {
     private List<Worker> workers;
     private int workerNum;
 
-    // 1. private worker array list
-    // 2. private int workerNum
-
-    public Player(String name, String imagePath, int workerNum) //3. pass in workerNum
+    public Player(String name, String imagePath, int workerNum)
     {
         this.name = name;
         setPlayerImageIcon(imagePath);
@@ -27,10 +24,6 @@ public class Player {
 
     }
 
-    // 4. method: intialiseWorker
-    // for loop (workerNum)
-    // create objects of worker
-    // store the object worker in the worker arraylist
     public void initialiseWorkers() {
         for (int i = 0; i < workerNum; i++) {
             Worker worker = new Worker(this);
