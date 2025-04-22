@@ -17,7 +17,7 @@ public class MoveAction extends Action {
     }
 
     private boolean validateMove() {
-        // Check if moving to same tile
+
         if (fromTile == toTile) {
             return false;
         }
@@ -27,9 +27,13 @@ public class MoveAction extends Action {
             return false;
         }
 
-        Tower targetTower = toTile.getTower();
-        Tower currentTower = fromTile.getTower();
-        if (targetTower != null && (targetTower.isHasDome() || (targetTower.getLevel() - currentTower.getLevel() > 1)))
+        // Get tower levels, defaulting to 0 if no tower exists
+        int fromLevel = getTowerLevel(fromTile.getTower());
+        int toLevel = getTowerLevel(toTile.getTower());
+
+        // Prevent moving onto a tower that already has a dome or climbing up more than 1 level
+        Tower toTower = toTile.getTower();
+        if ((toTower != null && toTower.hasDome()) || (toLevel - fromLevel > 1))
         {
             return false;
         }
@@ -73,5 +77,9 @@ public class MoveAction extends Action {
 
     public boolean isMoveSuccessful() {
         return moveSuccessful;
+    }
+
+    private int getTowerLevel(Tower tower) {
+        return (tower != null) ? tower.getLevelCount() : 0;
     }
 }
