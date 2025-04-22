@@ -60,11 +60,11 @@ public class GameController {
             Tile tile = gameBoard.getTileLocation(row, col);    // set the row and col to the tile location
 
             // if the tile is empty (no worker on the tile)
-            if (tile.getWorkers() == null){
+            if (tile.getWorker() == null){
                 Worker worker = allWorkers.get(workerIndex);    // get the current worker in the worker list
                 Player player = worker.getPlayer(); // get the player that owns the worker
                 gameBoard.placePlayerOnTile(row, col, player);  // place the player on the tile
-                tile.setPlayer(player); // mark the tile which owned by that player
+                tile.setWorker(worker); // mark the tile which owned by that player
                 player.setWorkers(allWorkers);  // set the updated worker list back to the player
 
                 workerIndex++;
@@ -76,7 +76,7 @@ public class GameController {
     private void handleMovementPhase(Tile clickedTile) {
         if (selectedTile == null) {
             // First click - select a piece
-            if (clickedTile.getPlayer() == currentPlayer) {
+            if (clickedTile.getWorker() != null && clickedTile.getWorker().getPlayer() == currentPlayer) {
                 selectedTile = clickedTile;
                 System.out.println("Selected tile at: " + selectedTile.getTileRow() + "," + selectedTile.getTileColumn());
 
@@ -88,7 +88,7 @@ public class GameController {
             }
         } else {
             // Second click - move the piece
-            MoveAction moveAction = new MoveAction(gameBoard, selectedTile, clickedTile, currentPlayer);
+            MoveAction moveAction = new MoveAction(gameBoard, selectedTile, clickedTile, selectedTile.getWorker());
             moveAction.execute();
 
             if (moveAction.isMoveSuccessful()) {
@@ -124,6 +124,9 @@ public class GameController {
             if (buildAction.isBuildSuccessful()) {
                 System.out.println("Build successful");
 
+//                currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+//                currentPlayer = players.get(currentPlayerIndex);
+
                 if (currentPlayer == players.get(0))
                 {
                     currentPlayer = players.get(1);
@@ -145,9 +148,40 @@ public class GameController {
         }
     }
 
+//    public boolean isPlayerStuck(Player player, Tile currentTile) {
+//        int currentRow = currentTile.getTileRow();
+//        int currentColumn = currentTile.getTileColumn();
+//
+//        // Check all 8 surrounding tiles
+//        for (int row = currentRow - 1; row <= currentRow + 1; row++) {
+//            for (int column = currentColumn - 1; column <= currentColumn + 1; column++) {
+//                // Skip out-of-bounds or the same tile
+//                if (row == currentRow && column == currentColumn) continue;
+//                if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) continue;
+//
+//                Tile neighborTile = gameBoard.getTileLocation(row, column);
+//                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, player);
+//
+//                // If at least one move is valid, player is not stuck
+//                if (testMove.isMoveSuccessful()) {
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
+//    }
+
     public boolean isPlayerStuck(Player player, Tile currentTile) {
         int currentRow = currentTile.getTileRow();
         int currentColumn = currentTile.getTileColumn();
+
+        Worker worker = currentTile.getWorker();
+
+        // Only check if the worker exists and belongs to the given player
+        if (worker == null || worker.getPlayer() != player) {
+            return true;
+        }
 
         // Check all 8 surrounding tiles
         for (int row = currentRow - 1; row <= currentRow + 1; row++) {
@@ -157,7 +191,7 @@ public class GameController {
                 if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) continue;
 
                 Tile neighborTile = gameBoard.getTileLocation(row, column);
-                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, player);
+                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, worker);
 
                 // If at least one move is valid, player is not stuck
                 if (testMove.isMoveSuccessful()) {
@@ -172,6 +206,7 @@ public class GameController {
     public boolean isAdjacent(Tile tile1, Tile tile2) {
         int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
         int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
-        return (dx <= 2 && dy <= 2);
+//        return (dx <= 2 && dy <= 2);
+        return dx <= 1 && dy <= 1 && (dx + dy > 0);
     }
 }
