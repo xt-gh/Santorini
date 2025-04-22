@@ -206,7 +206,6 @@ public class GameController {
     public boolean isAdjacent(Tile tile1, Tile tile2) {
         int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
         int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
-//        return (dx <= 2 && dy <= 2);
-        return dx <= 1 && dy <= 1 && (dx + dy > 0);
+        return (dx <= 2 && dy <= 2);
     }
 }
