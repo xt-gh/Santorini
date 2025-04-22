@@ -1,30 +1,31 @@
 package sprint2implementation;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Tile extends JButton {
-    private Player player;
-    // worker should be arraylist
-    private List<Worker> workers;
     private Tower tower;
     private ImageIcon oriImageIcon;
     private ImageIcon currentIcon;
     private int tileRow;
     private int tileColumn;
+    private Worker worker;
 
     public Tile(String imagePath, int tileRow, int tileColumn) {
-        setPlayer(null);
+//        setPlayer(null);
         this.tower = new Tower();
         oriImageIcon = new ImageIcon(imagePath);
         currentIcon = oriImageIcon;
 //        currentIcon = new ImageIcon(imagePath);
         this.tileRow = tileRow;
         this.tileColumn = tileColumn;
-        resizeAndSetIcon();
 
+        resizeAndSetIcon();
     }
 
     public void updateIcon(ImageIcon icon) {
@@ -48,27 +49,21 @@ public class Tile extends JButton {
         return tileColumn;
     }
 
-
-
-    public List<Worker> getWorkers(){
-        return workers;
+    public Worker getWorker() {
+        return worker;
     }
 
-    public void addWorker(Worker worker){
-        workers.add(worker);
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
-    public Player getPlayer() {
-        return player;
+    public boolean hasWorker(){
+        return worker != null;
     }
+
 
     public Tower getTower() {
         return tower;
-    }
-
-    public void setPlayer(Player player)
-    {
-        this.player = player;
     }
 
     public void setTower(Tower tower) {
