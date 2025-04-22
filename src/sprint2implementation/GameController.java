@@ -11,7 +11,18 @@ public class GameController {
     private int currentPlayerIndex;
     private Tile selectedTile;
 
-    private Tile lastMovedTile;
+    private Tile lastMovedTile; // the tile where the worker just moved to during the Movement phase
+
+    // SMALL NOTE for lastMovedTile:
+    // - 1. players select the worker, 2. move it to an adjacent tile, 3. and the worker builds on an adjacent tile
+    // to its current location
+    // purpose of lastMovedTile: to perform step 3 correctly, the game needs to know where the worker currently
+    // is after step 2
+    // e.g: select worker on tile (2,2), moved it to (3,3), worker wants to build on (3,4) but the game
+    // has to check whether (3,4) is adjacent to the tile where the worker moved to
+    // So, use isAdjacent(lastMovedToTile, clickedTile), where lastMovedToTile = (3,3) and
+    // clickedTile = (3,4) - tile clicked during build phase
+
     private boolean isBuildingPhase;
 
     public GameController(Board gameBoard, Player player1, Player player2) {
@@ -118,48 +129,98 @@ public class GameController {
     }
 
     private void handleBuildingPhase(Tile clickedTile) {
-        if (selectedTile == null) {
+        if (lastMovedTile == null) {
             System.out.println("Error: No selected tile in building phase");
             return;
         }
 
-        if (isAdjacent(selectedTile, clickedTile)) {
-            Tower tower = clickedTile.getTower();
-            if (tower == null) {
-                tower = new Tower();
-                System.out.println("Selected tile at: " + selectedTile.getTileRow() + "," + selectedTile.getTileColumn());
-            }
-
-            BuildAction buildAction = new BuildAction(gameBoard, clickedTile, tower);
-            buildAction.execute();
-
-            if (buildAction.isBuildSuccessful()) {
-                System.out.println("Build successful");
-
-//                currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-//                currentPlayer = players.get(currentPlayerIndex);
-
-                if (currentPlayer == players.get(0))
-                {
-                    currentPlayer = players.get(1);
-                    JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
-                }
-                else {
-                    currentPlayer = players.get(0);
-                    JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
-                }
-                isBuildingPhase = false;
-                selectedTile = null; // Only reset after successful build
-            } else {
-                System.out.println("Build failed");
-                JOptionPane.showMessageDialog(null, "Build failed!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        else {
+        // Check adjacency before building
+        if (!isAdjacent(lastMovedTile, clickedTile)) {
             System.out.println("Tile not adjacent");
             JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Get or create the tower on the target tile
+        Tower tower = clickedTile.getTower();
+        if (tower == null) {
+            tower = new Tower();
+        }
+
+        // Attempt to build
+        BuildAction buildAction = new BuildAction(gameBoard, clickedTile, tower);
+        buildAction.execute();
+
+        if (buildAction.isBuildSuccessful()) {
+            System.out.println("Build successful");
+
+            // Switch turn to next player
+            if (currentPlayer == players.get(0))
+            {
+                currentPlayer = players.get(1);
+            }
+            else
+            {
+                currentPlayer = players.get(0);
+            }
+
+            JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
+
+            isBuildingPhase = false;
+            selectedTile = null;
+            lastMovedTile = null;
+        }
+        else
+        {
+            System.out.println("Build failed");
+            JOptionPane.showMessageDialog(null, "Build failed!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+//
+//    private void handleBuildingPhase(Tile clickedTile) {
+//        if (selectedTile == null) {
+//            System.out.println("Error: No selected tile in building phase");
+//            return;
+//        }
+//
+//        if (isAdjacent(selectedTile, clickedTile)) {
+//            Tower tower = clickedTile.getTower();
+//            if (tower == null) {
+//                tower = new Tower();
+//                System.out.println("Selected tile at: " + selectedTile.getTileRow() + "," + selectedTile.getTileColumn());
+//            }
+//
+//            BuildAction buildAction = new BuildAction(gameBoard, clickedTile, tower);
+//            buildAction.execute();
+//
+//            if (buildAction.isBuildSuccessful()) {
+//                System.out.println("Build successful");
+//
+////                currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+////                currentPlayer = players.get(currentPlayerIndex);
+//
+//                if (currentPlayer == players.get(0))
+//                {
+//                    currentPlayer = players.get(1);
+//                    JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
+//                }
+//                else {
+//                    currentPlayer = players.get(0);
+//                    JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
+//                }
+//                isBuildingPhase = false;
+//                selectedTile = null; // Only reset after successful build
+//            } else {
+//                System.out.println("Build failed");
+//                JOptionPane.showMessageDialog(null, "Build failed!", "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
+//        else {
+//            System.out.println("Tile not adjacent");
+//            JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
 //    public boolean isPlayerStuck(Player player, Tile currentTile) {
 //        int currentRow = currentTile.getTileRow();
