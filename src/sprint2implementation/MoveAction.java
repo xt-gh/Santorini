@@ -22,7 +22,7 @@ public class MoveAction extends Action {
             return false;
         }
 
-        // Check if target tile has another player
+        // Check if target tile has another worker
         if (toTile.getWorker() != null && toTile.getWorker().getPlayer() != worker.getPlayer()) {
             return false;
         }
@@ -50,7 +50,7 @@ public class MoveAction extends Action {
             Tower fromTower = fromTile.getTower();
             Tower toTower = toTile.getTower();
 
-            // Clear the player from the starting tile
+            // Clear the worker from the starting tile
             fromTile.setWorker(null);
 
             // Update the icon on the starting tile
@@ -79,6 +79,7 @@ public class MoveAction extends Action {
                 // Show the worker on that level
                 toTile.updateIcon(workerOnTower);
             }
+
 
 
             // Check winning condition: the worker has moved onto the topmost level without a dome
