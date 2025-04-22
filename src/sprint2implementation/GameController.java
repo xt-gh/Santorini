@@ -1,21 +1,32 @@
 package sprint2implementation;
 
 import javax.swing.*;
+import java.util.*;
 
 public class GameController {
     private Board gameBoard;
-    private Player player1;
-    private Player player2;
+    // change Player instance variable to arraylist
+    private List<Player>players;
+//    private Player player1;
+//    private Player player2;
     private Player currentPlayer;
+    private int currentPlayerIndex;
     private Tile selectedTile;
     private boolean isBuildingPhase;
+    private Random random;
 
     public GameController(Board gameBoard, Player player1, Player player2) {
         this.gameBoard = gameBoard;
-        this.player1 = player1;
-        this.player2 = player2;
-        this.currentPlayer = player1;
-        initializePlayers();
+        this.players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+//        this.player1 = player1;
+//        this.player2 = player2;
+//        this.currentPlayer = player1;
+        this.currentPlayerIndex = 0;
+        this.currentPlayer = players.get(currentPlayerIndex);
+
+        initializeWorkers();
         setupTileListeners();
     }
 
@@ -36,12 +47,37 @@ public class GameController {
         }
     }
 
-    private void initializePlayers() {
-        gameBoard.placePlayerOnTile(0, 0, player1);
-        gameBoard.getTileLocation(0, 0).setPlayer(player1);
-        gameBoard.placePlayerOnTile(gameBoard.getBoardRows()-1, gameBoard.getBoardColumns()-1, player2);
-        gameBoard.getTileLocation(gameBoard.getBoardRows()-1, gameBoard.getBoardColumns()-1).setPlayer(player2);
+    private void initializeWorkers() {
+        List<Worker> allWorkers = new ArrayList<>();
+        for (Player player: players){
+            allWorkers.addAll(player.getWorkers());
+        }
+
+        int workerIndex = 0;
+        Random random = new Random();
+
+        while(workerIndex < allWorkers.size()){
+            int row = random.nextInt(gameBoard.getBoardRows());
+            int col = random.nextInt(gameBoard.getBoardColumns());
+            Tile tile = gameBoard.getTileLocation(row, col);
+
+            if (tile.getWorkers() == null){
+                Worker worker = allWorkers.get(workerIndex);
+                Player player = worker.getPlayer();
+                gameBoard.placePlayerOnTile(row, col, player);
+                tile.setPlayer(player);
+                player.setWorkers(allWorkers);
+
+                workerIndex++;
+            }
+        }
+
+
+
+
     }
+
+
 
     private void handleMovementPhase(Tile clickedTile) {
         if (selectedTile == null) {
@@ -85,6 +121,7 @@ public class GameController {
             Tower tower = clickedTile.getTower();
             if (tower == null) {
                 tower = new Tower();
+                System.out.println("Selected tile at: " + selectedTile.getTileRow() + "," + selectedTile.getTileColumn());
             }
 
             BuildAction buildAction = new BuildAction(gameBoard, clickedTile, tower);
@@ -93,13 +130,13 @@ public class GameController {
             if (buildAction.isBuildSuccessful()) {
                 System.out.println("Build successful");
 
-                if (currentPlayer == player1)
+                if (currentPlayer == players.get(0))
                 {
-                    currentPlayer = player2;
+                    currentPlayer = players.get(1);
                     JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
                 }
                 else {
-                    currentPlayer = player1;
+                    currentPlayer = players.get(0);
                     JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
                 }
                 isBuildingPhase = false;
