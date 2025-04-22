@@ -15,7 +15,7 @@ public class BuildAction extends Action {
     }
 
     public boolean validateBuild() {
-        if (targetTile.getPlayer() != null || targetTile.getTower().isHasDome()) {
+        if (targetTile.getWorker() != null || targetTile.getTower().isHasDome()) {
             return false;
         }
 

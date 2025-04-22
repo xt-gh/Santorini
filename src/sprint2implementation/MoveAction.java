@@ -5,26 +5,27 @@ import javax.swing.*;
 public class MoveAction extends Action {
     private Tile fromTile;
     private Tile toTile;
-    private Player player;
+//    private Player player;
+    private Worker worker;
     private boolean moveSuccessful;
 
-    public MoveAction(Board gameBoard, Tile fromTile, Tile toTile, Player player) {
+    public MoveAction(Board gameBoard, Tile fromTile, Tile toTile, Worker worker) {
         super(gameBoard, fromTile.getTileRow(), fromTile.getTileColumn());
         this.fromTile = fromTile;
         this.toTile = toTile;
-        this.player = player;
+        this.worker = worker;
+//        this.player = worker.getPlayer();
         this.moveSuccessful = validateMove();
     }
 
     private boolean validateMove() {
         // Check if moving to same tile
-        if (fromTile == toTile)
-        {
+        if (fromTile == toTile) {
             return false;
         }
 
         // Check if target tile has another player
-        if (toTile.getPlayer() != null && toTile.getPlayer() != player) {
+        if (toTile.getWorker() != null && toTile.getWorker().getPlayer() != worker.getPlayer()) {
             return false;
         }
 
@@ -44,7 +45,7 @@ public class MoveAction extends Action {
         Tower fromTileTower = fromTile.getTower();
 
         if (moveSuccessful) {
-            fromTile.setPlayer(null);
+            fromTile.setWorker(null);
             if (fromTileTower == null)
             {
                 fromTile.updateIcon(null);
@@ -55,13 +56,13 @@ public class MoveAction extends Action {
 
             if (toTileTower == null)
             {
-                toTile.updateIcon(player.getPlayerIcon());
+                toTile.updateIcon(worker.getPlayer().getPlayerIcon());
             }
             else {
-                ImageIcon playerOnTower = player.getPlayerPositionTower().get(toTileTower.getLevel());
+                ImageIcon playerOnTower = worker.getPlayer().getPlayerPositionTower().get(toTileTower.getLevel());
                 toTile.updateIcon(playerOnTower);
             }
-            toTile.setPlayer(player);
+            toTile.setWorker(worker);
 
             if (toTileTower.getLevel() == 3)
             {
