@@ -1,59 +1,29 @@
 package sprint2implementation;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tower {
-    private int level;
-    private ImageIcon towerIcon;
-    private boolean hasDome;
-    private Map<Integer, ImageIcon> towerLevels;
+    private static final int MAX_LEVELS = 3;
+    private List<TowerLevel> towerLevels;
+    private Dome dome;
 
     public Tower() {
-        this.level = 0;
-        hasDome = false;
-        initializeTowerLevels();
+        this.towerLevels = new ArrayList<>();
+        this.dome = null;
     }
 
-    private void initializeTowerLevels() {
-        towerLevels = new HashMap<>();
-        towerLevels.put(0, new ImageIcon("src/sprint2implementation/pics/Empty_tile.png"));
-        towerLevels.put(1, new ImageIcon("src/sprint2implementation/pics/Lvl_1.png"));
-        towerLevels.put(2, new ImageIcon("src/sprint2implementation/pics/Lvl_2.png"));
-        towerLevels.put(3, new ImageIcon("src/sprint2implementation/pics/Lvl_3.png"));
-        towerLevels.put(4, new ImageIcon("src/sprint2implementation/pics/Lvl_complete.png"));
+    public static int getMaxLevels() {
+        return MAX_LEVELS;
     }
 
-    public void increaseLevel() {
-        if (level < 4) {
-            level++;
+    public void addLevel() {
+        if (towerLevels.size() < MAX_LEVELS) {
+            int nextLevel = towerLevels.size() + 1;
+            String iconPath = "src/sprint2implementation/pics/Lvl_" + nextLevel + ".png";
+            towerLevels.add(new TowerLevel(nextLevel, iconPath));
         }
     }
 
-    public ImageIcon getTowerIcon(int level) {
-        towerIcon = towerLevels.get(level);
-        if (towerIcon == null) {
-            return towerLevels.get(0); // Return ground if null
-        }
-        return towerIcon;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public Map<Integer, ImageIcon> getTowerLevels() {
-        return towerLevels;
-    }
-
-    public boolean isHasDome()
-    {
-        return level ==4;
-    }
-
-    @Override
-    public String toString() {
-        return "Tower Level: " + level;
-    }
 }
