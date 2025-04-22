@@ -3,28 +3,24 @@ package sprint2implementation;
 public class BuildAction extends Action {
     private Tile targetTile;
     private Tower tower;
-    private int currentLevel;
     private boolean buildSuccessful;
 
     public BuildAction(Board gameBoard, Tile targetTile, Tower tower) {
         super(gameBoard, targetTile.getTileRow(), targetTile.getTileColumn());
-        currentLevel = tower.getLevel();
         this.targetTile = targetTile;
         this.tower = tower;
         this.buildSuccessful = validateBuild();
     }
 
     public boolean validateBuild() {
-        if (targetTile.getWorker() != null || targetTile.getTower().isHasDome()) {
+
+        // Prevents building if the worker is already standing on a tile or a tower already has a dome
+        if (targetTile.getWorker() != null || tower.hasDome()) {
             return false;
         }
 
-        // Check tower level limits
-        if (tower.getLevel() >= 4) {
-            return false;
-        }
-
-        return true;
+        // Allows building only if the current tower level has not exceeded the maximum level
+        return tower.getLevelCount() <= Tower.getMaxLevels();
     }
 
     @Override
@@ -42,3 +38,4 @@ public class BuildAction extends Action {
         return buildSuccessful;
     }
 }
+
