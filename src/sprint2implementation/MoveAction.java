@@ -23,7 +23,7 @@ public class MoveAction extends Action {
         }
 
         // Check if target tile has another worker
-        if (toTile.getWorker() != null && toTile.getWorker().getPlayer() != worker.getPlayer()) {
+        if (toTile.getWorker() != null) {
             return false;
         }
 
