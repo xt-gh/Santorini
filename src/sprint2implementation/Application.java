@@ -30,6 +30,13 @@ public class Application
         gameBoard.setBounds(width,height, boardSize, boardSize);
         layeredPane.add(gameBoard, JLayeredPane.PALETTE_LAYER);
 
+        // Create player's turn label
+        JLabel turnLabel = new JLabel("Player: ");
+        turnLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        turnLabel.setForeground(Color.BLUE);
+        turnLabel.setBounds(20, 20, 400, 30);
+        layeredPane.add(turnLabel, JLayeredPane.MODAL_LAYER);
+        
         // Add Players into the game
         Player player1 = new Player("Player 1", "src/sprint2implementation/pics/player_1.png", 2);
         Player player2 = new Player("Player 2", "src/sprint2implementation/pics/player_2.png", 2);
@@ -45,8 +52,7 @@ public class Application
         System.out.println(player1.getPlayerPositionTower());
 
 
-        GameController controller = new GameController(gameBoard, player1, player2);
-
+        GameController controller = new GameController(gameBoard, player1, player2, turnLabel);
         windowFrame.addComponentListener(new ResizeListener(windowFrame, gameBoard, boardSize, boardSize));
         windowFrame.setVisible(true);
     }
