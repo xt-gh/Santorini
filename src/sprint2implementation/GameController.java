@@ -24,8 +24,9 @@ public class GameController {
     // clickedTile = (3,4) - tile clicked during build phase
 
     private boolean isBuildingPhase;
+    private JLabel currentPlayerLabel; //indicator for the current player's turn
 
-    public GameController(Board gameBoard, Player player1, Player player2) {
+    public GameController(Board gameBoard, Player player1, Player player2, JLabel currentPlayerLabel) {
         this.gameBoard = gameBoard;
         // store players as an arraylist
         this.players = new ArrayList<>();
@@ -35,8 +36,17 @@ public class GameController {
         this.currentPlayerIndex = 0;
         this.currentPlayer = players.get(currentPlayerIndex);
 
+        this.currentPlayerLabel = currentPlayerLabel;
+        updateCurrentPlayerLabel();
+
         initializeWorkers();
         setupTileListeners();
+    }
+
+    private void updateCurrentPlayerLabel() {
+        if (currentPlayerLabel != null){
+            currentPlayerLabel.setText("Player Now Playing: " + currentPlayer.getName());
+        }
     }
 
     private void setupTileListeners() {
@@ -164,6 +174,7 @@ public class GameController {
                 currentPlayer = players.get(0);
             }
 
+            updateCurrentPlayerLabel(); //update current player's turn
             JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
 
             isBuildingPhase = false;
