@@ -1,3 +1,5 @@
+package sprint2implementation;
+
 public abstract class GodCard {
     protected String name;
     protected String description;
