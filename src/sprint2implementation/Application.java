@@ -1,6 +1,9 @@
 package sprint2implementation;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public class Application
@@ -9,6 +12,14 @@ public class Application
     {
         GodCard demeter = new Demeter();
         GodCard artemis = new Artemis();
+
+        // Created a list to store all the god cards
+        List<GodCard> godCards = new ArrayList<>();
+        godCards.add(demeter);
+        godCards.add(artemis);
+
+        // Assign god cards randomly to every players by shuffling them
+        Collections.shuffle(godCards);
 
         // instantiate the window object
         Window windowObj = new Window();
@@ -44,9 +55,9 @@ public class Application
         Player player1 = new Player("Player 1", "src/sprint2implementation/pics/player_1.png", 2);
         Player player2 = new Player("Player 2", "src/sprint2implementation/pics/player_2.png", 2);
 
-        // Add God Card to Players
-        player1.setGodCard(demeter);
-        player2.setGodCard(artemis);
+        // Add God Card to Players randomly
+        player1.setGodCard(godCards.get(0));
+        player2.setGodCard(godCards.get(1));
 
         player1.setPlayerPositionTower(1, "src/sprint2implementation/pics/Lvl_1_player_1.png");
         player1.setPlayerPositionTower(2, "src/sprint2implementation/pics/Lvl_2_player_1.png");
