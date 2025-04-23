@@ -11,6 +11,9 @@ public class Player {
     private HashMap<Integer, ImageIcon> playerPositionTower = new HashMap<>();
     private List<Worker> workers;
     private int workerNum;
+    private int movesRemaining = 1;
+    private int buildsRemaining = 1;
+    private GodCard godCard;
 
     public Player(String name, String imagePath, int workerNum)
     {
@@ -22,6 +25,37 @@ public class Player {
 
         initialiseWorkers();
 
+    }
+
+    public GodCard getGodCard(){
+        return godCard;
+    }
+
+    public void setGodCard(GodCard godCard) {
+        this.godCard = godCard;
+        this.movesRemaining = godCard != null && godCard.canMoveTwice() ? 2 : 1;
+        this.buildsRemaining = godCard != null && godCard.canBuildTwice() ? 2 : 1;
+    }
+
+    public void decrementMove() {
+        movesRemaining--;
+    }
+
+    public void decrementBuild() {
+        buildsRemaining--;
+    }
+
+    public boolean canMoveAgain() {
+        return movesRemaining > 0;
+    }
+
+    public boolean canBuildAgain() {
+        return buildsRemaining > 0;
+    }
+
+    public void resetTurn() {
+        this.movesRemaining = godCard != null && godCard.canMoveTwice() ? 2 : 1;
+        this.buildsRemaining = godCard != null && godCard.canBuildTwice() ? 2 : 1;
     }
 
     public void initialiseWorkers() {
