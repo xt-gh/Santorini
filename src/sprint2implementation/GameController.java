@@ -26,6 +26,9 @@ public class GameController {
     private boolean isBuildingPhase;
     private JLabel currentPlayerLabel; //indicator for the current player's turn
 
+    private Tile originalMoveTile = null;
+    private boolean waitingForSecondMove = false;
+    private boolean waitingForSecondBuild = false;
     public GameController(Board gameBoard, Player player1, Player player2, JLabel currentPlayerLabel) {
         this.gameBoard = gameBoard;
         // store players as an arraylist
@@ -98,6 +101,11 @@ public class GameController {
 
 
     private void handleMovementPhase(Tile clickedTile) {
+
+        if (waitingForSecondMove){
+            selectedTile = lastMovedTile;
+        }
+
         if (selectedTile == null) {
             // First click - select a piece
             if (clickedTile.getWorker() != null && clickedTile.getWorker().getPlayer() == currentPlayer) {
@@ -116,7 +124,12 @@ public class GameController {
             // Second click - move the piece
             if (!isAdjacent(selectedTile, clickedTile)) {
                 JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
-                selectedTile = null;
+
+                if (!waitingForSecondMove){
+                    selectedTile = null;
+                    originalMoveTile = null;
+                }
+
                 return;
             }
 
@@ -124,16 +137,31 @@ public class GameController {
             moveAction.execute();
 
             if (moveAction.isMoveSuccessful()) {
-                isBuildingPhase = true;
+                currentPlayer.decrementMove();
                 lastMovedTile = clickedTile;
-                // Keep the selectedTile reference for building phase
-                System.out.println("Move successful, now in building phase");
-                JOptionPane.showMessageDialog(null, "Move successfully, now in building phase!", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
+
+                if (waitingForSecondMove){
+                    waitingForSecondMove = false;
+                    isBuildingPhase = true;
+                    JOptionPane.showMessageDialog(null, "Second move successful, now in building phase!", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
+                } else if (currentPlayer.canMoveAgain()){
+                    waitingForSecondMove = true;
+                    JOptionPane.showMessageDialog(null, currentPlayer.getName() + " can move again! (God Power)");
+                } else {
+                    isBuildingPhase = true;
+                    // Keep the selectedTile reference for building phase
+                    System.out.println("Move successful, now in building phase");
+                    JOptionPane.showMessageDialog(null, "Move successfully, now in building phase!", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
+                }
+
             } else {
-                selectedTile = null;
                 System.out.println("Move failed");
                 JOptionPane.showMessageDialog(null, "Move failed!", "Error", JOptionPane.ERROR_MESSAGE);
 
+                if (!waitingForSecondMove){
+                    selectedTile = null;
+                    originalMoveTile = null;
+                }
             }
         }
     }
@@ -162,24 +190,40 @@ public class GameController {
         buildAction.execute();
 
         if (buildAction.isBuildSuccessful()) {
+            currentPlayer.decrementBuild();
             System.out.println("Build successful");
 
-            // Switch turn to next player
-            if (currentPlayer == players.get(0))
-            {
-                currentPlayer = players.get(1);
-            }
-            else
-            {
-                currentPlayer = players.get(0);
+            if (currentPlayer.canBuildAgain()) {
+                waitingForSecondBuild = true;
+                JOptionPane.showMessageDialog(null, currentPlayer.getName() + " can build again! (God Power)");
+                // Don't switch turns yet
+            } else {
+                currentPlayer.resetTurn();
+                currentPlayer = (currentPlayer == players.get(0)) ? players.get(1) : players.get(0);
+                isBuildingPhase = false;
+                selectedTile = null;
+                lastMovedTile = null;
+                originalMoveTile = null;
+                waitingForSecondMove = false;
+                waitingForSecondBuild = false;
+
+                updateCurrentPlayerLabel(); //update current player's turn
+                JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
             }
 
-            updateCurrentPlayerLabel(); //update current player's turn
-            JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
+//            // Switch turn to next player
+//            if (currentPlayer == players.get(0))
+//            {
+//                currentPlayer = players.get(1);
+//            }
+//            else
+//            {
+//                currentPlayer = players.get(0);
+//            }
 
-            isBuildingPhase = false;
-            selectedTile = null;
-            lastMovedTile = null;
+//            isBuildingPhase = false;
+//            selectedTile = null;
+//            lastMovedTile = null;
         }
         else
         {
