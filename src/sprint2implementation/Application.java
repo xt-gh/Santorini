@@ -7,6 +7,9 @@ public class Application
 {
     public static void main(String[] args)
     {
+        GodCard demeter = new Demeter();
+        GodCard artemis = new Artemis();
+
         // instantiate the window object
         Window windowObj = new Window();
         JFrame windowFrame = windowObj.getNewFrame();
@@ -36,10 +39,14 @@ public class Application
         turnLabel.setForeground(Color.BLUE);
         turnLabel.setBounds(20, 20, 400, 30);
         layeredPane.add(turnLabel, JLayeredPane.MODAL_LAYER);
-        
+
         // Add Players into the game
         Player player1 = new Player("Player 1", "src/sprint2implementation/pics/player_1.png", 2);
         Player player2 = new Player("Player 2", "src/sprint2implementation/pics/player_2.png", 2);
+
+        // Add God Card to Players
+        player1.setGodCard(demeter);
+        player2.setGodCard(artemis);
 
         player1.setPlayerPositionTower(1, "src/sprint2implementation/pics/Lvl_1_player_1.png");
         player1.setPlayerPositionTower(2, "src/sprint2implementation/pics/Lvl_2_player_1.png");
