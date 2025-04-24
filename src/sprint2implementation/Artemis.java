@@ -2,11 +2,11 @@ package sprint2implementation;
 
 public class Artemis extends GodCard{
     public Artemis(){
-        super("Artemis", "Allows player to build twice in a turn");
+        super("Artemis", "can move twice in a turn");
     }
 
     @Override
-    public boolean canBuildTwice(){
+    public boolean canMoveTwice(){
         return true;
     }
 }
