@@ -68,7 +68,7 @@ public class MoveAction extends Action {
             // Move the worker to the destination tile
             toTile.setWorker(worker);
             worker.setPosition(toTile.getTileRow(), toTile.getTileColumn());
-            System.out.println(worker.getPosition());
+            System.out.println("Current worker position: " + worker.getPosition());
 
             // Update the icon on the destination tile
             // Check if the tower on the destination tile does not have a dome
@@ -82,11 +82,9 @@ public class MoveAction extends Action {
                 toTile.updateIcon(workerOnTower);
             }
 
-
-
             // Check winning condition: the worker has moved onto the topmost level without a dome
             if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {
-                JOptionPane.showMessageDialog(null, "WIN!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " WINS!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
                 System.exit(0);
             }
 
@@ -94,18 +92,9 @@ public class MoveAction extends Action {
         }
         else {
             if (isWorkerStuck(fromTile.getWorker(), fromTile)) {
-//                        bothWorkersStuck = true;
                 JOptionPane.showMessageDialog(null, " This worker is stuck. Please move another worker.", "Message", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println(fromTile.getWorker());
 
                 fromTile.getWorker().setBooleanStuck(true);
-                System.out.println(fromTile.getWorker().isStuck());
-//                    bothWorkersStuck = true;
-//                    if (bothWorkersStuck)
-//                    {
-//                        JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! The player is stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
-//                        System.exit(0);
-//                    }
             }
 
         }
@@ -113,11 +102,10 @@ public class MoveAction extends Action {
         for (Worker worker : worker.getPlayer().getWorkerList())
         {
             bothWorkersStuck = bothWorkersStuck && worker.isStuck();
-            System.out.println("Worker: " + worker + ", stuck: " + worker.isStuck());
         }
         if (bothWorkersStuck)
         {
-            JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " LOSE!! The players are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
     }
@@ -142,7 +130,6 @@ public class MoveAction extends Action {
                 if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) continue;
 
                 Tile neighborTile = gameBoard.getTileLocation(row, column);
-//                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, currentTile.getWorker());
                 MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, currentTile.getWorker());
 
                 // If at least one move is valid, player is not stuck
