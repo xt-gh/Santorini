@@ -7,9 +7,11 @@ public class Worker {
     private int row;
     private int col;
     private Player player;
+    private boolean booleanStuck;
 
     public Worker(Player player) {
         this.player = player;
+        setBooleanStuck(false);
     }
 
     public Player getPlayer() {
@@ -30,9 +32,22 @@ public class Worker {
 
     }
 
+    public String getPosition()
+    {
+        return "(" + row + "," + col + ")";
+    }
+
     public String toString(){
-        return "Worker at position: (" + row + ", " + col + ")";
-//        return player.getName();
+        return "Worker at position: " + getPosition();
+    }
+
+    public boolean isStuck()
+    {
+        return booleanStuck;
+    }
+
+    public void setBooleanStuck(boolean booleanStuck) {
+        this.booleanStuck = booleanStuck;
     }
 }
 
