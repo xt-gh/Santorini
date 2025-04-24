@@ -3,6 +3,7 @@ package sprint2implementation.characters;
 import sprint2implementation.cards.GodCard;
 
 import javax.swing.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,19 @@ public class Player {
     private int buildsRemaining = 1;
     private GodCard godCard;
 
-    public Player(String name, String imagePath, int workerNum)
+//    public Player(String name, String imagePath, int workerNum)
+//    {
+//        this.name = name;
+//        setPlayerImageIcon(imagePath);
+//        playerPositionTower.put(0, new ImageIcon(imagePath));
+//        this.workerList = new ArrayList<>();
+//        this.workerNum = workerNum;
+//
+//        initialiseWorkers();
+//
+//    }
+
+    public Player(String name, URL imagePath, int workerNum)
     {
         this.name = name;
         setPlayerImageIcon(imagePath);
@@ -79,11 +92,19 @@ public class Player {
         return playerPositionTower;
     }
 
-    public void setPlayerPositionTower(int num, String imagePath) {
+//    public void setPlayerPositionTower(int num, String imagePath) {
+//        playerPositionTower.put(num, new ImageIcon(imagePath));
+//    }
+
+    public void setPlayerPositionTower(int num, URL imagePath) {
         playerPositionTower.put(num, new ImageIcon(imagePath));
     }
 
-    public void setPlayerImageIcon(String imagePath) {
+//    public void setPlayerImageIcon(String imagePath) {
+//        playerIcon = new ImageIcon(imagePath);
+//    }
+
+    public void setPlayerImageIcon(URL imagePath) {
         playerIcon = new ImageIcon(imagePath);
     }
 

@@ -60,10 +60,22 @@ public class Board extends JPanel {
         this.boardColumns = boardColumns;
     }
 
+//    public void setTileImageIcon() {
+//        for (int currentRow = 0; currentRow < boardRows; currentRow++) {
+//            for (int currentColumn = 0; currentColumn < boardColumns; currentColumn++) {
+//                Tile tile = new Tile("src/sprint2implementation/pics/Empty_tile.png", currentRow, currentColumn);
+//
+//                tileLocation[currentRow][currentColumn] = tile; // Store tile
+//                add(tile);
+//            }
+//        }
+//    }
+
+
     public void setTileImageIcon() {
         for (int currentRow = 0; currentRow < boardRows; currentRow++) {
             for (int currentColumn = 0; currentColumn < boardColumns; currentColumn++) {
-                Tile tile = new Tile("src/sprint2implementation/pics/Empty_tile.png", currentRow, currentColumn);
+                Tile tile = new Tile(Board.class.getResource("/pics/Empty_tile.png"), currentRow, currentColumn);
 
                 tileLocation[currentRow][currentColumn] = tile; // Store tile
                 add(tile);

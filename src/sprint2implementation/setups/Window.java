@@ -2,6 +2,7 @@ package sprint2implementation.setups;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class Window
 {
@@ -18,14 +19,18 @@ public class Window
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action after the window is close
         newFrame.setTitle("Santorini");
 
-        ImageIcon applicationIcon = new ImageIcon("src/sprint2implementation/pics/frame_img_icon.jpg");
+//        ImageIcon applicationIcon = new ImageIcon("src/sprint2implementation/pics/frame_img_icon.jpg");
+        URL applicationIconPath = Window.class.getResource("/pics/frame_img_icon.jpg");
+        ImageIcon applicationIcon = new ImageIcon(applicationIconPath);
         newFrame.setIconImage(applicationIcon.getImage());
     }
 
     public JLabel setBgLabel(Dimension currentScreenSize)
     {
         // Scale the background and set the background of the frame
-        Image bgImageIcon = new ImageIcon("src/sprint2implementation/pics/ocean.jpg").getImage();
+//        Image bgImageIcon = new ImageIcon("src/sprint2implementation/pics/ocean.jpg").getImage();
+        URL bgImageIconPath = Window.class.getResource("/pics/ocean.jpg");
+        Image bgImageIcon = new ImageIcon(bgImageIconPath).getImage();
         Image scaledBgImage = bgImageIcon.getScaledInstance(currentScreenSize.width, currentScreenSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledBgImageIcon = new ImageIcon(scaledBgImage);
         JLabel bgLabel = new JLabel(scaledBgImageIcon);

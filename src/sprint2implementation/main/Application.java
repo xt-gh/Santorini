@@ -31,17 +31,36 @@ public class Application {
         return godCards;
     }
 
+//    public static List<Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
+//    {
+//        List<Player> playerList = new ArrayList<>();
+//
+//        for (int playerNo = 0; playerNo < playerNum; playerNo++)
+//        {
+//            Player player = new Player("Player "+(playerNo+1), "src/sprint2implementation/pics/player_"+(playerNo+1)+".png", workerNum);
+//            player.setGodCard(godCardList.get(playerNo));
+//            for (int towerNo = 1; towerNo < 4 ; towerNo++)
+//            {
+//                player.setPlayerPositionTower(towerNo, "src/sprint2implementation/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png");
+//            }
+//            // store player into the player list
+//            playerList.add(player);
+//        }
+//        return playerList;
+//    }
+
+
     public static List<Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
     {
         List<Player> playerList = new ArrayList<>();
 
         for (int playerNo = 0; playerNo < playerNum; playerNo++)
         {
-            Player player = new Player("Player "+(playerNo+1), "src/sprint2implementation/pics/player_"+(playerNo+1)+".png", workerNum);
+            Player player = new Player("Player "+(playerNo+1), Application.class.getResource("/pics/player_"+(playerNo+1)+".png"), workerNum);
             player.setGodCard(godCardList.get(playerNo));
             for (int towerNo = 1; towerNo < 4 ; towerNo++)
             {
-                player.setPlayerPositionTower(towerNo, "src/sprint2implementation/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png");
+                player.setPlayerPositionTower(towerNo, Application.class.getResource("/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png"));
             }
             // store player into the player list
             playerList.add(player);

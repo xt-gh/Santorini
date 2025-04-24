@@ -1,6 +1,7 @@
 package sprint2implementation.towers;
 
 import javax.swing.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +19,31 @@ public class Tower {
         return MAX_LEVELS;
     }
 
+//    public void addLevel() {
+//        if (towerLevels.size() < MAX_LEVELS) {
+//            int nextLevel = towerLevels.size() + 1;
+//            String iconPath = "src/sprint2implementation/pics/Lvl_" + nextLevel + ".png";
+//            towerLevels.add(new TowerLevel(nextLevel, iconPath));
+//        }
+//    }
+
     public void addLevel() {
         if (towerLevels.size() < MAX_LEVELS) {
             int nextLevel = towerLevels.size() + 1;
-            String iconPath = "src/sprint2implementation/pics/Lvl_" + nextLevel + ".png";
+            URL iconPath = Tower.class.getResource("/pics/Lvl_" + nextLevel + ".png");
             towerLevels.add(new TowerLevel(nextLevel, iconPath));
         }
     }
 
+//    public void addDome() {
+//        if (!hasDome()) {
+//            dome = new Dome("src/sprint2implementation/pics/Lvl_complete.png");
+//        }
+//    }
+
     public void addDome() {
         if (!hasDome()) {
-            dome = new Dome("src/sprint2implementation/pics/Lvl_complete.png");
+            dome = new Dome(Tower.class.getResource("/pics/Lvl_complete.png"));
         }
     }
 
@@ -55,7 +70,9 @@ public class Tower {
         }
         else
         {
-            return new ImageIcon("src/sprint2implementation/pics/Empty_tile.png");
+//            return new ImageIcon("src/sprint2implementation/pics/Empty_tile.png");
+            URL emptyTilePath = Tower.class.getResource("/pics/Empty_tile.png");
+            return new ImageIcon(emptyTilePath);
         }
     }
 
