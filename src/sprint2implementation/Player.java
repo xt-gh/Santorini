@@ -9,7 +9,7 @@ public class Player {
     private ImageIcon playerIcon;
     private String name;
     private HashMap<Integer, ImageIcon> playerPositionTower = new HashMap<>();
-    private List<Worker> workers;
+    private List<Worker> workerList;
     private int workerNum;
     private int movesRemaining = 1;
     private int buildsRemaining = 1;
@@ -20,7 +20,7 @@ public class Player {
         this.name = name;
         setPlayerImageIcon(imagePath);
         playerPositionTower.put(0, new ImageIcon(imagePath));
-        this.workers = new ArrayList<>();
+        this.workerList = new ArrayList<>();
         this.workerNum = workerNum;
 
         initialiseWorkers();
@@ -65,18 +65,17 @@ public class Player {
         }
     }
 
-    public List<Worker> getWorkers() {
-        return workers;
+    public List<Worker> getWorkerList() {
+        return workerList;
     }
+
     public void addWorker(Worker worker) {
-        workers.add(worker);
+        workerList.add(worker);
     }
 
     public void setWorkers(List<Worker> workers) {
-        this.workers = workers;
+        this.workerList = workers;
     }
-
-
 
     public HashMap<Integer, ImageIcon> getPlayerPositionTower() {
         return playerPositionTower;
