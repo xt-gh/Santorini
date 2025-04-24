@@ -29,13 +29,11 @@ public class GameController {
     private boolean waitingForSecondMove = false;
     private boolean waitingForSecondBuild = false;
 
-    public GameController(Board gameBoard, Player player1, Player player2, JLabel currentPlayerLabel) {
+    public GameController(Board gameBoard, List<Player> playerList, JLabel currentPlayerLabel) {
         this.gameBoard = gameBoard;
         // store players as an arraylist
-        this.playerList = new ArrayList<>();
+        this.playerList = playerList;
         // add the player1 and player2 into the array list
-        playerList.add(player1);
-        playerList.add(player2);
         this.currentPlayerIndex = 0;
         this.currentPlayer = playerList.get(currentPlayerIndex);
 
