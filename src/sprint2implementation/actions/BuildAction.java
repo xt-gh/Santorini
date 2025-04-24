@@ -1,4 +1,8 @@
-package sprint2implementation;
+package sprint2implementation.actions;
+
+import sprint2implementation.grounds.Board;
+import sprint2implementation.grounds.Tile;
+import sprint2implementation.towers.Tower;
 
 public class BuildAction extends Action {
     private Tile targetTile;

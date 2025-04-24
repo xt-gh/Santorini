@@ -1,4 +1,4 @@
-package sprint2implementation;
+package sprint2implementation.cards;
 
 public abstract class GodCard {
     protected String name;

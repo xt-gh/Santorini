@@ -1,4 +1,4 @@
-package sprint2implementation;
+package sprint2implementation.setups;
 
 import javax.swing.*;
 import java.awt.*;
