@@ -41,7 +41,7 @@ public class Application {
             player.setGodCard(godCardList.get(playerNo));
             for (int towerNo = 1; towerNo < 4 ; towerNo++)
             {
-                player.setPlayerPositionTower(towerNo, "src/sprint2implementation/pics/Lvl_"+towerNo+"_player_"+playerNo+".png");
+                player.setPlayerPositionTower(towerNo, "src/sprint2implementation/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png");
             }
             // store player into the player list
             playerList.add(player);
