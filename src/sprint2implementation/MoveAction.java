@@ -67,6 +67,8 @@ public class MoveAction extends Action {
 
             // Move the worker to the destination tile
             toTile.setWorker(worker);
+            worker.setPosition(toTile.getTileRow(), toTile.getTileColumn());
+            System.out.println(worker.getPosition());
 
             // Update the icon on the destination tile
             // Check if the tower on the destination tile does not have a dome
@@ -87,6 +89,36 @@ public class MoveAction extends Action {
                 JOptionPane.showMessageDialog(null, "WIN!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
                 System.exit(0);
             }
+
+
+        }
+        else {
+            if (isWorkerStuck(fromTile.getWorker(), fromTile)) {
+//                        bothWorkersStuck = true;
+                JOptionPane.showMessageDialog(null, " This worker is stuck. Please move another worker.", "Message", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(fromTile.getWorker());
+
+                fromTile.getWorker().setBooleanStuck(true);
+                System.out.println(fromTile.getWorker().isStuck());
+//                    bothWorkersStuck = true;
+//                    if (bothWorkersStuck)
+//                    {
+//                        JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! The player is stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+//                        System.exit(0);
+//                    }
+            }
+
+        }
+        boolean bothWorkersStuck = true;
+        for (Worker worker : worker.getPlayer().getWorkerList())
+        {
+            bothWorkersStuck = bothWorkersStuck && worker.isStuck();
+            System.out.println("Worker: " + worker + ", stuck: " + worker.isStuck());
+        }
+        if (bothWorkersStuck)
+        {
+            JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " LOSE!! The players are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
         }
     }
 
@@ -96,5 +128,30 @@ public class MoveAction extends Action {
 
     private int getTowerLevel(Tower tower) {
         return (tower != null) ? tower.getLevelCount() : 0;
+    }
+
+    public boolean isWorkerStuck(Worker worker, Tile currentTile) {
+        int currentRow = currentTile.getTileRow();
+        int currentColumn = currentTile.getTileColumn();
+
+        // Check all 8 surrounding tiles
+        for (int row = currentRow - 1; row <= currentRow + 1; row++) {
+            for (int column = currentColumn - 1; column <= currentColumn + 1; column++) {
+                // Skip out-of-bounds or the same tile
+                if (row == currentRow && column == currentColumn) continue;
+                if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) continue;
+
+                Tile neighborTile = gameBoard.getTileLocation(row, column);
+//                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, currentTile.getWorker());
+                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, currentTile.getWorker());
+
+                // If at least one move is valid, player is not stuck
+                if (testMove.isMoveSuccessful()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
