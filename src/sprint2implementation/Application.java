@@ -10,17 +10,6 @@ public class Application
 {
     public static void main(String[] args)
     {
-        GodCard demeter = new Demeter();
-        GodCard artemis = new Artemis();
-
-        // Created a list to store all the god cards
-        List<GodCard> godCards = new ArrayList<>();
-        godCards.add(demeter);
-        godCards.add(artemis);
-
-        // Assign god cards randomly to every players by shuffling them
-        Collections.shuffle(godCards);
-
         // instantiate the window object
         Window windowObj = new Window();
         JFrame windowFrame = windowObj.getNewFrame();
@@ -36,7 +25,7 @@ public class Application
         bgLabel.setBounds(0, 0, screenSize.width, screenSize.height);
         layeredPane.add(bgLabel, JLayeredPane.DEFAULT_LAYER);
 
-//      Create a game board (a layer higher)
+        // Create a game board (a layer higher)
         Board gameBoard = new Board(600,5,5);
         int boardSize = gameBoard.getBoardSize();
         int width = (screenSize.width - boardSize)/2;
@@ -47,9 +36,21 @@ public class Application
         // Create player's turn label
         JLabel turnLabel = new JLabel("Player: ");
         turnLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        turnLabel.setForeground(Color.BLUE);
-        turnLabel.setBounds(20, 20, 400, 30);
+        turnLabel.setForeground(Color.WHITE);
+        turnLabel.setBounds(20, 20, 600, 30);
         layeredPane.add(turnLabel, JLayeredPane.MODAL_LAYER);
+
+        // instantiates the type of god cards
+        GodCard demeter = new Demeter();
+        GodCard artemis = new Artemis();
+
+        // Created a list to store all the god cards
+        List<GodCard> godCards = new ArrayList<>();
+        godCards.add(demeter);
+        godCards.add(artemis);
+
+        // Assign god cards randomly to every players by shuffling them
+        Collections.shuffle(godCards);
 
         // Add Players into the game
         Player player1 = new Player("Player 1", "src/sprint2implementation/pics/player_1.png", 2);
@@ -66,9 +67,6 @@ public class Application
         player2.setPlayerPositionTower(1, "src/sprint2implementation/pics/Lvl_1_player_2.png");
         player2.setPlayerPositionTower(2, "src/sprint2implementation/pics/Lvl_2_player_2.png");
         player2.setPlayerPositionTower(3, "src/sprint2implementation/pics/Lvl_3_player_2.png");
-
-        System.out.println(player1.getPlayerPositionTower());
-
 
         GameController controller = new GameController(gameBoard, player1, player2, turnLabel);
         windowFrame.addComponentListener(new ResizeListener(windowFrame, gameBoard, boardSize, boardSize));
