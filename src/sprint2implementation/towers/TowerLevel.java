@@ -1,4 +1,4 @@
-package sprint2implementation;
+package sprint2implementation.towers;
 
 import javax.swing.*;
 

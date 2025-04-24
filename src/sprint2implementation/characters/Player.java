@@ -1,4 +1,6 @@
-package sprint2implementation;
+package sprint2implementation.characters;
+
+import sprint2implementation.cards.GodCard;
 
 import javax.swing.*;
 import java.util.ArrayList;

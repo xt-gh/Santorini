@@ -1,7 +1,4 @@
-package sprint2implementation;
-
-
-import java.util.List;
+package sprint2implementation.characters;
 
 public class Worker {
     private int row;

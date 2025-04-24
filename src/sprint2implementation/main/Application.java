@@ -1,4 +1,12 @@
-package sprint2implementation;
+package sprint2implementation.main;
+import sprint2implementation.cards.Artemis;
+import sprint2implementation.cards.Demeter;
+import sprint2implementation.cards.GodCard;
+import sprint2implementation.characters.Player;
+import sprint2implementation.grounds.Board;
+import sprint2implementation.setups.ResizeListener;
+import sprint2implementation.setups.Window;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -43,7 +51,7 @@ public class Application {
 
     public static void main(String[] args) {
         // instantiate the window object
-        Window windowObj = new Window();
+        sprint2implementation.setups.Window windowObj = new Window();
         JFrame windowFrame = windowObj.getNewFrame();
         Dimension screenSize = windowObj.getCurrentScreenSize();
 

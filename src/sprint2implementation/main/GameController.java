@@ -1,4 +1,12 @@
-package sprint2implementation;
+package sprint2implementation.main;
+
+import sprint2implementation.actions.BuildAction;
+import sprint2implementation.actions.MoveAction;
+import sprint2implementation.characters.Player;
+import sprint2implementation.characters.Worker;
+import sprint2implementation.grounds.Board;
+import sprint2implementation.grounds.Tile;
+import sprint2implementation.towers.Tower;
 
 import javax.swing.*;
 import java.util.*;

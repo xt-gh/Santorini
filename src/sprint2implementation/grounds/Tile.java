@@ -1,4 +1,7 @@
-package sprint2implementation;
+package sprint2implementation.grounds;
+
+import sprint2implementation.characters.Worker;
+import sprint2implementation.towers.Tower;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +15,9 @@ public class Tile extends JButton {
     private Worker worker;
 
     public Tile(String imagePath, int tileRow, int tileColumn) {
-//        setPlayer(null);
         this.tower = new Tower();
         oriImageIcon = new ImageIcon(imagePath);
         currentIcon = oriImageIcon;
-//        currentIcon = new ImageIcon(imagePath);
         this.tileRow = tileRow;
         this.tileColumn = tileColumn;
 
@@ -76,13 +77,11 @@ public class Tile extends JButton {
         if (currentIcon != null && getWidth() > 0 && getHeight() > 0) {
             Image scaledImage = currentIcon.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
             setIcon(new ImageIcon(scaledImage));
-//            System.out.println((new ImageIcon(scaledImage)));
-//            System.out.println("success2");
         }
     }
 
     @Override
     public String toString() {
-        return "Tile location: (" + tileRow + ", " + tileColumn + ")";
+        return "Tile Position: (" + tileRow + ", " + tileColumn + ")";
     }
 }
