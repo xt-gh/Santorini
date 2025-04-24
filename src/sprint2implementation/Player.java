@@ -73,10 +73,6 @@ public class Player {
         workerList.add(worker);
     }
 
-    public void setWorkers(List<Worker> workers) {
-        this.workerList = workers;
-    }
-
     public HashMap<Integer, ImageIcon> getPlayerPositionTower() {
         return playerPositionTower;
     }
