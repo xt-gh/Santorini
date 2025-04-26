@@ -1,7 +1,5 @@
 package sprint2implementation.actions;
 
-import sprint2implementation.grounds.Board;
-
 public abstract class Action {
 
     protected int row;
