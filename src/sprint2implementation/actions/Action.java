@@ -4,12 +4,10 @@ import sprint2implementation.grounds.Board;
 
 public abstract class Action {
 
-    protected Board gameBoard;
     protected int row;
     protected int column;
 
-    public Action(Board gameBoard, int row, int column) {
-        this.gameBoard = gameBoard;
+    public Action( int row, int column) {
         this.row = row;
         this.column = column;
 
