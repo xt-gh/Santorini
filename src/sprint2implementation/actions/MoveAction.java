@@ -1,6 +1,5 @@
 package sprint2implementation.actions;
 
-import sprint2implementation.grounds.Board;
 import sprint2implementation.grounds.Tile;
 import sprint2implementation.towers.Tower;
 import sprint2implementation.characters.Worker;
@@ -13,8 +12,8 @@ public class MoveAction extends Action {
     private Worker worker;
     private boolean moveSuccessful;
 
-    public MoveAction(Board gameBoard, Tile fromTile, Tile toTile, Worker worker) {
-        super(gameBoard, fromTile.getTileRow(), fromTile.getTileColumn());
+    public MoveAction(Tile fromTile, Tile toTile, Worker worker) {
+        super(fromTile.getTileRow(), fromTile.getTileColumn());
         this.fromTile = fromTile;
         this.toTile = toTile;
         this.worker = worker;
@@ -71,6 +70,7 @@ public class MoveAction extends Action {
                 ImageIcon workerOnTower = worker.getPlayer().getPlayerPositionTower().getOrDefault(toLevel, worker.getPlayer().getPlayerIcon());
 
                 toTile.updateIcon(workerOnTower);
+                checkWinningCondition(worker,toTile);
             }
         }
     }
@@ -81,6 +81,15 @@ public class MoveAction extends Action {
 
     private int getTowerLevel(Tower tower) {
         return (tower != null) ? tower.getLevelCount() : 0;
+    }
+
+    private void checkWinningCondition(Worker worker, Tile toTile) {
+        // Check if the worker is on a tower and the tower has reached level 3
+        Tower toTower = toTile.getTower();
+        if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {
+            JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " WINS!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
     }
 }
 
