@@ -1,6 +1,5 @@
 package sprint2implementation.actions;
 
-import sprint2implementation.grounds.Board;
 import sprint2implementation.grounds.Tile;
 import sprint2implementation.towers.Tower;
 
@@ -9,8 +8,8 @@ public class BuildAction extends Action {
     private Tower tower;
     private boolean buildSuccessful;
 
-    public BuildAction(Board gameBoard, Tile targetTile, Tower tower) {
-        super(gameBoard, targetTile.getTileRow(), targetTile.getTileColumn());
+    public BuildAction(Tile targetTile, Tower tower) {
+        super(targetTile.getTileRow(), targetTile.getTileColumn());
         this.targetTile = targetTile;
         this.tower = tower;
         this.buildSuccessful = validateBuild();

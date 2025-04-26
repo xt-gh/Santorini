@@ -108,66 +108,77 @@ public class GameController {
         }
     }
 
-
     private void handleMovementPhase(Tile clickedTile) {
-        if (waitingForSecondMove){
+        if (waitingForSecondMove) {
             selectedTile = lastMovedTile;
         }
 
         if (selectedTile == null) {
             // First click - select a piece
-            if (clickedTile.getWorker() != null && clickedTile.getWorker().getPlayer() == currentPlayer)
-            {
-                selectedTile = clickedTile;
+            if (clickedTile.getWorker() != null && clickedTile.getWorker().getPlayer() == currentPlayer) {
 
+                // Check if the selected worker is stuck
+                if (isWorkerStuck(clickedTile.getWorker(), clickedTile)) {
+                    JOptionPane.showMessageDialog(null, "This worker is stuck. Please move another worker.", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    clickedTile.getWorker().setBooleanStuck(true);
+                    selectedTile = null;  // Clear selection so player can choose another worker
+                    checkLosingCondition();
+                    return;  // Exit method, forcing the player to select another worker
+                }
+
+                selectedTile = clickedTile;
                 System.out.println("Selected " + selectedTile);
             }
 
         } else {
-
             // Second click - move the piece
             if (!isAdjacent(selectedTile, clickedTile)) {
                 JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
 
-                if (!waitingForSecondMove){
+                if (!waitingForSecondMove) {
                     selectedTile = null;
                     originalMoveTile = null;
                 }
                 return;
             }
 
-            MoveAction moveAction = new MoveAction(gameBoard, selectedTile, clickedTile, selectedTile.getWorker());
+            MoveAction moveAction = new MoveAction(selectedTile, clickedTile, selectedTile.getWorker());
             moveAction.execute();
+//            checkWinningCondition(clickedTile.getWorker(),clickedTile);
+
 
             if (moveAction.isMoveSuccessful()) {
                 currentPlayer.decrementMove();
                 lastMovedTile = clickedTile;
 
-                if (waitingForSecondMove){
+                if (waitingForSecondMove) {
                     waitingForSecondMove = false;
                     isBuildingPhase = true;
                     JOptionPane.showMessageDialog(null, "Second move successful, now in building phase!", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
-                } else if (currentPlayer.canMoveAgain()){
+                } else if (currentPlayer.canMoveAgain()) {
                     waitingForSecondMove = true;
                     JOptionPane.showMessageDialog(null, currentPlayer.getName() + " " + currentPlayer.getGodCard().getDescription());
                 } else {
                     isBuildingPhase = true;
-                    // Keep the selectedTile reference for building phase
                     System.out.println("Move successful, now in building phase");
                     JOptionPane.showMessageDialog(null, "Move successfully, now in building phase!", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
+
+
                 }
 
             } else {
                 System.out.println("Move failed");
                 JOptionPane.showMessageDialog(null, "Move failed!", "Error", JOptionPane.ERROR_MESSAGE);
 
-                if (!waitingForSecondMove){
+                if (!waitingForSecondMove) {
                     selectedTile = null;
                     originalMoveTile = null;
                 }
             }
         }
     }
+
+
 
     private void handleBuildingPhase(Tile clickedTile) {
         if (lastMovedTile == null) {
@@ -189,7 +200,7 @@ public class GameController {
         }
 
         // Attempt to build
-        BuildAction buildAction = new BuildAction(gameBoard, clickedTile, tower);
+        BuildAction buildAction = new BuildAction(clickedTile, tower);
         buildAction.execute();
 
         if (buildAction.isBuildSuccessful()) {
@@ -220,6 +231,50 @@ public class GameController {
             JOptionPane.showMessageDialog(null, "Build failed!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private boolean isWorkerStuck(Worker worker, Tile currentTile) {
+        int currentRow = currentTile.getTileRow();
+        int currentColumn = currentTile.getTileColumn();
+
+        // Check all 8 surrounding tiles
+        for (int row = currentRow - 1; row <= currentRow + 1; row++) {
+            for (int column = currentColumn - 1; column <= currentColumn + 1; column++) {
+                if (row == currentRow && column == currentColumn) continue;
+                if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) continue;
+
+                Tile neighborTile = gameBoard.getTileLocation(row, column);
+                MoveAction testMove = new MoveAction(currentTile, neighborTile, currentTile.getWorker());
+
+                if (testMove.isMoveSuccessful()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void checkLosingCondition() {
+        // Check if both workers of the current player are stuck
+        boolean bothWorkersStuck = true;
+        for (Worker worker : currentPlayer.getWorkerList()) {
+            bothWorkersStuck = bothWorkersStuck && worker.isStuck();
+        }
+        if (bothWorkersStuck) {
+            JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
+    }
+
+//    private void checkWinningCondition(Worker worker, Tile clickedTile) {
+//        // Check if the worker is on a tower and the tower has reached level 3
+//        Tower toTower = clickedTile.getTower();
+//            if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {
+//                JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " WINS!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+//                System.exit(0);
+//            }
+//    }
+
 
     public boolean isAdjacent(Tile tile1, Tile tile2) {
         int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
