@@ -142,9 +142,9 @@ public class GameController {
                 return;
             }
 
-            MoveAction moveAction = new MoveAction(gameBoard, selectedTile, clickedTile, selectedTile.getWorker());
+            MoveAction moveAction = new MoveAction(selectedTile, clickedTile, selectedTile.getWorker());
             moveAction.execute();
-            checkWinningCondition(clickedTile.getWorker(),clickedTile);
+//            checkWinningCondition(clickedTile.getWorker(),clickedTile);
 
 
             if (moveAction.isMoveSuccessful()) {
@@ -200,7 +200,7 @@ public class GameController {
         }
 
         // Attempt to build
-        BuildAction buildAction = new BuildAction(gameBoard, clickedTile, tower);
+        BuildAction buildAction = new BuildAction(clickedTile, tower);
         buildAction.execute();
 
         if (buildAction.isBuildSuccessful()) {
@@ -243,7 +243,7 @@ public class GameController {
                 if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) continue;
 
                 Tile neighborTile = gameBoard.getTileLocation(row, column);
-                MoveAction testMove = new MoveAction(gameBoard, currentTile, neighborTile, currentTile.getWorker());
+                MoveAction testMove = new MoveAction(currentTile, neighborTile, currentTile.getWorker());
 
                 if (testMove.isMoveSuccessful()) {
                     return false;
@@ -266,14 +266,14 @@ public class GameController {
         }
     }
 
-    private void checkWinningCondition(Worker worker, Tile clickedTile) {
-        // Check if the worker is on a tower and the tower has reached level 3
-        Tower toTower = clickedTile.getTower();
-            if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {
-                JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " WINS!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
-                System.exit(0);
-            }
-    }
+//    private void checkWinningCondition(Worker worker, Tile clickedTile) {
+//        // Check if the worker is on a tower and the tower has reached level 3
+//        Tower toTower = clickedTile.getTower();
+//            if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {
+//                JOptionPane.showMessageDialog(null, worker.getPlayer().getName() + " WINS!!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+//                System.exit(0);
+//            }
+//    }
 
 
     public boolean isAdjacent(Tile tile1, Tile tile2) {
