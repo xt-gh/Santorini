@@ -1,6 +1,8 @@
 package sprint2implementation.cards;
 
-public abstract class GodCard {
+import sprint2implementation.actions.SpecialAbility;
+
+public abstract class GodCard implements SpecialAbility {
     protected String name;
     protected String description;
     public GodCard(String name, String description){
