@@ -22,10 +22,12 @@ public class MoveAction extends Action {
 
     private boolean validateMove() {
 
+        // cannot move on the same tile
         if (fromTile == toTile) {
             return false;
         }
 
+        // cannot move to the tile that is occupied by other worker
         if (toTile.getWorker() != null) {
             return false;
         }
@@ -33,6 +35,7 @@ public class MoveAction extends Action {
         int fromLevel = getTowerLevel(fromTile.getTower());
         int toLevel = getTowerLevel(toTile.getTower());
 
+        // cannot move to a tile with dome or more than one level from the previous tower
         Tower toTower = toTile.getTower();
         if ((toTower != null && toTower.hasDome()) || (toLevel - fromLevel > 1))
         {
@@ -71,7 +74,14 @@ public class MoveAction extends Action {
 
                 toTile.updateIcon(workerOnTower);
                 checkWinningCondition(worker,toTile);
+                System.out.println("Move successful");
+                JOptionPane.showMessageDialog(null, "Move successfully", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
             }
+        }
+        else
+        {
+            System.out.println("Move failed");
+            JOptionPane.showMessageDialog(null, "Move failed!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
