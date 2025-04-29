@@ -3,6 +3,8 @@ package sprint2implementation.actions;
 import sprint2implementation.grounds.Tile;
 import sprint2implementation.towers.Tower;
 
+import javax.swing.*;
+
 public class BuildAction extends Action {
     private Tile targetTile;
     private Tower tower;
@@ -17,11 +19,13 @@ public class BuildAction extends Action {
 
     public boolean validateBuild() {
 
+        if (tower == null) {
+            tower = new Tower();
+        }
         // Prevents building if the worker is already standing on a tile or a tower already has a dome
         if (targetTile.getWorker() != null || tower.hasDome()) {
             return false;
         }
-
         // Allows building only if the current tower level has not exceeded the maximum level
         return tower.getLevelCount() <= Tower.getMaxLevels();
     }
@@ -44,6 +48,11 @@ public class BuildAction extends Action {
             // Update the tower object on the tile to reflect changes
             targetTile.setTower(tower);
             targetTile.updateIcon(tower.getCurrentIcon());
+        }
+        else
+        {
+            System.out.println("Build failed");
+            JOptionPane.showMessageDialog(null, "Build failed!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
