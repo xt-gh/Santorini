@@ -19,14 +19,6 @@ public class Tower {
         return MAX_LEVELS;
     }
 
-//    public void addLevel() {
-//        if (towerLevels.size() < MAX_LEVELS) {
-//            int nextLevel = towerLevels.size() + 1;
-//            String iconPath = "src/sprint2implementation/pics/Lvl_" + nextLevel + ".png";
-//            towerLevels.add(new TowerLevel(nextLevel, iconPath));
-//        }
-//    }
-
     public void addLevel() {
         if (towerLevels.size() < MAX_LEVELS) {
             int nextLevel = towerLevels.size() + 1;
@@ -34,12 +26,6 @@ public class Tower {
             towerLevels.add(new TowerLevel(nextLevel, iconPath));
         }
     }
-
-//    public void addDome() {
-//        if (!hasDome()) {
-//            dome = new Dome("src/sprint2implementation/pics/Lvl_complete.png");
-//        }
-//    }
 
     public void addDome() {
         if (!hasDome()) {
@@ -64,16 +50,20 @@ public class Tower {
         {
             return dome.getDomeIcon();
         }
-        else if (!towerLevels.isEmpty())
+        else if (!isTowerEmpty())
         {
             return towerLevels.get(towerLevels.size() - 1).getLevelIcon();
         }
         else
         {
-//            return new ImageIcon("src/sprint2implementation/pics/Empty_tile.png");
             URL emptyTilePath = Tower.class.getResource("/pics/Empty_tile.png");
             return new ImageIcon(emptyTilePath);
         }
+    }
+
+    public boolean isTowerEmpty()
+    {
+        return towerLevels.isEmpty();
     }
 
 }
