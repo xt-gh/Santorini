@@ -1,8 +1,9 @@
 package sprint2implementation.cards;
 
-public abstract class GodCard {
+public abstract class GodCard implements SpecialAbility{
     protected String name;
     protected String description;
+
     public GodCard(String name, String description){
         this.name = name;
         this.description = description;
@@ -16,11 +17,4 @@ public abstract class GodCard {
         return description;
     }
 
-    public boolean canMoveTwice(){
-        return false;
-    }
-
-    public boolean canBuildTwice(){
-        return false;
-    }
 }
