@@ -7,28 +7,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Player {
     private ImageIcon playerIcon;
     private String name;
-    private HashMap<Integer, ImageIcon> playerPositionTower = new HashMap<>();
+    private Map<Integer, ImageIcon> playerPositionTower = new HashMap<>();
+    private GodCard godCard;
     private List<Worker> workerList;
     private int workerNum;
-    private int movesRemaining = 1;
-    private int buildsRemaining = 1;
-    private GodCard godCard;
-
-//    public Player(String name, String imagePath, int workerNum)
-//    {
-//        this.name = name;
-//        setPlayerImageIcon(imagePath);
-//        playerPositionTower.put(0, new ImageIcon(imagePath));
-//        this.workerList = new ArrayList<>();
-//        this.workerNum = workerNum;
-//
-//        initialiseWorkers();
-//
-//    }
+    private Boolean isActionSuccessful = false;
 
     public Player(String name, URL imagePath, int workerNum)
     {
@@ -48,29 +36,6 @@ public class Player {
 
     public void setGodCard(GodCard godCard) {
         this.godCard = godCard;
-        this.movesRemaining = godCard != null && godCard.canMoveTwice() ? 2 : 1;
-        this.buildsRemaining = godCard != null && godCard.canBuildTwice() ? 2 : 1;
-    }
-
-    public void decrementMove() {
-        movesRemaining--;
-    }
-
-    public void decrementBuild() {
-        buildsRemaining--;
-    }
-
-    public boolean canMoveAgain() {
-        return movesRemaining > 0;
-    }
-
-    public boolean canBuildAgain() {
-        return buildsRemaining > 0;
-    }
-
-    public void resetTurn() {
-        this.movesRemaining = godCard != null && godCard.canMoveTwice() ? 2 : 1;
-        this.buildsRemaining = godCard != null && godCard.canBuildTwice() ? 2 : 1;
     }
 
     public void initialiseWorkers() {
@@ -88,21 +53,13 @@ public class Player {
         workerList.add(worker);
     }
 
-    public HashMap<Integer, ImageIcon> getPlayerPositionTower() {
+    public Map<Integer, ImageIcon> getPlayerPositionTower() {
         return playerPositionTower;
     }
-
-//    public void setPlayerPositionTower(int num, String imagePath) {
-//        playerPositionTower.put(num, new ImageIcon(imagePath));
-//    }
 
     public void setPlayerPositionTower(int num, URL imagePath) {
         playerPositionTower.put(num, new ImageIcon(imagePath));
     }
-
-//    public void setPlayerImageIcon(String imagePath) {
-//        playerIcon = new ImageIcon(imagePath);
-//    }
 
     public void setPlayerImageIcon(URL imagePath) {
         playerIcon = new ImageIcon(imagePath);
@@ -114,5 +71,14 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+
+    public boolean isActionSuccessful() {
+        return isActionSuccessful;
+    }
+
+    public void setActionSuccessful(Boolean actionSuccessful) {
+        isActionSuccessful = actionSuccessful;
     }
 }
