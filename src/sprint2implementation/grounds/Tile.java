@@ -15,16 +15,6 @@ public class Tile extends JButton {
     private int tileColumn;
     private Worker worker;
 
-//    public Tile(String imagePath, int tileRow, int tileColumn) {
-//        this.tower = new Tower();
-//        oriImageIcon = new ImageIcon(imagePath);
-//        currentIcon = oriImageIcon;
-//        this.tileRow = tileRow;
-//        this.tileColumn = tileColumn;
-//
-//        resizeAndSetIcon();
-//    }
-
     public Tile(URL imagePath, int tileRow, int tileColumn) {
         this.tower = new Tower();
         oriImageIcon = new ImageIcon(imagePath);
