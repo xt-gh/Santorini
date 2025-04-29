@@ -5,14 +5,17 @@ import sprint2implementation.characters.Player;
 import javax.swing.*;
 import java.awt.*;
 
+// Design pattern: Singleton.
+// Singleton is used as the design pattern for the Board class because only one board instance is needed for the game.
 public class Board extends JPanel {
 
+    private static Board instance;
     private Tile[][] tileLocation;
     private int boardSize;
     private int boardRows;
     private int boardColumns;
 
-    public Board(int boardSize, int boardRows, int boardColumns)
+    private Board(int boardSize, int boardRows, int boardColumns)
     {
         setBoardSize(boardSize);
         setBoardRows(boardRows);
@@ -22,6 +25,13 @@ public class Board extends JPanel {
         setLayout(boardGrid);
         setTileImageIcon();
 
+    }
+
+    public static Board getInstance(int boardSize, int boardRows, int boardColumns) {
+        if (instance == null) {
+            instance = new Board(boardSize, boardRows, boardColumns);
+        }
+        return instance;
     }
 
     public int getBoardSize() {
@@ -59,18 +69,6 @@ public class Board extends JPanel {
     public void setBoardColumns(int boardColumns) {
         this.boardColumns = boardColumns;
     }
-
-//    public void setTileImageIcon() {
-//        for (int currentRow = 0; currentRow < boardRows; currentRow++) {
-//            for (int currentColumn = 0; currentColumn < boardColumns; currentColumn++) {
-//                Tile tile = new Tile("src/sprint2implementation/pics/Empty_tile.png", currentRow, currentColumn);
-//
-//                tileLocation[currentRow][currentColumn] = tile; // Store tile
-//                add(tile);
-//            }
-//        }
-//    }
-
 
     public void setTileImageIcon() {
         for (int currentRow = 0; currentRow < boardRows; currentRow++) {
