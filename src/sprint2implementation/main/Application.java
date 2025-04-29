@@ -9,8 +9,7 @@ import sprint2implementation.setups.Window;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 
@@ -31,28 +30,9 @@ public class Application {
         return godCards;
     }
 
-//    public static List<Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
-//    {
-//        List<Player> playerList = new ArrayList<>();
-//
-//        for (int playerNo = 0; playerNo < playerNum; playerNo++)
-//        {
-//            Player player = new Player("Player "+(playerNo+1), "src/sprint2implementation/pics/player_"+(playerNo+1)+".png", workerNum);
-//            player.setGodCard(godCardList.get(playerNo));
-//            for (int towerNo = 1; towerNo < 4 ; towerNo++)
-//            {
-//                player.setPlayerPositionTower(towerNo, "src/sprint2implementation/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png");
-//            }
-//            // store player into the player list
-//            playerList.add(player);
-//        }
-//        return playerList;
-//    }
-
-
-    public static List<Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
+    public static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
     {
-        List<Player> playerList = new ArrayList<>();
+        Map<Integer, Player> playerList = new HashMap<>();
 
         for (int playerNo = 0; playerNo < playerNum; playerNo++)
         {
@@ -62,15 +42,15 @@ public class Application {
             {
                 player.setPlayerPositionTower(towerNo, Application.class.getResource("/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png"));
             }
-            // store player into the player list
-            playerList.add(player);
+            // store player into the player list (Hash Map)
+            playerList.put(playerNo, player);
         }
         return playerList;
     }
 
     public static void main(String[] args) {
         // instantiate the window object
-        sprint2implementation.setups.Window windowObj = new Window();
+        Window windowObj = Window.getInstance();
         JFrame windowFrame = windowObj.getNewFrame();
         Dimension screenSize = windowObj.getCurrentScreenSize();
 
@@ -85,7 +65,7 @@ public class Application {
         layeredPane.add(bgLabel, JLayeredPane.DEFAULT_LAYER);
 
         // Create a game board (a layer higher)
-        Board gameBoard = new Board(600, 5, 5);
+        Board gameBoard = Board.getInstance(600, 5, 5);
         int boardSize = gameBoard.getBoardSize();
         int width = (screenSize.width - boardSize) / 2;
         int height = (screenSize.height - boardSize) / 2;
@@ -100,10 +80,10 @@ public class Application {
         layeredPane.add(turnLabel, JLayeredPane.MODAL_LAYER);
 
         List<GodCard> godCardList = instantiateGodCards();
-        List<Player> playerList = instantiatePlayers(2, 2, godCardList);
+        Map<Integer, Player> playerList = instantiatePlayers(2, 2, godCardList);
 
-        GameController controller = new GameController(gameBoard, playerList, turnLabel);
-        windowFrame.addComponentListener(new ResizeListener(windowFrame, gameBoard, boardSize, boardSize));
+        GameController gameController = GameController.getInstance(gameBoard, playerList, turnLabel);
+        windowFrame.addComponentListener(ResizeListener.getInstance(windowFrame, gameBoard, boardSize, boardSize));
         windowFrame.setVisible(true);
     }
 
