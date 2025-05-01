@@ -6,14 +6,49 @@ import java.awt.event.ComponentEvent;
 
 // Design pattern: Singleton.
 // Singleton is used as the design pattern for the ResizeListener class because only one instance is needed for the window to be resized.
+
+/**
+ * A singleton listener that resizes the game board component
+ * within the manin window frame when the frame is resizes.
+ * Design Patter: Singleton. Only one instance of this listener is needed for the application window.
+ */
 public class ResizeListener extends ComponentAdapter {
 
+    /**
+     * The single instance of the ResizeListener.
+     */
     private static ResizeListener instance;
+
+    /**
+     * The main window frame of the application.
+     */
     private JFrame windowFrame;
+
+    /**
+     * The game board component that needs to be repositioned on resize.
+     */
     private JComponent gameBoard;
+
+    /**
+     * The original width of the game board.
+     */
     private int boardWidth;
+
+    /**
+     * The original height of the game board.
+     */
     private int boardHeight;
 
+
+    /**
+     * Private constructor to initialize the ResizeListener
+     * with required component and dimension.
+     *
+     * @param windowFrame the main application window
+     * @param gameBoard the component to be resized and repositioned
+     * @param width the original width of the game board
+     * @param height the original height of the game board
+     */
     private ResizeListener(JFrame windowFrame, JComponent gameBoard, int width, int height){
         setWindowFrame(windowFrame);
         setWindowComponent(gameBoard);
@@ -21,6 +56,16 @@ public class ResizeListener extends ComponentAdapter {
         setHeight(height);
     }
 
+    /**
+     * Returns the singleton instance of ResizeListener, creating it if necessary.
+
+     * @param windowFrame the main application window
+     * @param gameBoard the component to be resized and repositioned
+     * @param width the original width of the game board
+     * @param height the original height of the game board
+     *
+     * @return the singleton instance of ResizeListener
+     */
     public static ResizeListener getInstance(JFrame windowFrame, JComponent gameBoard, int width, int height) {
         if (instance == null) {
             instance = new ResizeListener(windowFrame, gameBoard, width, height);
@@ -28,6 +73,13 @@ public class ResizeListener extends ComponentAdapter {
         return instance;
     }
 
+
+    /**
+     * Automatically called when the window is resized.
+     * Recalculates the position of the game board to remain centered.
+     *
+     * @param e the resize event
+     */
     @Override
     public void componentResized(ComponentEvent e) {
         super.componentResized(e);
@@ -36,19 +88,34 @@ public class ResizeListener extends ComponentAdapter {
         gameBoard.setBounds(newWidth, newHeight, boardWidth, boardHeight);
     }
 
-    private void setHeight(int newHeight) {
+    /**
+     * Sets the new height of the game board.
+     *
+     * @param newHeight the new height in pixels
+     */
+    public void setHeight(int newHeight) {
         boardHeight = newHeight;
     }
 
-    private void setWidth(int newWidth) {
+    /**
+     * Sets the new width of the game board.
+     *
+     * @param newWidth the new width in pixels
+     */
+    public void setWidth(int newWidth) {
         boardWidth = newWidth;
     }
 
-    private void setWindowComponent(JComponent newWindowComponent) {
+    /**
+     * Sets the game board component to be resized and repositioned.
+     *
+     * @param newWindowComponent the new game board component
+     */
+    public void setWindowComponent(JComponent newWindowComponent) {
         gameBoard = newWindowComponent;
     }
 
-    private void setWindowFrame(JFrame newWindowFrame) {
+    public void setWindowFrame(JFrame newWindowFrame) {
         windowFrame = newWindowFrame;
     }
 }
