@@ -6,12 +6,40 @@ import sprint2implementation.characters.Worker;
 
 import javax.swing.*;
 
+/**
+ * An action that moves a worker form one tile to another.
+ * The move must follow game rules, such ad no dome, height limit and no worker blocking.
+ * @author Yee Peen
+ * Modified by: Tiffany
+ */
 public class MoveAction extends Action {
+    /**
+     * The tile from which the worker is moving.
+     */
     private Tile fromTile;
+
+    /**
+     * The tile to which the worker is moving.
+     */
     private Tile toTile;
+
+    /**
+     * The worker being the moved.
+     */
     private Worker worker;
+
+    /**
+     * Indicates whether the move passed validation and is allowed to execute.
+     */
     private boolean moveSuccessful;
 
+    /**
+     * Constructor for MoveAction.
+     *
+     * @param fromTile the tile the worker is moving form
+     * @param toTile the tile the worker is moving to
+     * @param worker the worker being moved
+     */
     public MoveAction(Tile fromTile, Tile toTile, Worker worker) {
         super(fromTile.getTileRow(), fromTile.getTileColumn());
         this.fromTile = fromTile;
@@ -20,6 +48,15 @@ public class MoveAction extends Action {
         this.moveSuccessful = validateMove();
     }
 
+    /**
+     * Validates the move follows game rules
+     * The worker cannot move to the same tile.
+     * The destination must be unoccupied.
+     * The worker cannot move onto a dome.
+     * The worker cannot climb more than 1 level.
+     *
+     * @return true if the move is allowed
+     */
     private boolean validateMove() {
 
         // cannot move on the same tile
@@ -45,6 +82,11 @@ public class MoveAction extends Action {
         return true;
     }
 
+    /**
+     * Executes the move if it is valid.
+     * Updated worker position and tile icons and checks for a win condition.
+     * Shows a message dialog with the result.
+     */
     @Override
     public void execute() {
         if (moveSuccessful) {
@@ -82,15 +124,32 @@ public class MoveAction extends Action {
         }
     }
 
+    /**
+     * Return whether the move passed validation.
+     *
+     * @return true if valid
+     */
     public boolean isMoveSuccessful() {
         return moveSuccessful;
     }
 
+    /**
+     * Returns the tower level or 0 if the tower is null.
+     *
+     * @param tower the tower to check
+     * @return the number of levels
+     */
     private int getTowerLevel(Tower tower) {
         return (tower != null) ? tower.getLevelCount() : 0;
     }
 
-    public void checkWinningCondition(Worker worker, Tile toTile) {
+    /**
+     * Ends the game if the worker moves onto a complete level-3 tower without a dome.
+     *
+     * @param worker the worker that moved
+     * @param toTile the tile the worker moved to
+     */
+    private void checkWinningCondition(Worker worker, Tile toTile) {
         // Check if the worker is on a tower and the tower has reached level 3
         Tower toTower = toTile.getTower();
         if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {
