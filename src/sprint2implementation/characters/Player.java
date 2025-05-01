@@ -92,6 +92,15 @@ public class Player {
     }
 
     /**
+     * Returns the name of player
+     *
+     * @return the name of player
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Returns the God card assigned to the player.
      *
      * @return the player's GodCard
