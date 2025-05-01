@@ -17,6 +17,7 @@ public class Player {
     private List<Worker> workerList;
     private int workerNum;
     private Boolean isActionSuccessful = false;
+    private Worker currentWorker = null;
 
     public Player(String name, URL imagePath, int workerNum)
     {
@@ -73,6 +74,13 @@ public class Player {
         return name;
     }
 
+    public Worker getCurrentWorker() {
+        return currentWorker;
+    }
+
+    public void setCurrentWorker(Worker worker) {
+        this.currentWorker = worker;
+    }
 
     public boolean isActionSuccessful() {
         return isActionSuccessful;
@@ -80,5 +88,8 @@ public class Player {
 
     public void setActionSuccessful(Boolean actionSuccessful) {
         isActionSuccessful = actionSuccessful;
+    }
+    public void clearCurrentWorker() {
+        this.currentWorker = null;
     }
 }
