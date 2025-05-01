@@ -5,11 +5,35 @@ import sprint2implementation.towers.Tower;
 
 import javax.swing.*;
 
+/**
+ * An action that builds on a given tile.
+ * Adds a new tower level or places a dome if the tower is complete.
+ *  * @author Tiffany
+ *  * Modified by: Yee Peen
+ */
 public class BuildAction extends Action {
+
+    /**
+     * The tile on which the build action is attempted.
+     */
     private Tile targetTile;
+
+    /**
+     * The tower being build or updated on the target tile.
+     */
     private Tower tower;
+
+    /**
+     * Indicates whether the build action is valid and can be executed.
+     */
     private boolean buildSuccessful;
 
+    /**
+     * Constructor for BuildAction.
+     *
+     * @param targetTile the tile on which to perform the build
+     * @param tower the tower to be built or updated
+     */
     public BuildAction(Tile targetTile, Tower tower) {
         super(targetTile.getTileRow(), targetTile.getTileColumn());
         this.targetTile = targetTile;
@@ -17,6 +41,13 @@ public class BuildAction extends Action {
         this.buildSuccessful = validateBuild();
     }
 
+    /**
+     * Validated whether a build can occur on the target tile.
+     * A build is not allowed if there is a worker on the tile or if the tower already has a dome.
+     * A new tower created if none exists.
+     *
+     * @return true if the build is allowed
+     */
     private boolean validateBuild() {
 
         if (tower == null) {
@@ -30,6 +61,13 @@ public class BuildAction extends Action {
         return tower.getLevelCount() <= Tower.getMaxLevels();
     }
 
+
+    /**
+     * Performs the build if allowed
+     * Adds a level if not at max level, or adds a dome is it is on max level.
+     * Updates the tile with the new tower state.
+     * Shows an error message if the build is not valid.
+     */
     @Override
     public void execute() {
         if (buildSuccessful) {
@@ -55,6 +93,12 @@ public class BuildAction extends Action {
         }
     }
 
+
+    /**
+     * Returns whether the build passed validation.
+     *
+     * @return true if valid
+     */
     public boolean isBuildSuccessful() {
         return buildSuccessful;
     }
