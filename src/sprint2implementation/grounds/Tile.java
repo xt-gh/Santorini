@@ -9,11 +9,11 @@ import java.net.URL;
 
 public class Tile extends JButton {
     private Tower tower;
+    private Worker worker;
     private ImageIcon oriImageIcon;
     private ImageIcon currentIcon;
     private int tileRow;
     private int tileColumn;
-    private Worker worker;
 
     public Tile(URL imagePath, int tileRow, int tileColumn) {
         this.tower = new Tower();
@@ -34,10 +34,6 @@ public class Tile extends JButton {
         resizeAndSetIcon();
     }
 
-    public ImageIcon getCurrentIcon() {
-        return currentIcon;
-    }
-
     public int getTileRow() {
         return tileRow;
     }
@@ -53,11 +49,6 @@ public class Tile extends JButton {
     public void setWorker(Worker worker) {
         this.worker = worker;
     }
-
-    public boolean hasWorker(){
-        return worker != null;
-    }
-
 
     public Tower getTower() {
         return tower;

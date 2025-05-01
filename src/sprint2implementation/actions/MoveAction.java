@@ -90,7 +90,7 @@ public class MoveAction extends Action {
         return (tower != null) ? tower.getLevelCount() : 0;
     }
 
-    private void checkWinningCondition(Worker worker, Tile toTile) {
+    public void checkWinningCondition(Worker worker, Tile toTile) {
         // Check if the worker is on a tower and the tower has reached level 3
         Tower toTower = toTile.getTower();
         if (toTower != null && toTower.getLevelCount() == Tower.getMaxLevels() && !toTower.hasDome()) {

@@ -23,7 +23,7 @@ public class Tower {
         if (towerLevels.size() < MAX_LEVELS) {
             int nextLevel = towerLevels.size() + 1;
             URL iconPath = Tower.class.getResource("/pics/Lvl_" + nextLevel + ".png");
-            towerLevels.add(new TowerLevel(nextLevel, iconPath));
+            towerLevels.add(new TowerLevel(iconPath));
         }
     }
 

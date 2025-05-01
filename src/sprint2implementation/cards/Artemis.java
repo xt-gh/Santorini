@@ -9,15 +9,15 @@ import sprint2implementation.towers.Tower;
 import javax.swing.*;
 
 public class Artemis extends GodCard {
-    private boolean waitingForSecondMove = false;
     private Tile firstMoveFromTile = null;
+    private boolean waitingForSecondMove = false;
+    private boolean isBuildingPhase = false;
+    private boolean isMoving = false;
     private final int MAX_MOVE = 2;
     private int movedNum = 0;
-    private boolean isBuildingPhase = false;
-    private Boolean isMoving = false;
 
     public Artemis(){
-        super("Artemis", "can move twice in a turn");
+        super("Artemis", "Artemis can move twice in a turn.");
     }
 
     public boolean executeSpecialAbility(Player currentPlayer, Tile selectedTile, Tile clickedTile, Tower tower) {
@@ -43,7 +43,7 @@ public class Artemis extends GodCard {
                     // After first move, ask if user wants to move again
                     int response = JOptionPane.showConfirmDialog(
                             null,
-                            currentPlayer.getName() + ", Do you want to move again using Artemis's ability?",
+                            getDescription() + "\n" + currentPlayer.getName() + ", Do you want to move again using Artemis's ability?",
                             "Second Move?",
                             JOptionPane.YES_NO_OPTION
                     );

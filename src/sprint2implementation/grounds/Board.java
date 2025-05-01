@@ -64,7 +64,7 @@ public class Board extends JPanel {
         return tiles.get(getTileIndex(row, column));
     }
 
-    public void setBoardSize(int boardSize) {
+    private void setBoardSize(int boardSize) {
         this.boardSize = boardSize;
     }
 
@@ -78,11 +78,11 @@ public class Board extends JPanel {
     }
 
 
-    public void setBoardRows(int boardRows) {
+    private void setBoardRows(int boardRows) {
         this.boardRows = boardRows;
     }
 
-    public void setBoardColumns(int boardColumns) {
+    private void setBoardColumns(int boardColumns) {
         this.boardColumns = boardColumns;
     }
 

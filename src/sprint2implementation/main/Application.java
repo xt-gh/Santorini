@@ -29,7 +29,7 @@ import java.util.List;
 
 
 public class Application {
-    public static List<GodCard> instantiateGodCards() {
+    private static List<GodCard> instantiateGodCards() {
         // instantiates the type of god cards
         GodCard demeter = new Demeter();
         GodCard artemis = new Artemis();
@@ -45,7 +45,7 @@ public class Application {
         return godCards;
     }
 
-    public static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
+    private static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
     {
         Map<Integer, Player> playerList = new HashMap<>();
 

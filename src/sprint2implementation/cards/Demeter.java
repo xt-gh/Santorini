@@ -9,15 +9,16 @@ import sprint2implementation.towers.Tower;
 import javax.swing.*;
 
 public class Demeter extends GodCard {
-    private boolean waitingForSecondBuild;
     private Tile firstBuildTile = null;
+    private boolean waitingForSecondBuild;
     private boolean isBuildingPhase = false;
+    private boolean isMoving = false;
     private final int MAX_BUILD = 2;
     private int builtNum = 0;
-    private Boolean isMoving = false;
+
 
     public Demeter() {
-        super("Demeter", "can build twice in a turn");
+        super("Demeter", "Demeter can build twice in a turn.");
     }
 
     public boolean executeSpecialAbility(Player currentPlayer, Tile selectedTile, Tile clickedTile, Tower tower)
@@ -56,7 +57,7 @@ public class Demeter extends GodCard {
 
                     int response = JOptionPane.showConfirmDialog(
                             null,
-                            currentPlayer.getName() + ", do you want to perform a second build using Demeter's power?",
+                            getDescription() + "\n" + currentPlayer.getName() + ", do you want to perform a second build using Demeter's power?",
                             "Second Build?",
                             JOptionPane.YES_NO_OPTION
                     );
