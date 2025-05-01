@@ -17,7 +17,7 @@ public class BuildAction extends Action {
         this.buildSuccessful = validateBuild();
     }
 
-    public boolean validateBuild() {
+    private boolean validateBuild() {
 
         if (tower == null) {
             tower = new Tower();
