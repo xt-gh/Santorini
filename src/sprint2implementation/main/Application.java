@@ -27,8 +27,18 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-
+/**
+ * Main class to run the Santorini game application.
+ *
+ * @author Yee Peen
+ * Modified by: Tiffany, Emil
+ */
 public class Application {
+    /**
+     * Instantiates and shuffles the God cards available in the game.
+     *
+     * @return a shuffled list of GodCard objects
+     */
     private static List<GodCard> instantiateGodCards() {
         // instantiates the type of god cards
         GodCard demeter = new Demeter();
@@ -45,6 +55,15 @@ public class Application {
         return godCards;
     }
 
+    /**
+     * Creates players and assigns each one a unique GodCard
+     * and associated images.
+     *
+     * @param playerNum the number of players.
+     * @param workerNum the number of workers per player.
+     * @param godCardList the list of GodCards to assign
+     * @return a map of players indexed by their ID.
+     */
     private static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
     {
         Map<Integer, Player> playerList = new HashMap<>();
@@ -63,6 +82,12 @@ public class Application {
         return playerList;
     }
 
+    /**
+     * Entry point of the application.
+     * Sets up the window, board, UI layers, and initializes the game controller.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         // instantiate the window object
         Window windowObj = Window.getInstance();
