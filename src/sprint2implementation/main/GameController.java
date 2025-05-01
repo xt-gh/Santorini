@@ -12,17 +12,69 @@ import java.util.*;
 
 // Design pattern: Singleton.
 // Singleton is used as the design pattern for the GameController class because only one game controller instance is needed.
+
+/**
+ * GameController is a singleton class that controls the flow of the game.
+ * It manages player turns, board interactions, worker movements and turn resents.
+ *
+ * @author Yee Peen
+ * Modified by: Xin Thung, Tiffany
+ */
 public class GameController {
+
+    /**
+     * Singleton instance of GameController.
+     */
     private static GameController instance;
+
+    /**
+     * The game board.
+     */
     private Board gameBoard;
-    private Tile selectedTile;
-    private Tile lastMovedTile; // the tile where the worker just moved to during the Movement phase
+
+    /**
+     * List of players mapped by their player number.
+     */
     private Map<Integer, Player> playerList; // Use of a map here is to store the players with their respective player number
+
+    /**
+     * The player whose turn is currently active.
+     */
     private Player currentPlayer;
+
+    /**
+     * The tile currently selected by the player
+     */
+    private Tile selectedTile;
+
+    /**
+     * The tile where the current worker just moved to.
+     */
+    private Tile lastMovedTile; // the tile where the worker just moved to during the Movement phase
+
+    /**
+     * Index to track the current player.
+     */
     private int currentPlayerIndex;
-    private boolean isMoving = false;
+
+    /**
+     * Flag to indicate if a worker is currently moving.
+     */
+    private Boolean isMoving = false;
+
+    /**
+     * Label used in the UI to display the current player's turn
+     */
     private JLabel currentPlayerLabel; //indicator for the current player's turn
 
+
+    /**
+     * Private constructor for singleton instance.
+     *
+     * @param gameBoard The game board.
+     * @param playerList The players in the game.
+     * @param currentPlayerLabel JLabel used to show whose turn it is.
+     */
     private GameController(Board gameBoard, Map<Integer, Player> playerList, JLabel currentPlayerLabel) {
         this.gameBoard = gameBoard;
         this.playerList = playerList; // store players as a map so that the player can be accessed with a specific player number
@@ -34,7 +86,12 @@ public class GameController {
         setupTileListeners();
     }
 
-    public void checkLosingCondition() {
+
+    /**
+     * Checks whether both workers of the current player are stuck,
+     * if yes, then end the game.
+     */
+    private void checkLosingCondition() {
         // Check if both workers of the current player are stuck
         boolean bothWorkersStuck = true;
         for (Worker worker : currentPlayer.getWorkerList()) {
@@ -46,6 +103,15 @@ public class GameController {
         }
     }
 
+    /**
+     * Gets the singleton instance of GameController.
+     *
+     * @param gameBoard the game board
+     * @param playerList the player
+     * @param currentPlayerLabel the label for the current player
+     *
+     * @return the GameController instance
+     */
     // use a static method to call the GameController object
     public static GameController getInstance(Board gameBoard, Map<Integer, Player> playerList, JLabel currentPlayerLabel) {
         if (instance == null) {
@@ -55,6 +121,11 @@ public class GameController {
     }
 
     // this method will be invoked everytime a tile is clicked
+    /**
+     * Handles the logic when a tile is clicked during a player's turn.
+     *
+     * @param clickedTile The tile that was clicked.
+     */
     private void handleTileClick(Tile clickedTile) {
         if (selectedTile == null) {
             // First click - select a piece
@@ -114,6 +185,10 @@ public class GameController {
         }
     }
 
+
+    /**
+     * Randomly places all workers on the board at the start of the game.
+     */
     private void randomiseWorkers()
     {
         // copy all workers in an arraylist
@@ -147,6 +222,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Sets up listeners on all tiles of the board for player interaction.
+     */
     private void setupTileListeners() {
         for (int row = 0; row < gameBoard.getBoardRows(); row++) {
             for (int col = 0; col < gameBoard.getBoardColumns(); col++) {
@@ -156,6 +234,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Updates the label that shows the current player's name and god card.
+     */
     private void updateCurrentPlayerLabel() {
         if (currentPlayerLabel != null){
             currentPlayerLabel.setText("Player's Turn: " + currentPlayer.getName() +" (God Card: " + currentPlayer.getGodCard().getName() + ")");
@@ -163,6 +244,12 @@ public class GameController {
         }
     }
 
+    /**
+     * Checks if a worker is stuck (cannot move to any adjacent tile).
+     *
+     * @param currentTile The tile of the worker.
+     * @return True if the worker is stuck, false otherwise.
+     */
     private boolean isWorkerStuck(Tile currentTile) {
         int currentRow = currentTile.getTileRow();
         int currentColumn = currentTile.getTileColumn();
@@ -189,6 +276,9 @@ public class GameController {
     }
 
 
+    /**
+     * Resets the turn and moves to the next player.
+     */
     private void resetTurn()
     {
         if (currentPlayerIndex < playerList.size()) {
@@ -214,6 +304,14 @@ public class GameController {
         }
     }
 
+
+    /**
+     * Determines whether two tiles are adjacent.
+     *
+     * @param tile1 the first tile.
+     * @param tile2 the second tile.
+     * @return true if adjacent, otherwise false
+     */
     public boolean isAdjacent(Tile tile1, Tile tile2) {
         int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
         int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
