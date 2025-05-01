@@ -51,7 +51,6 @@ public class BuildAction extends Action {
         }
         else
         {
-            System.out.println("Build failed");
             JOptionPane.showMessageDialog(null, "Build failed!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
