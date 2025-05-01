@@ -87,7 +87,7 @@ public class Board extends JPanel {
     }
 
     // Set up all the tiles and add them to the board
-    public void setTileImageIcon() {
+    private void setTileImageIcon() {
         for (int currentRow = 0; currentRow < boardRows; currentRow++) {
             for (int currentColumn = 0; currentColumn < boardColumns; currentColumn++) {
                 Tile tile = new Tile(Board.class.getResource("/pics/Empty_tile.png"), currentRow, currentColumn);
