@@ -5,17 +5,11 @@ import java.net.URL;
 
 public class TowerLevel
 {
-    private int level;
     private ImageIcon levelIcon;
 
-    public TowerLevel(int level, URL iconPath)
+    public TowerLevel(URL iconPath)
     {
-        this.level = level;
         this.levelIcon = new ImageIcon(iconPath);
-    }
-
-    public int getLevel() {
-        return level;
     }
 
     public ImageIcon getLevelIcon() {

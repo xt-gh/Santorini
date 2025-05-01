@@ -15,12 +15,12 @@ import java.util.*;
 public class GameController {
     private static GameController instance;
     private Board gameBoard;
-    private Map<Integer, Player> playerList; // Use of a map here is to store the players with their respective player number
-    private Player currentPlayer;
     private Tile selectedTile;
     private Tile lastMovedTile; // the tile where the worker just moved to during the Movement phase
+    private Map<Integer, Player> playerList; // Use of a map here is to store the players with their respective player number
+    private Player currentPlayer;
     private int currentPlayerIndex;
-    private Boolean isMoving = false;
+    private boolean isMoving = false;
     private JLabel currentPlayerLabel; //indicator for the current player's turn
 
     private GameController(Board gameBoard, Map<Integer, Player> playerList, JLabel currentPlayerLabel) {
@@ -34,7 +34,7 @@ public class GameController {
         setupTileListeners();
     }
 
-    private void checkLosingCondition() {
+    public void checkLosingCondition() {
         // Check if both workers of the current player are stuck
         boolean bothWorkersStuck = true;
         for (Worker worker : currentPlayer.getWorkerList()) {

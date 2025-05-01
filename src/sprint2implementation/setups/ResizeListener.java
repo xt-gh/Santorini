@@ -36,19 +36,19 @@ public class ResizeListener extends ComponentAdapter {
         gameBoard.setBounds(newWidth, newHeight, boardWidth, boardHeight);
     }
 
-    public void setHeight(int newHeight) {
+    private void setHeight(int newHeight) {
         boardHeight = newHeight;
     }
 
-    public void setWidth(int newWidth) {
+    private void setWidth(int newWidth) {
         boardWidth = newWidth;
     }
 
-    public void setWindowComponent(JComponent newWindowComponent) {
+    private void setWindowComponent(JComponent newWindowComponent) {
         gameBoard = newWindowComponent;
     }
 
-    public void setWindowFrame(JFrame newWindowFrame) {
+    private void setWindowFrame(JFrame newWindowFrame) {
         windowFrame = newWindowFrame;
     }
 }

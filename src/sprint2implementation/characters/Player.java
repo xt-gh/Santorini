@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 public class Player {
+    private Map<Integer, ImageIcon> playerPositionTower = new HashMap<>();
+    private List<Worker> workerList;
+    private Worker currentWorker = null;
+    private GodCard godCard;
     private ImageIcon playerIcon;
     private String name;
-    private Map<Integer, ImageIcon> playerPositionTower = new HashMap<>();
-    private GodCard godCard;
-    private List<Worker> workerList;
     private int workerNum;
-    private Boolean isActionSuccessful = false;
-    private Worker currentWorker = null;
+    private boolean isActionSuccessful = false;
+
 
     public Player(String name, URL imagePath, int workerNum)
     {
@@ -31,6 +32,21 @@ public class Player {
 
     }
 
+    private void initialiseWorkers() {
+        for (int i = 0; i < workerNum; i++) {
+            Worker worker = new Worker(this);
+            addWorker(worker);
+        }
+    }
+
+    public void addWorker(Worker worker) {
+        workerList.add(worker);
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public GodCard getGodCard(){
         return godCard;
     }
@@ -39,19 +55,8 @@ public class Player {
         this.godCard = godCard;
     }
 
-    public void initialiseWorkers() {
-        for (int i = 0; i < workerNum; i++) {
-            Worker worker = new Worker(this);
-            addWorker(worker);
-        }
-    }
-
     public List<Worker> getWorkerList() {
         return workerList;
-    }
-
-    public void addWorker(Worker worker) {
-        workerList.add(worker);
     }
 
     public Map<Integer, ImageIcon> getPlayerPositionTower() {
@@ -62,16 +67,12 @@ public class Player {
         playerPositionTower.put(num, new ImageIcon(imagePath));
     }
 
-    public void setPlayerImageIcon(URL imagePath) {
-        playerIcon = new ImageIcon(imagePath);
-    }
-
     public ImageIcon getPlayerIcon() {
         return playerIcon;
     }
 
-    public String getName() {
-        return name;
+    private void setPlayerImageIcon(URL imagePath) {
+        playerIcon = new ImageIcon(imagePath);
     }
 
     public Worker getCurrentWorker() {
@@ -82,6 +83,10 @@ public class Player {
         this.currentWorker = worker;
     }
 
+    public void clearCurrentWorker() {
+        this.currentWorker = null;
+    }
+
     public boolean isActionSuccessful() {
         return isActionSuccessful;
     }
@@ -89,7 +94,6 @@ public class Player {
     public void setActionSuccessful(Boolean actionSuccessful) {
         isActionSuccessful = actionSuccessful;
     }
-    public void clearCurrentWorker() {
-        this.currentWorker = null;
-    }
+
+
 }

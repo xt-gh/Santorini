@@ -6,5 +6,5 @@ import sprint2implementation.towers.Tower;
 
 
 public interface SpecialAbility {
-    boolean executeSpecialAbility(Player currentPlayer, Tile selectedTile, Tile clieckedTile, Tower tower);
+    boolean executeSpecialAbility(Player currentPlayer, Tile selectedTile, Tile clickedTile, Tower tower);
 }
