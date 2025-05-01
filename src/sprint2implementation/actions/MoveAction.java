@@ -65,7 +65,6 @@ public class MoveAction extends Action {
 
             toTile.setWorker(worker);
             worker.setPosition(toTile.getTileRow(), toTile.getTileColumn());
-            System.out.println("Current worker position: " + worker.getPosition());
 
             if (toTower == null || !toTower.hasDome()) {
                 int toLevel = getTowerLevel(toTower);
@@ -74,13 +73,11 @@ public class MoveAction extends Action {
 
                 toTile.updateIcon(workerOnTower);
                 checkWinningCondition(worker,toTile);
-                System.out.println("Move successful");
                 JOptionPane.showMessageDialog(null, "Move successfully", "Moving Stage", JOptionPane.PLAIN_MESSAGE);
             }
         }
         else
         {
-            System.out.println("Move failed");
             JOptionPane.showMessageDialog(null, "Move failed!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
