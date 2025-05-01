@@ -21,41 +21,62 @@ public class Artemis extends GodCard {
     }
 
     public boolean executeSpecialAbility(Player currentPlayer, Tile selectedTile, Tile clickedTile, Tower tower) {
-
         if (!isBuildingPhase) {
-            if (clickedTile == firstMoveFromTile) { // the worker cannot move back to its previous position
+            if (clickedTile == firstMoveFromTile) { // Can't move back to original position
                 JOptionPane.showMessageDialog(null, "You cannot move back to your original position!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+
             MoveAction moveAction = new MoveAction(selectedTile, clickedTile, selectedTile.getWorker());
             moveAction.execute();
 
             if (moveAction.isMoveSuccessful()) {
                 movedNum++;
+                isMoving = true;
 
-                if (waitingForSecondMove) { // the second movement
+                if (waitingForSecondMove) {
+                    // This is the second move
                     waitingForSecondMove = false;
                     isBuildingPhase = true;
                     JOptionPane.showMessageDialog(null, "Now is your building phase!", "Building Stage", JOptionPane.PLAIN_MESSAGE);
-                } else if (movedNum < MAX_MOVE){ // the first movement
-                    waitingForSecondMove = true;
-                    firstMoveFromTile = selectedTile;
-                    JOptionPane.showMessageDialog(null, currentPlayer.getName() + " " + currentPlayer.getGodCard().getDescription());
+                } else if (movedNum < MAX_MOVE) {
+                    // After first move, ask if user wants to move again
+                    int response = JOptionPane.showConfirmDialog(
+                            null,
+                            currentPlayer.getName() + ", Do you want to move again using Artemis's ability?",
+                            "Second Move?",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (response == JOptionPane.YES_OPTION) {
+                        waitingForSecondMove = true;
+                        firstMoveFromTile = selectedTile;
+                        JOptionPane.showMessageDialog(null, "You can perform your second move.", "Moving Stage", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        // Skip second move, go straight to building phase
+                        waitingForSecondMove = false;
+                        isBuildingPhase = true;
+                        JOptionPane.showMessageDialog(null, "Now is your building phase!", "Building Stage", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
-                isMoving = true;
             }
-        }
-        else
-        {
+        } else {
+            // Building phase
             BuildAction buildAction = new BuildAction(clickedTile, tower);
             buildAction.execute();
             isMoving = false;
+
             if (buildAction.isBuildSuccessful()) {
+                // Reset Artemis state
+                waitingForSecondMove = false;
                 isBuildingPhase = false;
                 movedNum = 0;
-                currentPlayer.setActionSuccessful(true); // the player completed both move and build actions
+                firstMoveFromTile = null;
+                currentPlayer.setActionSuccessful(true);
             }
         }
+
         return isMoving;
     }
 }
+
