@@ -36,12 +36,14 @@ public class Demeter extends GodCard {
         else
         {
             // Prevent building twice on the same tile
-            if (waitingForSecondBuild && clickedTile == firstBuildTile) { // to check if the worker built at the tile before
+            if (waitingForSecondBuild && clickedTile == firstBuildTile) {
                 JOptionPane.showMessageDialog(null, "You cannot build on the same tile twice!", "Invalid Build", JOptionPane.WARNING_MESSAGE);
                 return false;
             }
+
             BuildAction buildAction = new BuildAction(clickedTile, tower);
             buildAction.execute();
+
             if (buildAction.isBuildSuccessful()) {
                 if (waitingForSecondBuild) { // second building
                     waitingForSecondBuild = false;
@@ -50,13 +52,30 @@ public class Demeter extends GodCard {
                     currentPlayer.setActionSuccessful(true); // the player completed both move and build actions
 
                 } else if (builtNum < MAX_BUILD) { // first building
-                    waitingForSecondBuild = true;
-                    isMoving = false;
                     firstBuildTile = clickedTile;
-                    JOptionPane.showMessageDialog(null, currentPlayer.getName() + " " + currentPlayer.getGodCard().getDescription());
+
+                    int response = JOptionPane.showConfirmDialog(
+                            null,
+                            currentPlayer.getName() + ", do you want to perform a second build using Demeter's power?",
+                            "Second Build?",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (response == JOptionPane.YES_OPTION) {
+                        waitingForSecondBuild = true;
+                        isMoving = false;
+                        JOptionPane.showMessageDialog(null, "Perform your second build.", "Building Stage", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        waitingForSecondBuild = false;
+                        isBuildingPhase = false;
+                        isMoving = false;
+                        currentPlayer.setActionSuccessful(true); // Player ends turn after 1 build
+                    }
                 }
             }
         }
+
         return isMoving;
     }
+
 }
