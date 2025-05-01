@@ -8,19 +8,64 @@ import sprint2implementation.towers.Tower;
 
 import javax.swing.*;
 
+/**
+ * Represents the Demeter God card which allows a player to build twice in one turn,
+ * but not on the same tile.
+ *
+ * @author Tiffany
+ * Modified by: Yee Peen, Emil
+ */
 public class Demeter extends GodCard {
+
+    /**
+     * The tile where the first build occurred.
+     */
     private Tile firstBuildTile = null;
+
+    /**
+     * Indicates whether the player is waiting to perform the second build.
+     */
     private boolean waitingForSecondBuild;
+
+    /**
+     * Indicates whether the building phase is active.
+     */
     private boolean isBuildingPhase = false;
+
+    /**
+     * Indicates whether the player is in the moving phase.
+     */
     private boolean isMoving = false;
+
+    /**
+     * The maximum number of builds allowed (2 for Demeter).
+     */
     private final int MAX_BUILD = 2;
+
+    /**
+     * The number of builds performed so far.
+     */
     private int builtNum = 0;
 
 
+    /**
+     * Constructs a Demeter GodCard with name and description.
+     */
     public Demeter() {
         super("Demeter", "Demeter can build twice in a turn.");
     }
 
+    /**
+     * Executes Demeter's special ability which includes moving and up to two builds,
+     * with the restriction that both builds cannot occur on the same tile.
+     *
+     * @param currentPlayer the current player taking the action
+     * @param selectedTile the tile where the current worker starts (before movement)
+     * @param clickedTile the tile the player clicks to either move to or build on
+     * @param tower the tower being built upon
+     *
+     * @return true if still in progress (i.e., moving/building), otherwise false
+     */
     public boolean executeSpecialAbility(Player currentPlayer, Tile selectedTile, Tile clickedTile, Tower tower)
     {
         if (!isBuildingPhase) {
