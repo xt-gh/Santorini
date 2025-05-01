@@ -19,15 +19,6 @@ public class GameController {
     private Player currentPlayer;
     private Tile selectedTile;
     private Tile lastMovedTile; // the tile where the worker just moved to during the Movement phase
-    // SMALL NOTE for lastMovedTile:
-    // - 1. players select the worker, 2. move it to an adjacent tile, 3. and the worker builds on an adjacent tile
-    // to its current location
-    // purpose of lastMovedTile: to perform step 3 correctly, the game needs to know where the worker currently
-    // is after step 2
-    // e.g: select worker on tile (2,2), moved it to (3,3), worker wants to build on (3,4) but the game
-    // has to check whether (3,4) is adjacent to the tile where the worker moved to
-    // So, use isAdjacent(lastMovedToTile, clickedTile), where lastMovedToTile = (3,3) and
-    // clickedTile = (3,4) - tile clicked during build phase
     private int currentPlayerIndex;
     private Boolean isMoving = false;
     private JLabel currentPlayerLabel; //indicator for the current player's turn
@@ -79,17 +70,22 @@ public class GameController {
                     return;  // Exit method, forcing the player to select another worker
                 }
                 selectedTile = clickedTile;
-                lastMovedTile = selectedTile;
-                System.out.println("Selected " + selectedTile);
+                lastMovedTile = clickedTile;
+                currentPlayer.setCurrentWorker(selectedWorker);
             }
 
         } else {
-            // Second click - move the piece
-            // check if the clicked tile is adjacent to the selected tile
+
+            Worker worker = currentPlayer.getCurrentWorker();
+
             if (!isAdjacent(selectedTile, clickedTile)) {
                 JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
-                selectedTile = null;
-                return;    // Exit method, forcing the player to select another worker
+                return;
+            }
+
+            if (clickedTile.getWorker() != null) {
+                JOptionPane.showMessageDialog(null, "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
             // get the tower from the clicked tile to be passed into the action
@@ -98,18 +94,20 @@ public class GameController {
                 tower = new Tower();
             }
 
-            isMoving = selectedTile.getWorker().executeAction(currentPlayer,selectedTile,clickedTile,tower);
+            isMoving = worker.executeAction(currentPlayer,selectedTile,clickedTile,tower);
 
             if (isMoving) // isMoving is to check whether the worker is successfully moved (to store the lastMovedTile)
             {
                 lastMovedTile = clickedTile;
+                selectedTile = clickedTile;
             }
-            selectedTile = null;  // clear the storage of the initial position of a worker
         }
 
         if (currentPlayer.isActionSuccessful()) // if the current player has successfully moved and build
         {
             currentPlayer.setActionSuccessful(false);
+            selectedTile = null;
+            currentPlayer.clearCurrentWorker();
             resetTurn();
             updateCurrentPlayerLabel();
             JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
@@ -172,10 +170,12 @@ public class GameController {
         // Check all 8 surrounding tiles
         for (int row = currentRow - 1; row <= currentRow + 1; row++) {
             for (int column = currentColumn - 1; column <= currentColumn + 1; column++) {
-                if (row == currentRow && column == currentColumn)
-                {continue;}
-                if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns())
-                {continue;}
+                if (row == currentRow && column == currentColumn) {
+                    continue;
+                }
+                if (row < 0 || row >= gameBoard.getBoardRows() || column < 0 || column >= gameBoard.getBoardColumns()) {
+                    continue;
+                }
 
                 Tile neighborTile = gameBoard.getTileLocation(row, column);
                 MoveAction testMove = new MoveAction(currentTile, neighborTile, currentTile.getWorker());
@@ -187,6 +187,7 @@ public class GameController {
         }
         return true;
     }
+
 
     private void resetTurn()
     {
