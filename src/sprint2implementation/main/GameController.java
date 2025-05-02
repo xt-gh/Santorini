@@ -10,8 +10,6 @@ import sprint2implementation.towers.Tower;
 import javax.swing.*;
 import java.util.*;
 
-// Design pattern: Singleton.
-// Singleton is used as the design pattern for the GameController class because only one game controller instance is needed.
 
 /**
  * GameController is a singleton class that controls the flow of the game.

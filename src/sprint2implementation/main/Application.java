@@ -1,17 +1,19 @@
-// Please make sure you read these instructions before you run the program in Intellij.
-// This is because without following these instructions, you won't be able to run the program in the Application class and
-// there will be an error.
-//
-//  Instructions to run the Program in Intellij:
-//  1. Go to the resources folder and right click on it.
-//  2. Navigate to the "Mark Directory As" at the last row and click on Resources Root.
-//  3. Go back to the Application class and run the program. The program should run as expected.
-//
-//    The purpose of creating a resources folder is to allow the pictures to load into the game
-//    when the artifact is built, converted to a JAR file followed by an executable file.
-//
-//    For further information, you can go and read the "Instructions to Build and Run an Executable using Windows",
-//    on page 1 and 2.
+/**
+ * Please make sure you read these instructions before you run the program in Intellij.
+ *  This is because without following these instructions, you won't be able to run the program in the Application class and
+ *  there will be an error.
+ *
+ *   Instructions to run the Program in Intellij:
+ *   1. Go to the resources folder and right click on it.
+ *   2. Navigate to the "Mark Directory As" at the last row and click on Resources Root.
+ *   3. Go back to the Application class and run the program. The program should run as expected.
+ *
+ *     The purpose of creating a resources folder is to allow the pictures to load into the game
+ *     when the artifact is built, converted to a JAR file followed by an executable file.
+ *
+ *     For further information, you can go and read the "Instructions to Build and Run an Executable using Windows",
+ *     on page 1 and 2.
+ */
 
 package sprint2implementation.main;
 import sprint2implementation.cards.Artemis;

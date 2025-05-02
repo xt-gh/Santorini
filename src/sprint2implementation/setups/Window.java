@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-// Design pattern: Singleton.
-// Singleton is used as the design pattern for the Window class because only one window instance is needed to set up the game.
 
 /**
  * Singleton class responsible for setting up and managing the main game window.

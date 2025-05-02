@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-// Design pattern: Singleton.
-// Singleton is used as the design pattern for the ResizeListener class because only one instance is needed for the window to be resized.
-
 /**
  * A singleton listener that resizes the game board component
  * within the manin window frame when the frame is resizes.

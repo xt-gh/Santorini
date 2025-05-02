@@ -7,11 +7,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Design pattern: Singleton.
-// Singleton is used as the design pattern for the Board class because only one board instance is needed for the game.
 
 /**
- * Represents the game board for the game.
+ * Represents a singleton game board for the game.
  * Only one instance of the board can exist at a time.
  * The board is a grid of link {@link Tile} objects used to place players and perform game actions.
  *
