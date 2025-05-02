@@ -58,7 +58,12 @@ public class BuildAction extends Action {
             return false;
         }
         // Allows building only if the current tower level has not exceeded the maximum level
-        return tower.getLevelCount() <= Tower.getMaxLevels();
+        if (tower.getLevelCount() <= Tower.getMaxLevels())
+        {
+            return true;
+        }
+        return false;
+
     }
 
 
