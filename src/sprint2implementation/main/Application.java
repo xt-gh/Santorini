@@ -66,7 +66,7 @@ public class Application {
      * @param godCardList the list of GodCards to assign
      * @return a map of players indexed by their ID.
      */
-    private static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
+    public static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
     {
         Map<Integer, Player> playerList = new HashMap<>();
 
