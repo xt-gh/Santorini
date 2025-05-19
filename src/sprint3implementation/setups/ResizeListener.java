@@ -1,4 +1,4 @@
-package sprint2implementation.setups;
+package sprint3implementation.setups;
 
 import javax.swing.*;
 import java.awt.event.ComponentAdapter;

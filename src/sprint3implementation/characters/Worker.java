@@ -1,9 +1,9 @@
-package sprint2implementation.characters;
+package sprint3implementation.characters;
 
-import sprint2implementation.actions.BuildAction;
-import sprint2implementation.actions.MoveAction;
-import sprint2implementation.grounds.Tile;
-import sprint2implementation.towers.Tower;
+import sprint3implementation.actions.BuildAction;
+import sprint3implementation.actions.MoveAction;
+import sprint3implementation.grounds.Tile;
+import sprint3implementation.towers.Tower;
 
 /**
  * Represents a worker in the game.

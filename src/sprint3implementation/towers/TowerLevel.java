@@ -1,4 +1,4 @@
-package sprint2implementation.towers;
+package sprint3implementation.towers;
 
 import javax.swing.*;
 import java.net.URL;

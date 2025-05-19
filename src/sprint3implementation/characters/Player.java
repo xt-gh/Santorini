@@ -1,6 +1,6 @@
-package sprint2implementation.characters;
+package sprint3implementation.characters;
 
-import sprint2implementation.cards.GodCard;
+import sprint3implementation.cards.GodCard;
 
 import javax.swing.*;
 import java.net.URL;

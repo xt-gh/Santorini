@@ -1,6 +1,6 @@
-package sprint2implementation.grounds;
+package sprint3implementation.grounds;
 
-import sprint2implementation.characters.Player;
+import sprint3implementation.characters.Player;
 
 import javax.swing.*;
 import java.awt.*;

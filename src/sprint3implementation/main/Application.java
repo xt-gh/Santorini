@@ -15,14 +15,14 @@
  *     on page 1 and 2.
  */
 
-package sprint2implementation.main;
-import sprint2implementation.cards.Artemis;
-import sprint2implementation.cards.Demeter;
-import sprint2implementation.cards.GodCard;
-import sprint2implementation.characters.Player;
-import sprint2implementation.grounds.Board;
-import sprint2implementation.setups.ResizeListener;
-import sprint2implementation.setups.Window;
+package sprint3implementation.main;
+import sprint3implementation.cards.Artemis;
+import sprint3implementation.cards.Demeter;
+import sprint3implementation.cards.GodCard;
+import sprint3implementation.characters.Player;
+import sprint3implementation.grounds.Board;
+import sprint3implementation.setups.ResizeListener;
+import sprint3implementation.setups.Window;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,10 +1,10 @@
-package sprint2implementation.cards;
+package sprint3implementation.cards;
 
-import sprint2implementation.actions.BuildAction;
-import sprint2implementation.actions.MoveAction;
-import sprint2implementation.characters.Player;
-import sprint2implementation.grounds.Tile;
-import sprint2implementation.towers.Tower;
+import sprint3implementation.actions.BuildAction;
+import sprint3implementation.actions.MoveAction;
+import sprint3implementation.characters.Player;
+import sprint3implementation.grounds.Tile;
+import sprint3implementation.towers.Tower;
 
 import javax.swing.*;
 

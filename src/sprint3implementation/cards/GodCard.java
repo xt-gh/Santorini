@@ -1,4 +1,4 @@
-package sprint2implementation.cards;
+package sprint3implementation.cards;
 
 /**
  * Abstract base class representing a God Card in the game.

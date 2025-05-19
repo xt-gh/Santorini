@@ -1,7 +1,7 @@
-package sprint2implementation.grounds;
+package sprint3implementation.grounds;
 
-import sprint2implementation.characters.Worker;
-import sprint2implementation.towers.Tower;
+import sprint3implementation.characters.Worker;
+import sprint3implementation.towers.Tower;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,8 +1,8 @@
-package sprint2implementation.cards;
+package sprint3implementation.cards;
 
-import sprint2implementation.characters.Player;
-import sprint2implementation.grounds.Tile;
-import sprint2implementation.towers.Tower;
+import sprint3implementation.characters.Player;
+import sprint3implementation.grounds.Tile;
+import sprint3implementation.towers.Tower;
 
 /**
  * Interface representing a special ability associated with a God card.
