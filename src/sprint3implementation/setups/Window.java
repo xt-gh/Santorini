@@ -68,7 +68,7 @@ public class Window {
     public JLabel setBgLabel(Dimension currentScreenSize)
     {
         // Scale the background and set the background of the frame
-        URL bgImageIconPath = Window.class.getResource("/pics/ocean.jpg");
+        URL bgImageIconPath = Window.class.getResource("/pics/background.jpg");
         Image bgImageIcon = new ImageIcon(bgImageIconPath).getImage();
         Image scaledBgImage = bgImageIcon.getScaledInstance(currentScreenSize.width, currentScreenSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledBgImageIcon = new ImageIcon(scaledBgImage);

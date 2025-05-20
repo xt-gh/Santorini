@@ -120,8 +120,12 @@ public class Application {
         // Create player's turn label
         JLabel turnLabel = new JLabel("Player: ");
         turnLabel.setFont(new Font("Gill Sans", Font.BOLD, 20));
-        turnLabel.setForeground(Color.WHITE);
-        turnLabel.setBounds(20, 20, 600, 30);
+        turnLabel.setForeground(Color.black);
+
+        turnLabel.setOpaque(true);
+        turnLabel.setBackground(new Color(225,225,225,250));
+
+        turnLabel.setBounds(25, 20, 500, 40);
         layeredPane.add(turnLabel, JLayeredPane.MODAL_LAYER);
 
         List<GodCard> godCardList = instantiateGodCards();

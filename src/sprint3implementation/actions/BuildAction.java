@@ -142,6 +142,7 @@ public class BuildAction extends Action {
 
             // Update the tower object on the tile to reflect changes
             targetTile.setTower(tower);
+
             targetTile.updateIcon(tower.getCurrentIcon());
         }
         else

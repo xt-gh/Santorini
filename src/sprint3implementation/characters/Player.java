@@ -81,14 +81,11 @@ public class Player {
     }
 
     public void loadCombinedTowerPlayerIcons(){
-        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_1.png"));
-        setPlayerPositionTower(2, getClass().getResource("pics/Lvl_2_player_1.png"));
-        setPlayerPositionTower(3, getClass().getResource("pics/Lvl_3_player_1.png"));
+        String playerNum = name.toLowerCase().contains("1") ? "1" : "2";
 
-        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_2.png"));
-        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_2.png"));
-        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_2.png"));
-
+        playerPositionTower.put(1, new ImageIcon(getClass().getResource("/pics/Lvl_1_player_" + playerNum + ".png")));
+        playerPositionTower.put(2, new ImageIcon(getClass().getResource("/pics/Lvl_2_player_" + playerNum + ".png")));
+        playerPositionTower.put(3, new ImageIcon(getClass().getResource("/pics/Lvl_3_player_" + playerNum + ".png")));
     }
 
     /**

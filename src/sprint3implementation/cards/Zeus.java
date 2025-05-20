@@ -65,6 +65,8 @@ import sprint3implementation.actions.MoveAction;
 import sprint3implementation.characters.Player;
 import sprint3implementation.grounds.Tile;
 import sprint3implementation.towers.Tower;
+import sprint3implementation.characters.Worker;
+
 
 import javax.swing.*;
 
@@ -94,6 +96,7 @@ public class Zeus extends GodCard {
 
         } else {
             // Building Phase
+            Worker worker = currentPlayer.getCurrentWorker();
             Tile workerTile = currentPlayer.getCurrentWorker().getCurrentTile();
 
             if (clickedTile == workerTile) {
@@ -120,6 +123,11 @@ public class Zeus extends GodCard {
                 isBuildingPhase = false;
                 currentPlayer.setActionSuccessful(true);
                 currentPlayer.setBuiltUnderSelf(builtUnderSelf);
+
+                Tile currentTile = worker.getCurrentTile();
+                int newLevel = currentTile.getTower().getLevelCount();
+                ImageIcon newIcon = worker.getPlayer().getPlayerPositionTower().get(newLevel);
+                currentTile.updateIcon(newIcon);
             }
         }
 
