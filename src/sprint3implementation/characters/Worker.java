@@ -41,6 +41,8 @@ public class Worker {
      */
     private Boolean isMoving = false;
 
+    private Tile currentTile;
+
 
     /**
      * Construct a new worker associated with the specified player.
@@ -59,6 +61,14 @@ public class Worker {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
+    public void setCurrentTile(Tile tile) {
+        this.currentTile = tile;
     }
 
 
@@ -116,7 +126,7 @@ public class Worker {
             if (moveAction.isMoveSuccessful())
             {
                 isMoving = true;
-                BuildAction buildAction = new BuildAction(clickedTile, tower);
+                BuildAction buildAction = new BuildAction(clickedTile, tower, false);
                 buildAction.execute();
 
                 if (buildAction.isBuildSuccessful())
@@ -125,7 +135,11 @@ public class Worker {
                 }
             }
         }
-        else { // special god cards execution of their special abilities
+        else {
+            // handle god card abilities (Zeus)
+            boolean allowBuildUnderSelf = clickedTile.getWorker() != null && clickedTile.getWorker().equals(this);
+            BuildAction buildAction = new BuildAction(clickedTile, tower, allowBuildUnderSelf);
+            // special god cards execution of their special abilities
             isMoving = currentPlayer.getGodCard().executeSpecialAbility(currentPlayer, selectedTile, clickedTile, tower);
         }
         return isMoving;

@@ -57,6 +57,7 @@ public class Player {
      */
     private boolean isActionSuccessful = false;
 
+    private boolean builtUnderSelf = false;
 
     /**
      * Constructor of Player.
@@ -74,6 +75,19 @@ public class Player {
         this.workerNum = workerNum;
 
         initialiseWorkers();
+
+        loadCombinedTowerPlayerIcons();
+
+    }
+
+    public void loadCombinedTowerPlayerIcons(){
+        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_1.png"));
+        setPlayerPositionTower(2, getClass().getResource("pics/Lvl_2_player_1.png"));
+        setPlayerPositionTower(3, getClass().getResource("pics/Lvl_3_player_1.png"));
+
+        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_2.png"));
+        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_2.png"));
+        setPlayerPositionTower(1, getClass().getResource("pics/Lvl_1_player_2.png"));
 
     }
 
@@ -208,5 +222,14 @@ public class Player {
         isActionSuccessful = actionSuccessful;
     }
 
+
+    public void setBuiltUnderSelf(boolean flag){
+        this.builtUnderSelf = flag;
+    }
+
+
+    public boolean hasBuiltUnderSelf() {
+        return builtUnderSelf;
+    }
 
 }

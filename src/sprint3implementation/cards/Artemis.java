@@ -107,7 +107,7 @@ public class Artemis extends GodCard {
             }
         } else {
             // Building phase
-            BuildAction buildAction = new BuildAction(clickedTile, tower);
+            BuildAction buildAction = new BuildAction(clickedTile, tower, false);
             buildAction.execute();
             isMoving = false;
 

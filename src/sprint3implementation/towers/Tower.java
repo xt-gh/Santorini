@@ -58,6 +58,19 @@ public class Tower {
         }
     }
 
+//    public void addLevel(int playerNumber) {
+//        if (towerLevels.size() < MAX_LEVELS) {
+//            int nextLevel = towerLevels.size() + 1;
+//            URL iconPath;
+//            if (playerNumber > 0) {
+//                iconPath = Tower.class.getResource("/pics/Lvl_" + nextLevel + "_player_" + playerNumber + ".png");
+//            } else {
+//                iconPath = Tower.class.getResource("/pics/Lvl_" + nextLevel + ".png");
+//            }
+//            towerLevels.add(new TowerLevel(iconPath));
+//        }
+//    }
+
     /**
      * Adds a dome to the tower if one is not already present.
      * The dome marks the tower as complete and unusable.

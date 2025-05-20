@@ -9,7 +9,7 @@ import javax.swing.*;
  * An action that builds on a given tile.
  * Adds a new tower level or places a dome if the tower is complete.
  *  * @author Tiffany
- *  * Modified by: Yee Peen
+ *  * Modified by: Yee Peen, Xin Thung
  */
 public class BuildAction extends Action {
 
@@ -28,16 +28,20 @@ public class BuildAction extends Action {
      */
     private boolean buildSuccessful;
 
+    private boolean allowBuildUnderSelf;
+
+
     /**
      * Constructor for BuildAction.
      *
      * @param targetTile the tile on which to perform the build
      * @param tower the tower to be built or updated
      */
-    public BuildAction(Tile targetTile, Tower tower) {
+    public BuildAction(Tile targetTile, Tower tower, boolean allowBuildUnderSelf) {
         super(targetTile.getTileRow(), targetTile.getTileColumn());
         this.targetTile = targetTile;
         this.tower = tower;
+        this.allowBuildUnderSelf = allowBuildUnderSelf;
         this.buildSuccessful = validateBuild();
     }
 
@@ -48,23 +52,71 @@ public class BuildAction extends Action {
      *
      * @return true if the build is allowed
      */
-    private boolean validateBuild() {
+//    private boolean validateBuild() {
+//
+//        if (tower == null) {
+//            tower = new Tower();
+//        }
+//
+//        if (tower.hasDome()) {
+//            return false;
+//        }
+//
+//        if (targetTile.getWorker() != null && !allowBuildUnderSelf) {
+//            return false;
+//        }
+//
+//        return tower.getLevelCount() < Tower.getMaxLevels() || !tower.hasDome();
+////        if (tower == null) {
+////            tower = new Tower();
+////        }
+//////        // Prevents building if the worker is already standing on a tile or a tower already has a dome
+//////        if (targetTile.getWorker() != null || tower.hasDome()) {
+//////            return false;
+//////        }
+////
+////        if (tower.hasDome()) {
+////            return false;
+////        }
+////
+////        if (targetTile.getWorker() != null && !allowBuildUnderSelf) {
+////            return false;
+//    }
+//
+//
+//
+//
+//
+////        // Allows building only if the current tower level has not exceeded the maximum level
+////        if (tower.getLevelCount() <= Tower.getMaxLevels())
+////        {
+////            return true;
+////        }
+//        return false;
+//
+//    }
 
+    private boolean validateBuild() {
+        // Create a new tower if none exists
         if (tower == null) {
             tower = new Tower();
         }
-        // Prevents building if the worker is already standing on a tile or a tower already has a dome
-        if (targetTile.getWorker() != null || tower.hasDome()) {
+
+        // Cannot build if tower already has a dome
+        if (tower.hasDome()) {
             return false;
         }
-        // Allows building only if the current tower level has not exceeded the maximum level
-        if (tower.getLevelCount() <= Tower.getMaxLevels())
-        {
-            return true;
-        }
-        return false;
 
+        // Cannot build if there's a worker and building under self is not allowed
+        if (targetTile.getWorker() != null && !allowBuildUnderSelf) {
+            return false;
+        }
+
+        // Allow build if: not at max level OR at max level and no dome yet
+        return tower.getLevelCount() < Tower.getMaxLevels() ||
+                (tower.getLevelCount() == Tower.getMaxLevels() && !tower.hasDome());
     }
+
 
 
     /**

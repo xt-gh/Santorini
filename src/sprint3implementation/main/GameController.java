@@ -147,15 +147,18 @@ public class GameController {
 
             Worker worker = currentPlayer.getCurrentWorker();
 
-            if (!isAdjacent(selectedTile, clickedTile)) {
-                JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (!worker.getPlayer().getGodCard().getName().equalsIgnoreCase("Zeus")){
+                if (!isAdjacent(selectedTile, clickedTile)) {
+                    JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (clickedTile.getWorker() != null) {
+                    JOptionPane.showMessageDialog(null, "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
 
-            if (clickedTile.getWorker() != null) {
-                JOptionPane.showMessageDialog(null, "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
 
             // get the tower from the clicked tile to be passed into the action
             Tower tower = clickedTile.getTower();

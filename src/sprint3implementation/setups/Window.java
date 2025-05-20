@@ -40,7 +40,7 @@ public class Window {
         currentScreenSize = getCurrentScreenSize();
         newFrame.setSize(currentScreenSize.width, currentScreenSize.height);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action after the window is close
-        newFrame.setTitle("Santorini");
+        newFrame.setTitle("Santorini Game");
 
         URL applicationIconPath = Window.class.getResource("/pics/frame_img_icon.jpg");
         ImageIcon applicationIcon = new ImageIcon(applicationIconPath);

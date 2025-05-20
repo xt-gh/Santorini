@@ -87,7 +87,7 @@ public class Demeter extends GodCard {
                 return false;
             }
 
-            BuildAction buildAction = new BuildAction(clickedTile, tower);
+            BuildAction buildAction = new BuildAction(clickedTile, tower, false);
             buildAction.execute();
 
             if (buildAction.isBuildSuccessful()) {

@@ -19,6 +19,7 @@ package sprint3implementation.main;
 import sprint3implementation.cards.Artemis;
 import sprint3implementation.cards.Demeter;
 import sprint3implementation.cards.GodCard;
+import sprint3implementation.cards.Zeus;
 import sprint3implementation.characters.Player;
 import sprint3implementation.grounds.Board;
 import sprint3implementation.setups.ResizeListener;
@@ -43,13 +44,15 @@ public class Application {
      */
     private static List<GodCard> instantiateGodCards() {
         // instantiates the type of god cards
-        GodCard demeter = new Demeter();
+//        GodCard demeter = new Demeter();
         GodCard artemis = new Artemis();
+        GodCard zeus = new Zeus();
 
         // Created a list to store all the god cards
         List<GodCard> godCards = new ArrayList<>();
-        godCards.add(demeter);
+//        godCards.add(demeter);
         godCards.add(artemis);
+        godCards.add(zeus);
 
         // Assign god cards randomly to every players by shuffling them
         Collections.shuffle(godCards);
@@ -116,7 +119,7 @@ public class Application {
 
         // Create player's turn label
         JLabel turnLabel = new JLabel("Player: ");
-        turnLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        turnLabel.setFont(new Font("Gill Sans", Font.BOLD, 20));
         turnLabel.setForeground(Color.WHITE);
         turnLabel.setBounds(20, 20, 600, 30);
         layeredPane.add(turnLabel, JLayeredPane.MODAL_LAYER);

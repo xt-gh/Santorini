@@ -103,14 +103,18 @@ public class Tile extends JButton {
         return worker;
     }
 
-    /**
-     * Sets a worker on the tile.
-     *
-     * @param worker the worker to place on this tile
-     */
+
+//    public void setWorker(Worker worker) {
+//        this.worker = worker;
+//    }
+
     public void setWorker(Worker worker) {
         this.worker = worker;
+        if (worker != null) {
+            worker.setCurrentTile(this);
+        }
     }
+
 
     /**
      * Checks if a worker is present on the tile.
