@@ -121,17 +121,26 @@ public class Application {
         JLabel turnLabel = new JLabel("Player: ");
         turnLabel.setFont(new Font("Gill Sans", Font.BOLD, 20));
         turnLabel.setForeground(Color.black);
-
         turnLabel.setOpaque(true);
         turnLabel.setBackground(new Color(225,225,225,250));
-
         turnLabel.setBounds(25, 20, 500, 40);
         layeredPane.add(turnLabel, JLayeredPane.MODAL_LAYER);
+
+        // Create timer label
+        JLabel timerLabel = new JLabel("Time: ");
+        timerLabel.setFont(new Font("Gill Sans", Font.BOLD, 20));
+        timerLabel.setForeground(Color.black);
+        timerLabel.setOpaque(true);
+        timerLabel.setBackground(new Color(225,225,225,250));
+        timerLabel.setBounds((screenSize.width - 200) / 2, 20, 200, 40);
+        layeredPane.add(timerLabel, JLayeredPane.MODAL_LAYER);
+
+
 
         List<GodCard> godCardList = instantiateGodCards();
         Map<Integer, Player> playerList = instantiatePlayers(2, 2, godCardList);
 
-        GameController gameController = GameController.getInstance(gameBoard, playerList, turnLabel);
+        GameController gameController = GameController.getInstance(gameBoard, playerList, turnLabel, timerLabel);
         windowFrame.addComponentListener(ResizeListener.getInstance(windowFrame, gameBoard, boardSize, boardSize));
         windowFrame.setVisible(true);
     }

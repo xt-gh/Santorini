@@ -5,11 +5,14 @@ import sprint3implementation.characters.Player;
 import sprint3implementation.characters.Worker;
 import sprint3implementation.grounds.Board;
 import sprint3implementation.grounds.Tile;
+import sprint3implementation.timers.PlayerTimer;
 import sprint3implementation.towers.Tower;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.Timer;
 
+//singleton - getInstance() method enforces one GameController instance.
 
 /**
  * GameController is a singleton class that controls the flow of the game.
@@ -65,6 +68,9 @@ public class GameController {
      */
     private JLabel currentPlayerLabel; //indicator for the current player's turn
 
+    private PlayerTimer playerTimer;
+    private JLabel timerLabel;
+
 
     /**
      * Private constructor for singleton instance.
@@ -73,16 +79,28 @@ public class GameController {
      * @param playerList The players in the game.
      * @param currentPlayerLabel JLabel used to show whose turn it is.
      */
-    private GameController(Board gameBoard, Map<Integer, Player> playerList, JLabel currentPlayerLabel) {
+    private GameController(Board gameBoard, Map<Integer, Player> playerList, JLabel currentPlayerLabel, JLabel timerLabel) {
         this.gameBoard = gameBoard;
         this.playerList = playerList; // store players as a map so that the player can be accessed with a specific player number
         this.currentPlayerIndex = 0;
         this.currentPlayer = playerList.get(currentPlayerIndex);
         this.currentPlayerLabel = currentPlayerLabel;
+        this.timerLabel = timerLabel;
         updateCurrentPlayerLabel();
+
         randomiseWorkers();
         setupTileListeners();
+//        updateCurrentTimerLabel();
+
+        this.playerTimer = new PlayerTimer(timerLabel,this::onTimeOut);
+        this.playerTimer.start();
     }
+
+    public void onTimeOut() {
+        JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
+    }
+
 
 
     /**
@@ -99,6 +117,12 @@ public class GameController {
             JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
+
+//        Timer remainingTime = new Timer();
+//        if(remainingTime == 0){
+//            JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+//            System.exit(0);
+//        }
     }
 
     /**
@@ -111,9 +135,9 @@ public class GameController {
      * @return the GameController instance
      */
     // use a static method to call the GameController object
-    public static GameController getInstance(Board gameBoard, Map<Integer, Player> playerList, JLabel currentPlayerLabel) {
+    public static GameController getInstance(Board gameBoard, Map<Integer, Player> playerList, JLabel currentPlayerLabel, JLabel timerLabel) {
         if (instance == null) {
-            instance = new GameController(gameBoard, playerList, currentPlayerLabel);
+            instance = new GameController(gameBoard, playerList, currentPlayerLabel, timerLabel);
         }
         return instance;
     }
@@ -177,12 +201,16 @@ public class GameController {
 
         if (currentPlayer.isActionSuccessful()) // if the current player has successfully moved and build
         {
+            playerTimer.pause();
             currentPlayer.setActionSuccessful(false);
             selectedTile = null;
             currentPlayer.clearCurrentWorker();
             resetTurn();
             updateCurrentPlayerLabel();
             JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
+            playerTimer.reset();
+//            resetTurn();
+
         }
     }
 
@@ -245,6 +273,12 @@ public class GameController {
         }
     }
 
+//    private void updateCurrentTimerLabel(){
+//        if (timerLabel != null){
+//            timerLabel.setText("HH:MM");
+//        }
+//    }
+
     /**
      * Checks if a worker is stuck (cannot move to any adjacent tile).
      *
@@ -282,6 +316,7 @@ public class GameController {
      */
     private void resetTurn()
     {
+
         if (currentPlayerIndex < playerList.size()) {
             for (Map.Entry<Integer, Player> entry : playerList.entrySet()) {
                 Player player = entry.getValue();
@@ -303,6 +338,9 @@ public class GameController {
             currentPlayerIndex = 0;
             currentPlayer = playerList.get(currentPlayerIndex);
         }
+//        playerTimer.reset();
+//        playerTimer.start();
+
     }
 
 
