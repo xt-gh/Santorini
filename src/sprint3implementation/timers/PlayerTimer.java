@@ -4,27 +4,27 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerTimer {
-    private final int totalSeconds = 30;   // 5 minutes
+public class PlayerTimer{
+    private final int totalSeconds = 15;   // 5 minutes
     private int remainingSeconds;
-    private Timer swingTimer;
+    private Timer timer;
     private JLabel timerLabel;
     private boolean isRunning = false;
     private TimerListener timerListener;
 
-    public PlayerTimer(JLabel timerLabel, TimerListener listener){
+    public PlayerTimer(JLabel timerLabel){
         this.timerLabel = timerLabel;
-        this.timerListener = listener;
+//        this.timerListener = listener;
         this.remainingSeconds = totalSeconds;
         updateLabel();
-        swingTimer = new Timer(1000, new ActionListener() {
+        timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (remainingSeconds > 0) {
                     remainingSeconds--;
                     updateLabel();
                     if (remainingSeconds == 0) {
-                        swingTimer.stop();
+                        timer.stop();
                         timeOut();
                     }
                 }
@@ -33,7 +33,13 @@ public class PlayerTimer {
     }
 
 
+    public TimerListener getTimerListener() {
+        return timerListener;
+    }
 
+    public void setTimerListener(TimerListener listener) {
+        this.timerListener = listener;
+    }
 
         private void updateLabel() {
             int minutes = remainingSeconds / 60;
@@ -50,33 +56,23 @@ public class PlayerTimer {
 
         public void start() {
             if (!isRunning && remainingSeconds > 0) {
-                swingTimer.start();
+                timer.start();
                 isRunning = true;
             }
         }
 
         public void pause() {
-            swingTimer.stop();
+            timer.stop();
             isRunning = false;
         }
 
         public void reset(){
-            swingTimer.stop();
+            timer.stop();
             remainingSeconds = totalSeconds;
             updateLabel();
             isRunning = false;
 
-            swingTimer.start();
+            timer.start();
         }
-
-        public int getRemainingSeconds() {
-            return remainingSeconds;
-        }
-
-        public interface TimerListener{
-            void onTimeOut();
-        }
-
-
 
 }
