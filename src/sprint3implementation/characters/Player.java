@@ -225,8 +225,8 @@ public class Player {
     }
 
 
-    public boolean hasBuiltUnderSelf() {
-        return builtUnderSelf;
-    }
+//    public boolean hasBuiltUnderSelf() {
+//        return builtUnderSelf;
+//    }
 
 }

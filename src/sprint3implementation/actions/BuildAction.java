@@ -45,56 +45,6 @@ public class BuildAction extends Action {
         this.buildSuccessful = validateBuild();
     }
 
-    /**
-     * Validated whether a build can occur on the target tile.
-     * A build is not allowed if there is a worker on the tile or if the tower already has a dome.
-     * A new tower created if none exists.
-     *
-     * @return true if the build is allowed
-     */
-//    private boolean validateBuild() {
-//
-//        if (tower == null) {
-//            tower = new Tower();
-//        }
-//
-//        if (tower.hasDome()) {
-//            return false;
-//        }
-//
-//        if (targetTile.getWorker() != null && !allowBuildUnderSelf) {
-//            return false;
-//        }
-//
-//        return tower.getLevelCount() < Tower.getMaxLevels() || !tower.hasDome();
-////        if (tower == null) {
-////            tower = new Tower();
-////        }
-//////        // Prevents building if the worker is already standing on a tile or a tower already has a dome
-//////        if (targetTile.getWorker() != null || tower.hasDome()) {
-//////            return false;
-//////        }
-////
-////        if (tower.hasDome()) {
-////            return false;
-////        }
-////
-////        if (targetTile.getWorker() != null && !allowBuildUnderSelf) {
-////            return false;
-//    }
-//
-//
-//
-//
-//
-////        // Allows building only if the current tower level has not exceeded the maximum level
-////        if (tower.getLevelCount() <= Tower.getMaxLevels())
-////        {
-////            return true;
-////        }
-//        return false;
-//
-//    }
 
     private boolean validateBuild() {
         // Create a new tower if none exists

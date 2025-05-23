@@ -6,6 +6,7 @@ import sprint3implementation.characters.Worker;
 import sprint3implementation.grounds.Board;
 import sprint3implementation.grounds.Tile;
 import sprint3implementation.timers.PlayerTimer;
+import sprint3implementation.timers.TimerListener;
 import sprint3implementation.towers.Tower;
 
 import javax.swing.*;
@@ -92,14 +93,21 @@ public class GameController {
         setupTileListeners();
 //        updateCurrentTimerLabel();
 
-        this.playerTimer = new PlayerTimer(timerLabel,this::onTimeOut);
+        this.playerTimer = new PlayerTimer(timerLabel);
+        this.playerTimer.setTimerListener((new TimerListener() {
+            @Override
+            public void onTimeOut() {
+                JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+                System.exit(0);
+            }
+        }));
         this.playerTimer.start();
     }
 
-    public void onTimeOut() {
-        JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
-    }
+//    public void onTimeOut() {
+//        JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+//        System.exit(0);
+//    }
 
 
 
@@ -114,15 +122,10 @@ public class GameController {
             bothWorkersStuck = bothWorkersStuck && worker.isStuck();
         }
         if (bothWorkersStuck) {
+            playerTimer.pause();
             JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
-
-//        Timer remainingTime = new Timer();
-//        if(remainingTime == 0){
-//            JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
-//            System.exit(0);
-//        }
     }
 
     /**

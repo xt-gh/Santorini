@@ -60,6 +60,7 @@
 //}
 package sprint3implementation.cards;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 import sprint3implementation.actions.BuildAction;
 import sprint3implementation.actions.MoveAction;
 import sprint3implementation.characters.Player;
@@ -75,9 +76,10 @@ public class Zeus extends GodCard {
     private boolean isBuildingPhase = false;
     private boolean isMoving = false;
     private boolean builtUnderSelf = false;
+    private Worker activeWorker;
 
     public Zeus() {
-        super("Zeus", "Zeus can build under himself.");
+        super("Zeus", "Zeus can build under itself.");
     }
 
     @Override
@@ -91,19 +93,33 @@ public class Zeus extends GodCard {
                 isMoving = true;
                 isBuildingPhase = true;
                 builtUnderSelf = false;
+                activeWorker = clickedTile.getWorker();
                 JOptionPane.showMessageDialog(null, "Now is your building phase!", "Building Stage", JOptionPane.PLAIN_MESSAGE);
             }
 
         } else {
             // Building Phase
-            Worker worker = currentPlayer.getCurrentWorker();
-            Tile workerTile = currentPlayer.getCurrentWorker().getCurrentTile();
+            Tile activeWorkerTile = activeWorker.getCurrentTile();
+//            Worker worker = currentPlayer.getCurrentWorker();
+//            Tile workerTile = currentPlayer.getCurrentWorker().getCurrentTile();
 
-            if (clickedTile == workerTile) {
+            if (clickedTile.hasWorker() && clickedTile != activeWorkerTile){
+                JOptionPane.showMessageDialog(null, "You cannot build under another worker!", "Invalid Action", JOptionPane.ERROR_MESSAGE);
+                return true;
+
+            }
+            if (clickedTile == activeWorkerTile) {
+//                int response = JOptionPane.showConfirmDialog(
+//                        null,
+//                        "Do you want to build under yourself using Zeus's power?",
+//                        "Build Under Self",
+//                        JOptionPane.YES_NO_OPTION
+//                );
+
                 int response = JOptionPane.showConfirmDialog(
                         null,
-                        "Do you want to build under yourself using Zeus's power?",
-                        "Build Under Self",
+                        getDescription() + "\n" + currentPlayer.getName() + ", do you want to build under yourself using Zeus's power?",
+                        "Build Under Self?",
                         JOptionPane.YES_NO_OPTION
                 );
 
@@ -113,8 +129,21 @@ public class Zeus extends GodCard {
                 } else {
                     builtUnderSelf = true;
                 }
+
+                if (response == JOptionPane.YES_OPTION) {
+                    builtUnderSelf = true;
+                    isMoving = false;
+//                    JOptionPane.showMessageDialog(null, "You can build under yourself now.", "Building Stage", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    builtUnderSelf = false;
+                    isBuildingPhase = false;
+                    isMoving = false;
+                    currentPlayer.setActionSuccessful(true); // Player ends turn after 1 build
+                    return false;
+                }
             }
 
+            // Build Action
             BuildAction buildAction = new BuildAction(clickedTile, tower, true);
             buildAction.execute();
 
@@ -124,10 +153,17 @@ public class Zeus extends GodCard {
                 currentPlayer.setActionSuccessful(true);
                 currentPlayer.setBuiltUnderSelf(builtUnderSelf);
 
-                Tile currentTile = worker.getCurrentTile();
-                int newLevel = currentTile.getTower().getLevelCount();
-                ImageIcon newIcon = worker.getPlayer().getPlayerPositionTower().get(newLevel);
-                currentTile.updateIcon(newIcon);
+                if (builtUnderSelf){
+                    int newLevel = activeWorkerTile.getTower().getLevelCount();
+                    ImageIcon newIcon = activeWorker.getPlayer().getPlayerPositionTower().get(newLevel);
+                    activeWorkerTile.updateIcon(newIcon);
+
+
+                }
+//                Tile currentTile = worker.getCurrentTile();
+//                int newLevel = currentTile.getTower().getLevelCount();
+//                ImageIcon newIcon = worker.getPlayer().getPlayerPositionTower().get(newLevel);
+//                currentTile.updateIcon(newIcon);
             }
         }
 

@@ -89,6 +89,7 @@ public class Application {
 
     /**
      * Entry point of the application.
+     *
      * Sets up the window, board, UI layers, and initializes the game controller.
      *
      * @param args command-line arguments

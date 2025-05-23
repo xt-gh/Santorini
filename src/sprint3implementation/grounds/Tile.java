@@ -104,10 +104,6 @@ public class Tile extends JButton {
     }
 
 
-//    public void setWorker(Worker worker) {
-//        this.worker = worker;
-//    }
-
     public void setWorker(Worker worker) {
         this.worker = worker;
         if (worker != null) {
