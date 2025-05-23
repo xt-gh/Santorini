@@ -41,38 +41,38 @@ public class PlayerTimer{
         this.timerListener = listener;
     }
 
-        private void updateLabel() {
-            int minutes = remainingSeconds / 60;
-            int seconds = remainingSeconds % 60;
-            timerLabel.setText(String.format("Time Left: %02d:%02d", minutes, seconds));
-        }
+    private void updateLabel() {
+        int minutes = remainingSeconds / 60;
+        int seconds = remainingSeconds % 60;
+        timerLabel.setText(String.format("Time Left: %02d:%02d", minutes, seconds));
+    }
 
-        private void timeOut() {
+    private void timeOut() {
 //            JOptionPane.showMessageDialog(null, "Time's up! You loses.");
-            if(timerListener != null){
-                timerListener.onTimeOut();
-            }
+        if(timerListener != null){
+            timerListener.onTimeOut();
         }
+    }
 
-        public void start() {
-            if (!isRunning && remainingSeconds > 0) {
-                timer.start();
-                isRunning = true;
-            }
-        }
-
-        public void pause() {
-            timer.stop();
-            isRunning = false;
-        }
-
-        public void reset(){
-            timer.stop();
-            remainingSeconds = totalSeconds;
-            updateLabel();
-            isRunning = false;
-
+    public void start() {
+        if (!isRunning && remainingSeconds > 0) {
             timer.start();
+            isRunning = true;
         }
+    }
+
+    public void pause() {
+        timer.stop();
+        isRunning = false;
+    }
+
+    public void reset(){
+        timer.stop();
+        remainingSeconds = totalSeconds;
+        updateLabel();
+        isRunning = false;
+
+        timer.start();
+    }
 
 }
