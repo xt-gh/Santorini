@@ -7,7 +7,7 @@ package sprint3implementation.cards;
  * @author Emil
  * Modified by: Yee Peen
  */
-public abstract class GodCard implements SpecialAbility{
+public abstract class GodCard implements SpecialAbility, Card{
 
     /**
      * The name of the god represented by the card.
@@ -35,6 +35,7 @@ public abstract class GodCard implements SpecialAbility{
      *
      * @return the name of the god.
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -44,6 +45,7 @@ public abstract class GodCard implements SpecialAbility{
      *
      * @return the description of the special ability
      */
+    @Override
     public String getDescription() {
         return description;
     }

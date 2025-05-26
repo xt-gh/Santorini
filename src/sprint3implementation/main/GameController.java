@@ -62,7 +62,7 @@ public class GameController {
     /**
      * Flag to indicate if a worker is currently moving.
      */
-    private Boolean isMoving = false;
+    private boolean isMoving = false;
 
     /**
      * Label used in the UI to display the current player's turn
@@ -71,6 +71,9 @@ public class GameController {
 
     private PlayerTimer playerTimer;
     private JLabel timerLabel;
+//    private List<Player> playerList;
+//    private int currentPlayerIndex;   // 当前玩家下标
+
 
 
     /**
@@ -145,6 +148,7 @@ public class GameController {
         return instance;
     }
 
+
     // this method will be invoked everytime a tile is clicked
     /**
      * Handles the logic when a tile is clicked during a player's turn.
@@ -204,17 +208,25 @@ public class GameController {
 
         if (currentPlayer.isActionSuccessful()) // if the current player has successfully moved and build
         {
-            playerTimer.pause();
-            currentPlayer.setActionSuccessful(false);
-            selectedTile = null;
-            currentPlayer.clearCurrentWorker();
-            resetTurn();
-            updateCurrentPlayerLabel();
-            JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
-            playerTimer.reset();
-//            resetTurn();
+//            boolean cardUsed = currentPlayer.useFunctionCard("skip card", this);
 
-        }
+//            if(!cardUsed){
+//                currentPlayer.useFunctionCard("skip card", this);
+                playerTimer.pause();
+                currentPlayer.setActionSuccessful(false);
+                selectedTile = null;
+                currentPlayer.clearCurrentWorker();
+                resetTurn();
+                updateCurrentPlayerLabel();
+                JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
+                playerTimer.reset();
+            }
+//            else{
+//            playerTimer.pause();
+////                skipNextPlayerTurn();
+//            playerTimer.reset();
+//      }
+
     }
 
 
@@ -276,11 +288,6 @@ public class GameController {
         }
     }
 
-//    private void updateCurrentTimerLabel(){
-//        if (timerLabel != null){
-//            timerLabel.setText("HH:MM");
-//        }
-//    }
 
     /**
      * Checks if a worker is stuck (cannot move to any adjacent tile).
@@ -319,33 +326,64 @@ public class GameController {
      */
     private void resetTurn()
     {
-
-        if (currentPlayerIndex < playerList.size()) {
-            for (Map.Entry<Integer, Player> entry : playerList.entrySet()) {
-                Player player = entry.getValue();
-                if (player.equals(currentPlayer)) {
-                    int nextPlayerNum = entry.getKey()+1;
-                    if (nextPlayerNum >= playerList.size())
-                    {
-                        nextPlayerNum = 0;
-                        currentPlayerIndex = 0;
-                        currentPlayer = playerList.get(currentPlayerIndex);
+        boolean usedCard = currentPlayer.useFunctionCard("skip card", this);
+        if(usedCard){
+            currentPlayer.useFunctionCard("skip card", this);
+        }else{
+            if (currentPlayerIndex < playerList.size()) {
+                for (Map.Entry<Integer, Player> entry : playerList.entrySet()) {
+                    Player player = entry.getValue();
+                    if (player.equals(currentPlayer)) {
+                        int nextPlayerNum = entry.getKey()+1;
+                        if (nextPlayerNum >= playerList.size())
+                        {
+                            nextPlayerNum = 0;
+                            currentPlayerIndex = 0;
+                            currentPlayer = playerList.get(currentPlayerIndex);
+                            return;
+                        }
+                        currentPlayer = playerList.get(nextPlayerNum);
+                        currentPlayerIndex = nextPlayerNum;
                         return;
                     }
-                    currentPlayer = playerList.get(nextPlayerNum);
-                    currentPlayerIndex = nextPlayerNum;
-                    return;
                 }
+            }else {
+                currentPlayerIndex = 0;
+                currentPlayer = playerList.get(currentPlayerIndex);
             }
-        }else {
-            currentPlayerIndex = 0;
-            currentPlayer = playerList.get(currentPlayerIndex);
         }
+
+
 //        playerTimer.reset();
 //        playerTimer.start();
 
     }
 
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public void setCurrentPlayerIndex(int index) {
+        this.currentPlayerIndex = index;
+    }
+
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
+    }
+
+    public Map<Integer, Player> getPlayerList() {
+        return playerList;
+    }
+
+    //    public void updateCurrentPlayerLabel() {
+//        // 更新UI显示当前玩家名字等
+//    }
 
     /**
      * Determines whether two tiles are adjacent.

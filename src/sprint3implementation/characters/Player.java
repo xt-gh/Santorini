@@ -1,6 +1,8 @@
 package sprint3implementation.characters;
 
+import sprint3implementation.cards.FunctionCard;
 import sprint3implementation.cards.GodCard;
+import sprint3implementation.main.GameController;
 
 import javax.swing.*;
 import java.net.URL;
@@ -58,6 +60,12 @@ public class Player {
     private boolean isActionSuccessful = false;
 
     private boolean builtUnderSelf = false;
+
+    private boolean hasSkipCard = true;
+
+    private List<FunctionCard> functionCards = new ArrayList<>();
+
+
 
     /**
      * Constructor of Player.
@@ -224,9 +232,54 @@ public class Player {
         this.builtUnderSelf = flag;
     }
 
-
-//    public boolean hasBuiltUnderSelf() {
-//        return builtUnderSelf;
+//    public boolean hasSkipCard() {
+//        return hasSkipCard;
+//    }
+//
+//    public void useSkipCard(){
+//        this.hasSkipCard = false;
 //    }
 
+//    public FunctionCard getFunctionCard(){
+//        return functionCards;
+//    }
+
+//    public void setFunctionCard(FunctionCard functionCards) {
+//        this.functionCards = functionCards;
+//    }
+
+//    public boolean hasFunctionCard(){
+//        return functionCards != null && !functionCards.isUsed();
+//    }
+
+    public boolean useFunctionCard(String cardName, GameController gameController) {
+//        if (hasFunctionCard()) {
+//            functionCard.applyCardEffect(this, functionCard);
+//        }
+        for (FunctionCard functionCard : functionCards) {
+            if (functionCard.getName().equalsIgnoreCase(cardName) && !functionCard.isUsed()) {
+                boolean success = functionCard.applyCardEffect(this,gameController);
+                return success;
+//                functionCard.applyCardEffect(this,gameController);
+
+//                return functionCard.isUsed();
+//                if(success){
+//                    System.out.println(this.getName() + " used " + functionCard.getName());
+//
+//                }
+//                return;
+            }
+        }
+
+//        JOptionPane.showMessageDialog(null, "No such available card: " + cardName, "Card Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    public void addFunctionCard(FunctionCard functionCard) {
+        functionCards.add(functionCard);
+    }
+
+    public List<FunctionCard> getFunctionCards() {
+        return functionCards;
+    }
 }

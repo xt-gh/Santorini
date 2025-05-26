@@ -16,10 +16,7 @@
  */
 
 package sprint3implementation.main;
-import sprint3implementation.cards.Artemis;
-import sprint3implementation.cards.Demeter;
-import sprint3implementation.cards.GodCard;
-import sprint3implementation.cards.Zeus;
+import sprint3implementation.cards.*;
 import sprint3implementation.characters.Player;
 import sprint3implementation.grounds.Board;
 import sprint3implementation.setups.ResizeListener;
@@ -60,6 +57,20 @@ public class Application {
         return godCards;
     }
 
+    private static List<FunctionCard> instantiateFunctionCards(int playerNum){
+        List<FunctionCard> functionCards = new ArrayList<>();
+        for (int i = 0; i < playerNum; i++) {
+            functionCards.add(new SkipCard()); // each player gets their own SkipCard instance
+        }
+        return functionCards;
+//        FunctionCard skipCard = new SkipCard();
+//
+//        List<FunctionCard> functionCards = new ArrayList<>();
+//        functionCards.add(skipCard);
+//
+//        return functionCards;
+    }
+
     /**
      * Creates players and assigns each one a unique GodCard
      * and associated images.
@@ -69,14 +80,16 @@ public class Application {
      * @param godCardList the list of GodCards to assign
      * @return a map of players indexed by their ID.
      */
-    public static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList)
+    public static Map<Integer, Player> instantiatePlayers(int playerNum, int workerNum, List<GodCard> godCardList, List<FunctionCard> functionCardList)
     {
         Map<Integer, Player> playerList = new HashMap<>();
+
 
         for (int playerNo = 0; playerNo < playerNum; playerNo++)
         {
             Player player = new Player("Player "+(playerNo+1), Application.class.getResource("/pics/player_"+(playerNo+1)+".png"), workerNum);
             player.setGodCard(godCardList.get(playerNo));
+//            player.setFunctionCard(functionCardList.get(playerNo));
             for (int towerNo = 1; towerNo < 4 ; towerNo++)
             {
                 player.setPlayerPositionTower(towerNo, Application.class.getResource("/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png"));
@@ -138,8 +151,11 @@ public class Application {
 
 
 
+        int playerNum = 2;
         List<GodCard> godCardList = instantiateGodCards();
-        Map<Integer, Player> playerList = instantiatePlayers(2, 2, godCardList);
+        List<FunctionCard> functionCardList = instantiateFunctionCards(playerNum);
+        Map<Integer, Player> playerList = instantiatePlayers(playerNum, 2, godCardList, functionCardList);
+
 
         GameController gameController = GameController.getInstance(gameBoard, playerList, turnLabel, timerLabel);
         windowFrame.addComponentListener(ResizeListener.getInstance(windowFrame, gameBoard, boardSize, boardSize));
