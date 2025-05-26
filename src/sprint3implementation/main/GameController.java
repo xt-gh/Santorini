@@ -212,11 +212,11 @@ public class GameController {
 
 //            if(!cardUsed){
 //                currentPlayer.useFunctionCard("skip card", this);
-                playerTimer.pause();
                 currentPlayer.setActionSuccessful(false);
                 selectedTile = null;
                 currentPlayer.clearCurrentWorker();
                 resetTurn();
+                playerTimer.pause();
                 updateCurrentPlayerLabel();
                 JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
                 playerTimer.reset();
@@ -397,4 +397,6 @@ public class GameController {
         int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
         return (dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0);
     }
+
+
 }

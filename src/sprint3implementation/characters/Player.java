@@ -64,7 +64,7 @@ public class Player {
     private boolean hasSkipCard = true;
 
     private List<FunctionCard> functionCards = new ArrayList<>();
-
+//    private FunctionCard functionCard;
 
 
     /**
@@ -240,13 +240,14 @@ public class Player {
 //        this.hasSkipCard = false;
 //    }
 
-//    public FunctionCard getFunctionCard(){
+//    public List<FunctionCard> getFunctionCard(){
 //        return functionCards;
 //    }
 
-//    public void setFunctionCard(FunctionCard functionCards) {
-//        this.functionCards = functionCards;
+//    public void setFunctionCard(FunctionCard functionCard) {
+//        this.functionCard = functionCard;
 //    }
+
 
 //    public boolean hasFunctionCard(){
 //        return functionCards != null && !functionCards.isUsed();
@@ -258,7 +259,7 @@ public class Player {
 //        }
         for (FunctionCard functionCard : functionCards) {
             if (functionCard.getName().equalsIgnoreCase(cardName) && !functionCard.isUsed()) {
-                boolean success = functionCard.applyCardEffect(this,gameController);
+                boolean success = functionCard.activateCardEffect(this,gameController);
                 return success;
 //                functionCard.applyCardEffect(this,gameController);
 
@@ -282,4 +283,6 @@ public class Player {
     public List<FunctionCard> getFunctionCards() {
         return functionCards;
     }
+
+
 }

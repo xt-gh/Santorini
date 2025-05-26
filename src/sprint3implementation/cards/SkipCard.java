@@ -34,7 +34,7 @@ public class SkipCard extends FunctionCard{
 
 
     @Override
-    public boolean applyCardEffect(Player currentPlayer, GameController gameController){
+    public boolean activateCardEffect(Player currentPlayer, GameController gameController){
         if(isUsed){
             JOptionPane.showMessageDialog(null, "You have already used your Skip Card!", "Card Unavailable", JOptionPane.WARNING_MESSAGE);
             return false;

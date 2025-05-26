@@ -37,5 +37,5 @@ public abstract class FunctionCard implements Card{
 
 //    public abstract void applyCardEffect(Player currentPlayer, GameController gameController);
 
-    public abstract boolean applyCardEffect(Player currentPlayer, GameController gameController);
+    public abstract boolean activateCardEffect(Player currentPlayer, GameController gameController);
 }

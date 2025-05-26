@@ -89,7 +89,7 @@ public class Application {
         {
             Player player = new Player("Player "+(playerNo+1), Application.class.getResource("/pics/player_"+(playerNo+1)+".png"), workerNum);
             player.setGodCard(godCardList.get(playerNo));
-//            player.setFunctionCard(functionCardList.get(playerNo));
+            player.addFunctionCard(functionCardList.get(playerNo));
             for (int towerNo = 1; towerNo < 4 ; towerNo++)
             {
                 player.setPlayerPositionTower(towerNo, Application.class.getResource("/pics/Lvl_"+towerNo+"_player_"+(playerNo+1)+".png"));
