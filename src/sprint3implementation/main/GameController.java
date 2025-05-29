@@ -71,8 +71,6 @@ public class GameController {
 
     private PlayerTimer playerTimer;
     private JLabel timerLabel;
-//    private List<Player> playerList;
-//    private int currentPlayerIndex;   // 当前玩家下标
 
 
 
@@ -96,21 +94,17 @@ public class GameController {
         setupTileListeners();
 //        updateCurrentTimerLabel();
 
-        this.playerTimer = new PlayerTimer(timerLabel);
-        this.playerTimer.setTimerListener((new TimerListener() {
-            @Override
-            public void onTimeOut() {
-                JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
-                System.exit(0);
-            }
-        }));
+        this.playerTimer = new PlayerTimer(timerLabel, currentPlayer.getName());
+//        this.playerTimer.setTimerListener(
+//            new TimerListener() {
+//            @Override
+//            public void onTimeOut() {
+//                JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+//                System.exit(0);
+//            }
+//        });
         this.playerTimer.start();
     }
-
-//    public void onTimeOut() {
-//        JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
-//        System.exit(0);
-//    }
 
 
 
@@ -156,12 +150,13 @@ public class GameController {
      * @param clickedTile The tile that was clicked.
      */
     private void handleTileClick(Tile clickedTile) {
+        //----------- 1st click: Select a worker -------------
         if (selectedTile == null) {
-            // First click - select a piece
+            // check if the clicked tile has a worker belonging to the current player
             if (clickedTile.getWorker() != null && clickedTile.getWorker().getPlayer() == currentPlayer) {
                 Worker selectedWorker = clickedTile.getWorker();
 
-                // Check if the selected worker is stuck
+                // Check if the selected worker is stuck (cannot move or build)
                 if (isWorkerStuck(clickedTile)) {
                     JOptionPane.showMessageDialog(null, "This worker is stuck. Please move another worker.", "Message", JOptionPane.INFORMATION_MESSAGE);
                     selectedWorker.setBooleanStuck(true);
@@ -169,38 +164,39 @@ public class GameController {
                     checkLosingCondition();
                     return;  // Exit method, forcing the player to select another worker
                 }
+                // set the selected tile and current worker for the pplayer
                 selectedTile = clickedTile;
                 lastMovedTile = clickedTile;
                 currentPlayer.setCurrentWorker(selectedWorker);
             }
 
         } else {
-
-//            Worker worker = currentPlayer.getCurrentWorker();
+            //----------- 2nd click: Move or Build -------------
             boolean canBuild;
 
+            // check adjacency based on god power: Zeus can build on the same tile (under self)
             if (currentPlayer.getGodCard().getName().equalsIgnoreCase("zeus")){
-                canBuild = isAdjacentOrSame(selectedTile, clickedTile);
+                canBuild = isAdjacentOrSame(selectedTile, clickedTile); // Zeus can build under self
             }else {
-                canBuild = isAdjacent(selectedTile, clickedTile);
+                canBuild = isAdjacent(selectedTile, clickedTile); // others must build adjacent
             }
 
-//            if (!worker.getPlayer().getGodCard().getName().equalsIgnoreCase("Zeus")){
-                if (!canBuild) {
-                    JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+            // if the clicked tile is not adjacent (or same for Zeus), reject the action
+            if (!canBuild) {
+                JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            // prevent building on a tile occupied by another worker (not yourself)
             Worker currentWorker = currentPlayer.getCurrentWorker();
             if (clickedTile.getWorker() != null && clickedTile.getWorker() != currentWorker) {
-
-//                if (clickedTile.getWorker() != null) {
-                    JOptionPane.showMessageDialog(null, "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                JOptionPane.showMessageDialog(null, "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
 
 
+            //----------- Proceed with the action (move/build) -------------
             // get the tower from the clicked tile to be passed into the action
             Tower tower = clickedTile.getTower();
             if (tower.isTowerEmpty()) {
@@ -208,7 +204,6 @@ public class GameController {
             }
 
             isMoving = currentWorker.executeAction(currentPlayer,selectedTile,clickedTile,tower);
-//            isMoving = worker.executeAction(currentPlayer,selectedTile,clickedTile,tower);
 
             if (isMoving) // isMoving is to check whether the worker is successfully moved (to store the lastMovedTile)
             {
@@ -219,25 +214,15 @@ public class GameController {
 
         if (currentPlayer.isActionSuccessful()) // if the current player has successfully moved and build
         {
-//            boolean cardUsed = currentPlayer.useFunctionCard("skip card", this);
-
-//            if(!cardUsed){
-//                currentPlayer.useFunctionCard("skip card", this);
-                currentPlayer.setActionSuccessful(false);
-                selectedTile = null;
-                currentPlayer.clearCurrentWorker();
-                resetTurn();
+                currentPlayer.setActionSuccessful(false);   // reset for the next round
+                selectedTile = null;                         // clear selection
+                currentPlayer.clearCurrentWorker();         // clear selected worker
+                resetTurn();                                // change next player
                 playerTimer.pause();
                 updateCurrentPlayerLabel();
                 JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
                 playerTimer.reset();
             }
-//            else{
-//            playerTimer.pause();
-////                skipNextPlayerTurn();
-//            playerTimer.reset();
-//      }
-
     }
 
 
@@ -363,11 +348,6 @@ public class GameController {
                 currentPlayer = playerList.get(currentPlayerIndex);
             }
         }
-
-
-//        playerTimer.reset();
-//        playerTimer.start();
-
     }
 
 
@@ -379,22 +359,9 @@ public class GameController {
         this.currentPlayerIndex = index;
     }
 
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(Player player) {
-        this.currentPlayer = player;
-    }
-
     public Map<Integer, Player> getPlayerList() {
         return playerList;
     }
-
-    //    public void updateCurrentPlayerLabel() {
-//        // 更新UI显示当前玩家名字等
-//    }
 
     /**
      * Determines whether two tiles are adjacent.

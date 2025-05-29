@@ -41,13 +41,13 @@ public class Application {
      */
     private static List<GodCard> instantiateGodCards() {
         // instantiates the type of god cards
-//        GodCard demeter = new Demeter();
+        GodCard demeter = new Demeter();
         GodCard artemis = new Artemis();
         GodCard zeus = new Zeus();
 
         // Created a list to store all the god cards
         List<GodCard> godCards = new ArrayList<>();
-//        godCards.add(demeter);
+        godCards.add(demeter);
         godCards.add(artemis);
         godCards.add(zeus);
 
@@ -63,12 +63,6 @@ public class Application {
             functionCards.add(new SkipCard()); // each player gets their own SkipCard instance
         }
         return functionCards;
-//        FunctionCard skipCard = new SkipCard();
-//
-//        List<FunctionCard> functionCards = new ArrayList<>();
-//        functionCards.add(skipCard);
-//
-//        return functionCards;
     }
 
     /**
