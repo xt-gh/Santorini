@@ -176,19 +176,29 @@ public class GameController {
 
         } else {
 
-            Worker worker = currentPlayer.getCurrentWorker();
+//            Worker worker = currentPlayer.getCurrentWorker();
+            boolean canBuild;
 
-            if (!worker.getPlayer().getGodCard().getName().equalsIgnoreCase("Zeus")){
-                if (!isAdjacent(selectedTile, clickedTile)) {
+            if (currentPlayer.getGodCard().getName().equalsIgnoreCase("zeus")){
+                canBuild = isAdjacentOrSame(selectedTile, clickedTile);
+            }else {
+                canBuild = isAdjacent(selectedTile, clickedTile);
+            }
+
+//            if (!worker.getPlayer().getGodCard().getName().equalsIgnoreCase("Zeus")){
+                if (!canBuild) {
                     JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                if (clickedTile.getWorker() != null) {
+            Worker currentWorker = currentPlayer.getCurrentWorker();
+            if (clickedTile.getWorker() != null && clickedTile.getWorker() != currentWorker) {
+
+//                if (clickedTile.getWorker() != null) {
                     JOptionPane.showMessageDialog(null, "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-            }
+
 
 
             // get the tower from the clicked tile to be passed into the action
@@ -197,7 +207,8 @@ public class GameController {
                 tower = new Tower();
             }
 
-            isMoving = worker.executeAction(currentPlayer,selectedTile,clickedTile,tower);
+            isMoving = currentWorker.executeAction(currentPlayer,selectedTile,clickedTile,tower);
+//            isMoving = worker.executeAction(currentPlayer,selectedTile,clickedTile,tower);
 
             if (isMoving) // isMoving is to check whether the worker is successfully moved (to store the lastMovedTile)
             {
@@ -396,6 +407,12 @@ public class GameController {
         int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
         int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
         return (dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0);
+    }
+
+    public boolean isAdjacentOrSame(Tile tile1, Tile tile2) {
+        int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
+        int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());
+        return (dx <= 1 && dy <= 1);
     }
 
 
