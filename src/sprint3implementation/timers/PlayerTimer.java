@@ -7,16 +7,47 @@ import java.awt.event.ActionListener;
 /**
  * PlayerTimer class controls a countdown timer for a player.
  * It shows time on a JLabel and notifies when time is up.
+ *
+ * @author Xin Thung
  */
 public class PlayerTimer implements TimerListener{
-    //    private final int totalSeconds = 5 * 60;   // 5 minutes
-    private final int totalSeconds = 20;   // 10 seconds (for testing)
+    /**
+     * Total time in seconds for the countdown.
+     */
+    private final int totalSeconds = 5 * 60;   // 5 minutes
+//    private final int totalSeconds = 20;   // 10 seconds (for testing)
+
+    /**
+     * The remaining time in seconds.
+     */
     private int remainingSeconds;
+
+    /**
+     * The Swing timer used to trigger countdown updates.
+     */
     private Timer timer;
+
+    /**
+     * JLabel where the countdown time is displayed.
+     */
     private JLabel timerLabel;
+
+    /**
+     * Indicates whether the timer is currently running.
+     */
     private boolean isRunning = false;
+
+    /**
+     * The name of the player associated with this timer.
+     */
     private String playerName;
 
+    /**
+     * Constructs a PlayerTimer object tied to a JLabel and a player name.
+     *
+     * @param timerLabel  JLabel used to display the remaining time.
+     * @param playerName  Name of the player associated with the timer.
+     */
     public PlayerTimer(JLabel timerLabel, String playerName){
         this.timerLabel = timerLabel;
         this.playerName = playerName;

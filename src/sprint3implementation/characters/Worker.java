@@ -41,6 +41,9 @@ public class Worker {
      */
     private Boolean isMoving = false;
 
+    /**
+     * The tile the worker is currently on.
+     */
     private Tile currentTile;
 
 
@@ -63,10 +66,20 @@ public class Worker {
         return player;
     }
 
+    /**
+     * Returns the tile the worker is currently on.
+     *
+     * @return the current tile
+     */
     public Tile getCurrentTile() {
         return currentTile;
     }
 
+    /**
+     * Sets the tile the worker is currently on.
+     *
+     * @param tile the new current tile
+     */
     public void setCurrentTile(Tile tile) {
         this.currentTile = tile;
     }

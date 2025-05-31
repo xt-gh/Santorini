@@ -57,10 +57,16 @@ public class Application {
         return godCards;
     }
 
+    /**
+     * Instantiates a list of FunctionCards, one for each player.
+     *
+     * @param playerNum the number of players
+     * @return a list of FunctionCard objects
+     */
     private static List<FunctionCard> instantiateFunctionCards(int playerNum){
         List<FunctionCard> functionCards = new ArrayList<>();
         for (int i = 0; i < playerNum; i++) {
-            functionCards.add(new SkipCard()); // each player gets their own SkipCard instance
+            functionCards.add(new SkipCard()); // each player gets SkipCard
         }
         return functionCards;
     }

@@ -2,10 +2,18 @@ package sprint3implementation.cards;
 
 /**
  * Abstract base class representing a God Card in the game.
- * Each God Card has a name and a description and implements a special ability.
+ * Each God Card has a name and a description and implements a special ability
+ * via the {@link SpecialAbility} interface.
+ *
+ * Subclasses of GodCard must provide concrete implementation
+ * of the special ability logic.
+ *
+ *
+ * This class also implements the {@link Card} interface, which provides
+ * methods to retrieve card details such as name and description.
  *
  * @author Emil
- * Modified by: Yee Peen
+ * Modified by: Yee Peen, Xin Thung
  */
 public abstract class GodCard implements SpecialAbility, Card{
 

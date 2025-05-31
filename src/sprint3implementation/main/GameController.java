@@ -17,7 +17,8 @@ import java.util.Timer;
 
 /**
  * GameController is a singleton class that controls the flow of the game.
- * It manages player turns, board interactions, worker movements and turn resents.
+ * It manages player turns, board interactions, worker movements, building,
+ * and turn resets. It also integrates a countdown timer for each player's turn.
  *
  * @author Yee Peen
  * Modified by: Xin Thung, Tiffany
@@ -69,7 +70,14 @@ public class GameController {
      */
     private JLabel currentPlayerLabel; //indicator for the current player's turn
 
+    /**
+     * Timer that counts down the allowed time per player's turn.
+     */
     private PlayerTimer playerTimer;
+
+    /**
+     * JLabel in the UI that displays the remaining time ("Time Left: 00:10").
+     */
     private JLabel timerLabel;
 
 
@@ -92,17 +100,9 @@ public class GameController {
 
         randomiseWorkers();
         setupTileListeners();
-//        updateCurrentTimerLabel();
 
+        // Initialize and start the player turn timer
         this.playerTimer = new PlayerTimer(timerLabel, currentPlayer.getName());
-//        this.playerTimer.setTimerListener(
-//            new TimerListener() {
-//            @Override
-//            public void onTimeOut() {
-//                JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! Time's up!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
-//                System.exit(0);
-//            }
-//        });
         this.playerTimer.start();
     }
 
@@ -318,7 +318,11 @@ public class GameController {
 
 
     /**
-     * Resets the turn and moves to the next player.
+     * Resets the turn to the next player, taking into account any skip card usage.
+     *
+     * If the current player used a skip card, it is applied here (advancing by two players).
+     * Otherwise, the turn simply advances to the next player in index order.
+     *
      */
     private void resetTurn()
     {
@@ -351,14 +355,29 @@ public class GameController {
     }
 
 
+    /**
+     * Returns the index of the current player.
+     *
+     * @return currentPlayerIndex
+     */
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
     }
 
+    /**
+     * Sets the index of the current player.
+     *
+     * @param index new player index
+     */
     public void setCurrentPlayerIndex(int index) {
         this.currentPlayerIndex = index;
     }
 
+    /**
+     * Returns the map of all players in the game.
+     *
+     * @return map of players mapped by their index
+     */
     public Map<Integer, Player> getPlayerList() {
         return playerList;
     }
@@ -376,6 +395,13 @@ public class GameController {
         return (dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0);
     }
 
+    /**
+     * Determines whether two tiles are either adjacent or the same tile.
+     *
+     * @param tile1 first tile
+     * @param tile2 second tile
+     * @return true if tile1 and tile2 share a border, corner, or are identical
+     */
     public boolean isAdjacentOrSame(Tile tile1, Tile tile2) {
         int dx = Math.abs(tile1.getTileRow() - tile2.getTileRow());
         int dy = Math.abs(tile1.getTileColumn() - tile2.getTileColumn());

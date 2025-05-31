@@ -12,10 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents a player in the game, including their workers, icon, and assigned GodCard.
+ * Represents a player in the game, including their workers, icon, assigned GodCard,
+ * and any function cards they possess. Manages player actions and state.
+ * <p>
+ * Responsible for tracking player-specific data such as current selected worker,
+ * player's icon, GodCard abilities, and function cards usage.
+ * </p>
  *
  * @author Yee Peen
- * Modified by: Xin Thung, Tiffany
+ * modified by Xin Thung, Tiffany
  */
 public class Player {
 
@@ -59,12 +64,15 @@ public class Player {
      */
     private boolean isActionSuccessful = false;
 
+    /**
+     * Flag indicating if the player has built under themselves during a turn.
+     */
     private boolean builtUnderSelf = false;
 
-    private boolean hasSkipCard = true;
-
+    /**
+     * List of function cards owned by the player.
+     */
     private List<FunctionCard> functionCards = new ArrayList<>();
-//    private FunctionCard functionCard;
 
 
     /**
@@ -88,6 +96,9 @@ public class Player {
 
     }
 
+    /**
+     * Loads tower icons for levels 1 to 3 based on player number.
+     */
     public void loadCombinedTowerPlayerIcons(){
         String playerNum = name.toLowerCase().contains("1") ? "1" : "2";
 
@@ -106,6 +117,11 @@ public class Player {
         }
     }
 
+    /**
+     * Adds a worker to the player's worker list.
+     *
+     * @param worker the Worker to add
+     */
     public void addWorker(Worker worker) {
         workerList.add(worker);
     }
@@ -228,61 +244,44 @@ public class Player {
     }
 
 
+    /**
+     * Sets whether the player has built under their own worker this turn.
+     *
+     * @param flag true if built under self, false otherwise
+     */
     public void setBuiltUnderSelf(boolean flag){
         this.builtUnderSelf = flag;
     }
 
-//    public boolean hasSkipCard() {
-//        return hasSkipCard;
-//    }
-//
-//    public void useSkipCard(){
-//        this.hasSkipCard = false;
-//    }
-
-//    public List<FunctionCard> getFunctionCard(){
-//        return functionCards;
-//    }
-
-//    public void setFunctionCard(FunctionCard functionCard) {
-//        this.functionCard = functionCard;
-//    }
-
-
-//    public boolean hasFunctionCard(){
-//        return functionCards != null && !functionCards.isUsed();
-//    }
-
+    /**
+     * Attempts to use a function card with the given name.
+     * If the card is found and unused, activates its effect.
+     *
+     * @param cardName       the name of the function card to use
+     * @param gameController reference to the GameController managing the game
+     * @return true if the card effect was successfully activated; false otherwise
+     */
     public boolean useFunctionCard(String cardName, GameController gameController) {
-//        if (hasFunctionCard()) {
-//            functionCard.applyCardEffect(this, functionCard);
-//        }
         for (FunctionCard functionCard : functionCards) {
             if (functionCard.getName().equalsIgnoreCase(cardName) && !functionCard.isUsed()) {
+                // if the card has not been used
+                // activate the card's effect
+                // if the card works return true, otherwise false
                 boolean success = functionCard.activateCardEffect(this,gameController);
                 return success;
-//                functionCard.applyCardEffect(this,gameController);
 
-//                return functionCard.isUsed();
-//                if(success){
-//                    System.out.println(this.getName() + " used " + functionCard.getName());
-//
-//                }
-//                return;
             }
         }
-
-//        JOptionPane.showMessageDialog(null, "No such available card: " + cardName, "Card Error", JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
+    /**
+     * Adds a function card to the player's collection.
+     *
+     * @param functionCard the FunctionCard to add
+     */
     public void addFunctionCard(FunctionCard functionCard) {
         functionCards.add(functionCard);
     }
-
-    public List<FunctionCard> getFunctionCards() {
-        return functionCards;
-    }
-
 
 }
