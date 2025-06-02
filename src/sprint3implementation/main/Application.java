@@ -64,9 +64,13 @@ public class Application {
      * @return a list of FunctionCard objects
      */
     private static List<FunctionCard> instantiateFunctionCards(int playerNum){
+        FunctionCard skipCard = new SkipCard();
+
         List<FunctionCard> functionCards = new ArrayList<>();
         for (int i = 0; i < playerNum; i++) {
-            functionCards.add(new SkipCard()); // each player gets SkipCard
+//            functionCards.add(new SkipCard()); // each player gets SkipCard
+            functionCards.add(skipCard); // each player gets SkipCard
+
         }
         return functionCards;
     }
