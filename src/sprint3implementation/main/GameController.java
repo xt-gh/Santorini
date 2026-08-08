@@ -120,7 +120,7 @@ public class GameController {
         }
         if (bothWorkersStuck) {
             playerTimer.pause();
-            JOptionPane.showMessageDialog(null, currentPlayer.getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(sprint3implementation.setups.Window.getInstance().getNewFrame(), currentPlayer.getName() + " LOSE!! All workers are stuck!", "Tournament Result", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
     }
@@ -158,7 +158,7 @@ public class GameController {
 
                 // Check if the selected worker is stuck (cannot move or build)
                 if (isWorkerStuck(clickedTile)) {
-                    JOptionPane.showMessageDialog(null, "This worker is stuck. Please move another worker.", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(sprint3implementation.setups.Window.getInstance().getNewFrame(), "This worker is stuck. Please move another worker.", "Message", JOptionPane.INFORMATION_MESSAGE);
                     selectedWorker.setBooleanStuck(true);
                     selectedTile = null;  // Clear selection so player can choose another worker
                     checkLosingCondition();
@@ -183,14 +183,14 @@ public class GameController {
 
             // if the clicked tile is not adjacent (or same for Zeus), reject the action
             if (!canBuild) {
-                JOptionPane.showMessageDialog(null, "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(sprint3implementation.setups.Window.getInstance().getNewFrame(), "Tile not adjacent!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // prevent building on a tile occupied by another worker (not yourself)
             Worker currentWorker = currentPlayer.getCurrentWorker();
             if (clickedTile.getWorker() != null && clickedTile.getWorker() != currentWorker) {
-                JOptionPane.showMessageDialog(null, "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(sprint3implementation.setups.Window.getInstance().getNewFrame(), "Tile already occupied by another worker!", "Invalid Move", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -220,7 +220,7 @@ public class GameController {
                 resetTurn();                                // change next player
                 playerTimer.pause();
                 updateCurrentPlayerLabel();
-                JOptionPane.showMessageDialog(null, "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(sprint3implementation.setups.Window.getInstance().getNewFrame(), "Now is " + currentPlayer.getName() + "'s turn", "Player turn", JOptionPane.PLAIN_MESSAGE);
                 playerTimer.reset();
             }
     }
