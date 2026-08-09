@@ -114,7 +114,7 @@ function App() {
       <div className="app-container">
         <div style={{gridColumn: '1 / -1', textAlign: 'center', marginTop: '4rem'}}>
           <h1 className="game-title" style={{fontSize: '4rem'}}>Santorini</h1>
-          <p style={{marginBottom: '2rem', fontSize: '1.2rem', color: 'var(--text-muted)'}}>
+          <p style={{marginBottom: '2rem', fontSize: '1.5rem', fontWeight: 'bold', color: '#ffffff', textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
             Build like a mortal, win like a god.
           </p>
           <button className="btn btn-primary" style={{fontSize: '1.25rem', padding: '1rem 2rem'}} onClick={handleCreateGame}>
@@ -149,14 +149,19 @@ function App() {
 
       {players && players[0] && (
         <div>
-          <PlayerPanel player={players[0]} isActive={currentPlayerIndex === 0 && !gameOver} />
-          {currentPlayerIndex === 0 && !gameOver && (
-            <TimerDisplay 
-              startTimeMs={turnStartTimeMs} 
-              timeLimitSeconds={turnTimeLimitSeconds} 
-              onTimeout={handleTimeout} 
-            />
-          )}
+          <PlayerPanel 
+            player={players[0]} 
+            isActive={currentPlayerIndex === 0 && !gameOver} 
+            timer={
+              currentPlayerIndex === 0 && !gameOver && (
+                <TimerDisplay 
+                  startTimeMs={turnStartTimeMs} 
+                  timeLimitSeconds={turnTimeLimitSeconds} 
+                  onTimeout={handleTimeout} 
+                />
+              )
+            }
+          />
         </div>
       )}
 
@@ -186,14 +191,19 @@ function App() {
 
       {players && players[1] && (
         <div>
-          <PlayerPanel player={players[1]} isActive={currentPlayerIndex === 1 && !gameOver} />
-          {currentPlayerIndex === 1 && !gameOver && (
-             <TimerDisplay 
-              startTimeMs={turnStartTimeMs} 
-              timeLimitSeconds={turnTimeLimitSeconds} 
-              onTimeout={handleTimeout} 
-            />
-          )}
+          <PlayerPanel 
+            player={players[1]} 
+            isActive={currentPlayerIndex === 1 && !gameOver} 
+            timer={
+              currentPlayerIndex === 1 && !gameOver && (
+                <TimerDisplay 
+                  startTimeMs={turnStartTimeMs} 
+                  timeLimitSeconds={turnTimeLimitSeconds} 
+                  onTimeout={handleTimeout} 
+                />
+              )
+            }
+          />
         </div>
       )}
 

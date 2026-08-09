@@ -27,15 +27,8 @@ const TimerDisplay = ({ startTimeMs, timeLimitSeconds, onTimeout }) => {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   
-  const isWarning = timeLeft <= 60;
-  const isDanger = timeLeft <= 10;
-
-  let color = 'var(--text-main)';
-  if (isDanger) color = 'var(--accent-red)';
-  else if (isWarning) color = 'var(--accent-gold)';
-
   return (
-    <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '1.25rem', fontWeight: '600', color }}>
+    <div style={{ textAlign: 'center', margin: '0.5rem 0', fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--accent-red)' }}>
       Time Left: {minutes}:{seconds.toString().padStart(2, '0')}
     </div>
   );

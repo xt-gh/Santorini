@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerPanel = ({ player, isActive }) => {
+const PlayerPanel = ({ player, isActive, timer }) => {
   if (!player) return null;
   
   // Format card name to match image filenames: e.g. "Artemis" -> "artemis_card.png"
@@ -20,6 +20,8 @@ const PlayerPanel = ({ player, isActive }) => {
         <div className="player-icon" style={{ backgroundImage: `url(${playerIcon})` }}></div>
         <div className="player-name">{player.name} {isActive && <span style={{fontSize: '0.8rem', color: 'var(--accent-blue)'}}>(Current Turn)</span>}</div>
       </div>
+
+      {timer}
 
       <div className="card-container">
         {player.godCardName && (
