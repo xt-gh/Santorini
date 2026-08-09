@@ -18,7 +18,7 @@ const PlayerPanel = ({ player, isActive, timer }) => {
     <div className={`player-panel glass-panel ${isActive ? 'active' : ''}`}>
       <div className="player-header">
         <div className="player-icon" style={{ backgroundImage: `url(${playerIcon})` }}></div>
-        <div className="player-name">{player.name} {isActive && <span style={{fontSize: '0.8rem', color: 'var(--accent-blue)'}}>(Current Turn)</span>}</div>
+        <div className="player-name">{player.name} {isActive && <span style={{fontSize: '0.9rem', color: 'var(--accent-gold)', fontWeight: 'bold', textShadow: '0 0 8px rgba(251, 191, 36, 0.8)'}}>(Current Turn)</span>}</div>
       </div>
 
       {timer}

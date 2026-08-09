@@ -53,8 +53,8 @@ body {
 /* Layout */
 .app-container {
   display: grid;
-  grid-template-columns: 280px 1fr 280px;
-  gap: 2rem;
+  grid-template-columns: clamp(200px, 22vw, 300px) minmax(auto, 1fr) clamp(200px, 22vw, 300px);
+  gap: clamp(0.5rem, 2vw, 2rem);
   align-items: start;
   width: 100%;
 }
@@ -198,9 +198,9 @@ body {
 }
 
 .board-cell {
-  width: 90px;
-  height: 90px;
-  border-radius: 8px;
+  width: clamp(45px, 9vw, 90px);
+  height: clamp(45px, 9vw, 90px);
+  background: rgba(255, 255, 255, 0.1);
   position: relative;
   cursor: pointer;
   background-size: cover;
@@ -255,8 +255,9 @@ body {
 
 .player-panel.active {
   border-color: var(--accent-blue);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-  transform: scale(1.02);
+  box-shadow: 0 0 35px rgba(59, 130, 246, 0.7), inset 0 0 15px rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
+  background: rgba(30, 41, 59, 0.9);
 }
 
 .player-header {
