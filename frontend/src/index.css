@@ -72,13 +72,20 @@ body {
 }
 
 @media (max-width: 900px) and (orientation: portrait) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+  #root {
+    height: auto;
+    align-items: flex-start;
+    padding: 1rem;
+  }
   .app-container {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
     gap: 1.5rem;
-  }
-  #root {
-    padding: 1rem;
   }
 }
 
