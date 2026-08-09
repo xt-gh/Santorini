@@ -175,12 +175,7 @@ function App() {
           onTileClick={handleTileClick}
         />
         
-        {gameOver && (
-          <div style={{marginTop: '2rem', display: 'flex', gap: '1rem'}}>
-            <button className="btn btn-primary" onClick={handleCreateGame}>Play Again</button>
-            <button className="btn btn-primary" onClick={handleGoHome}>Back to Home</button>
-          </div>
-        )}
+        {/* Game Over buttons are now in a modal overlay */}
         {!gameOver && (
           <div style={{marginTop: '2rem', display: 'flex', gap: '1rem'}}>
             <button className="btn btn-danger" onClick={handleEndGame}>End Game</button>
@@ -207,12 +202,43 @@ function App() {
         </div>
       )}
 
-      <PendingChoiceModal 
-        show={pendingChoice}
-        title={choiceType === 'USE_SKIP_CARD' ? 'Skip Card' : 'God Power'}
-        message={choiceMessage || 'Make your choice.'}
-        onResolve={handleResolveChoice}
-      />
+      {pendingChoice && (
+        <PendingChoiceModal 
+          show={pendingChoice}
+          title={choiceType === 'USE_SKIP_CARD' ? 'Skip Card' : 'God Power'}
+          message={choiceMessage || 'Make your choice.'}
+          onResolve={handleResolveChoice}
+        />
+      )}
+
+      {gameOver && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.6)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000
+        }}>
+          <div className="glass-panel" style={{
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '3rem',
+            textAlign: 'center',
+            maxWidth: '500px',
+            width: '90%'
+          }}>
+            <h2 style={{ color: 'var(--accent-blue)', fontSize: '2.5rem', marginBottom: '1rem', textShadow: 'none' }}>Game Over!</h2>
+            <p style={{ fontSize: '1.25rem', marginBottom: '2rem', color: 'var(--text-main)', textShadow: 'none' }}>
+              {gameState.gameOverMessage || gameState.message}
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <button className="btn btn-primary" style={{ fontSize: '1.2rem', padding: '0.8rem 1.5rem' }} onClick={handleCreateGame}>Play Again</button>
+              <button className="btn btn-primary" style={{ fontSize: '1.2rem', padding: '0.8rem 1.5rem' }} onClick={handleGoHome}>Back to Home</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
