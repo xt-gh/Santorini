@@ -178,13 +178,13 @@ function App() {
         {gameOver && (
           <div style={{marginTop: '2rem', display: 'flex', gap: '1rem'}}>
             <button className="btn btn-primary" onClick={handleCreateGame}>Play Again</button>
-            <button className="btn btn-secondary" onClick={handleGoHome}>Back to Home</button>
+            <button className="btn btn-primary" onClick={handleGoHome}>Back to Home</button>
           </div>
         )}
         {!gameOver && (
           <div style={{marginTop: '2rem', display: 'flex', gap: '1rem'}}>
             <button className="btn btn-danger" onClick={handleEndGame}>End Game</button>
-            <button className="btn btn-secondary" onClick={handleGoHome}>Back to Home</button>
+            <button className="btn btn-primary" onClick={handleGoHome}>Back to Home</button>
           </div>
         )}
       </div>
