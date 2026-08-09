@@ -29,6 +29,11 @@ export const resolveChoice = async (accepted) => {
   return response.data;
 };
 
+export const endGame = async () => {
+  const response = await apiClient.post('/api/game/end');
+  return response.data;
+};
+
 export const restartGame = async () => {
   const response = await apiClient.post('/api/game/restart');
   return response.data;

@@ -29,7 +29,7 @@ import java.util.*;
 @Service
 public class GameService {
 
-    private static final int TURN_TIME_LIMIT_SECONDS = 5 * 60; // 5 minutes
+    private static final int TURN_TIME_LIMIT_SECONDS = 3 * 60; // 3 minutes
 
     private Board gameBoard;
     private Map<Integer, Player> playerList;
@@ -175,6 +175,19 @@ public class GameService {
             lastMessage = "No pending choice to resolve.";
         }
 
+        return buildGameState();
+    }
+
+    /**
+     * Ends the current game immediately.
+     */
+    public GameStateDTO endGame() {
+        if (!gameStarted || GameResult.isGameOver()) {
+            lastMessage = "Game is already over or not active.";
+            return buildGameState();
+        }
+        GameResult.recordLoss(currentPlayer.getName(), currentPlayer.getName() + " surrendered! The game was ended early.");
+        lastMessage = GameResult.getMessage();
         return buildGameState();
     }
 

@@ -22,9 +22,10 @@
 body {
   font-family: 'Outfit', sans-serif;
   background-color: var(--bg-dark);
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(251, 191, 36, 0.1), transparent 25%);
+  background-image: url('/assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--text-main);
   min-height: 100vh;
@@ -284,6 +285,17 @@ body {
 
 .btn-secondary:hover {
   background: rgba(255,255,255,0.2);
+}
+
+.btn-danger {
+  background: var(--accent-red);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
 }
 
 /* Animations */

@@ -74,4 +74,12 @@ public class GameRestController {
         GameStateDTO state = gameService.createGame();
         return ResponseEntity.ok(state);
     }
+    /**
+     * Ends the current game.
+     */
+    @PostMapping("/game/end")
+    public ResponseEntity<GameStateDTO> endGame() {
+        GameStateDTO state = gameService.endGame();
+        return ResponseEntity.ok(state);
+    }
 }

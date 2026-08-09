@@ -69,6 +69,15 @@ function App() {
     }
   };
 
+  const handleEndGame = async () => {
+    try {
+      const state = await api.endGame();
+      setGameState(state);
+    } catch (err) {
+      console.error("Failed to end game:", err);
+    }
+  };
+
   const handleTimeout = () => {
     // If the timer expires locally, we can trigger a click on an invalid tile
     // just to force the server to evaluate the timeout condition and update state.
@@ -155,6 +164,11 @@ function App() {
         {gameOver && (
           <div style={{marginTop: '2rem'}}>
             <button className="btn btn-primary" onClick={handleCreateGame}>Play Again</button>
+          </div>
+        )}
+        {!gameOver && (
+          <div style={{marginTop: '2rem'}}>
+            <button className="btn btn-danger" onClick={handleEndGame}>End Game</button>
           </div>
         )}
       </div>
