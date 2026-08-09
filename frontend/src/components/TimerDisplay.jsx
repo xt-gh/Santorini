@@ -19,7 +19,7 @@ const TimerDisplay = ({ startTimeMs, timeLimitSeconds, onTimeout }) => {
 
     // Initial calculation to prevent 1-second delay
     const elapsed = Math.floor((Date.now() - startTimeMs) / 1000);
-    setTimeLeft(Math.max(0, timeLimitSeconds - elapsed));
+    setTimeLeft(Math.min(timeLimitSeconds, Math.max(0, timeLimitSeconds - elapsed)));
 
     return () => clearInterval(intervalId);
   }, [startTimeMs, timeLimitSeconds, onTimeout]);

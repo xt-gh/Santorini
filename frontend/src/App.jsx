@@ -228,7 +228,7 @@ function App() {
             maxWidth: '500px',
             width: '90%'
           }}>
-            <h2 style={{ color: 'var(--accent-blue)', fontSize: '2.5rem', marginBottom: '1rem', textShadow: 'none' }}>Game Over!</h2>
+            <h2 style={{ color: 'var(--accent-red)', fontSize: '2.5rem', marginBottom: '1rem', textShadow: 'none' }}>Game Over!</h2>
             <p style={{ fontSize: '1.25rem', marginBottom: '2rem', color: 'var(--text-main)', textShadow: 'none' }}>
               {gameState.gameOverMessage || gameState.message}
             </p>

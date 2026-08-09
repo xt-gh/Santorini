@@ -29,7 +29,7 @@ import java.util.*;
 @Service
 public class GameService {
 
-    private static final int TURN_TIME_LIMIT_SECONDS = 3 * 60; // 3 minutes
+    private static final int TURN_TIME_LIMIT_SECONDS = 2 * 60; // 2 minutes
 
     private Board gameBoard;
     private Map<Integer, Player> playerList;
