@@ -14,7 +14,7 @@ public class PlayerTimer implements TimerListener{
     /**
      * Total time in seconds for the countdown.
      */
-    private final int totalSeconds = 3 * 60;   // 5 minutes
+    private final int totalSeconds = 3 * 60;   // 3 minutes
 //    private final int totalSeconds = 20;   // 10 seconds (for testing)
 
     /**
