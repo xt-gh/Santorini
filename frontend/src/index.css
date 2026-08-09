@@ -66,7 +66,7 @@ body {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 900px) and (orientation: portrait) {
   .app-container {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
@@ -74,6 +74,62 @@ body {
   }
   #root {
     padding: 1rem;
+  }
+}
+
+@media (max-width: 950px) and (orientation: landscape) {
+  .app-container {
+    grid-template-columns: 150px 1fr 150px;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  #root {
+    padding: 0.25rem;
+  }
+  .game-header {
+    margin-bottom: 0.25rem;
+  }
+  .game-title {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+  }
+  .status-message {
+    font-size: 0.85rem;
+    padding: 0.2rem 1rem;
+  }
+  .board-cell {
+    width: 45px;
+    height: 45px;
+  }
+  .game-board {
+    gap: 2px;
+    padding: 4px;
+  }
+  .player-panel {
+    padding: 0.5rem;
+  }
+  .player-name {
+    font-size: 1rem;
+  }
+  .player-icon {
+    width: 25px;
+    height: 25px;
+  }
+  .god-card, .function-card {
+    padding: 0.25rem;
+  }
+  .god-card-img {
+    display: none;
+  }
+  .card-title {
+    font-size: 0.8rem;
+  }
+  .card-desc {
+    display: none;
+  }
+  .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
   }
 }
 
