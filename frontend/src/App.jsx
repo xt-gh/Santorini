@@ -109,7 +109,7 @@ function App() {
     );
   }
 
-  if (!gameState) {
+  if (!gameState || !gameState.gameStarted) {
     return (
       <div className="app-container">
         <div style={{gridColumn: '1 / -1', textAlign: 'center', marginTop: '4rem'}}>
