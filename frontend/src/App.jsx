@@ -113,7 +113,7 @@ function App() {
     return (
       <div className="app-container">
         <div style={{gridColumn: '1 / -1', textAlign: 'center', marginTop: '4rem'}}>
-          <h1 className="game-title" style={{fontSize: '4rem'}}>Santorini</h1>
+          <h1 className="game-title" style={{fontSize: '6.5rem'}}>Santorini</h1>
           <p style={{marginBottom: '2rem', fontSize: '1.5rem', fontWeight: 'bold', color: '#ffffff', textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
             Build like a mortal, win like a god.
           </p>
