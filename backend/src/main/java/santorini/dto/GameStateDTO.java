@@ -18,6 +18,7 @@ public class GameStateDTO {
     private boolean gameOver;
     private String winner;
     private String gameOverMessage;
+    private boolean gameStarted;
 
     // Pending choice info (god cards / skip card)
     private boolean pendingChoice;
@@ -67,6 +68,9 @@ public class GameStateDTO {
 
     public String getGameOverMessage() { return gameOverMessage; }
     public void setGameOverMessage(String gameOverMessage) { this.gameOverMessage = gameOverMessage; }
+
+    public boolean isGameStarted() { return gameStarted; }
+    public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
 
     public boolean isPendingChoice() { return pendingChoice; }
     public void setPendingChoice(boolean pendingChoice) { this.pendingChoice = pendingChoice; }

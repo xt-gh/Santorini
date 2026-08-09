@@ -533,6 +533,7 @@ public class GameService {
      */
     private GameStateDTO buildGameState() {
         GameStateDTO dto = new GameStateDTO();
+        dto.setGameStarted(this.gameStarted);
 
         if (!gameStarted) {
             dto.setMessage("No game in progress. Create a new game.");
