@@ -28,7 +28,8 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--text-main);
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +38,11 @@ body {
 #root {
   width: 100%;
   max-width: 1200px;
-  padding: 2rem;
+  height: 100vh;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Glassmorphism utilities */
@@ -55,7 +60,7 @@ body {
   display: grid;
   grid-template-columns: clamp(200px, 22vw, 300px) minmax(auto, 1fr) clamp(200px, 22vw, 300px);
   gap: clamp(0.5rem, 2vw, 2rem);
-  align-items: start;
+  align-items: center;
   width: 100%;
 }
 
@@ -198,8 +203,8 @@ body {
 }
 
 .board-cell {
-  width: clamp(45px, 9vw, 90px);
-  height: clamp(45px, 9vw, 90px);
+  width: clamp(35px, min(8vw, 12vh), 90px);
+  height: clamp(35px, min(8vw, 12vh), 90px);
   background: rgba(255, 255, 255, 0.1);
   position: relative;
   cursor: pointer;
