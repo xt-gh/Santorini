@@ -34,6 +34,11 @@ export const endGame = async () => {
   return response.data;
 };
 
+export const goHome = async () => {
+  const response = await apiClient.post('/api/game/home');
+  return response.data;
+};
+
 export const restartGame = async () => {
   const response = await apiClient.post('/api/game/restart');
   return response.data;

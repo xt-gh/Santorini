@@ -191,6 +191,20 @@ public class GameService {
         return buildGameState();
     }
 
+    /**
+     * Completely resets the server state to return to the Home screen.
+     */
+    public GameStateDTO resetToHome() {
+        this.gameStarted = false;
+        this.gameBoard = null;
+        this.playerList = null;
+        this.currentPlayer = null;
+        this.selectedTile = null;
+        this.lastMovedTile = null;
+        this.lastMessage = null;
+        return buildGameState();
+    }
+
 
     // ==================== Core Game Logic (from original GameController) ====================
 

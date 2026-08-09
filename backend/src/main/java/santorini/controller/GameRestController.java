@@ -82,4 +82,13 @@ public class GameRestController {
         GameStateDTO state = gameService.endGame();
         return ResponseEntity.ok(state);
     }
+
+    /**
+     * Resets the game server state to return to the Home screen.
+     */
+    @PostMapping("/game/home")
+    public ResponseEntity<GameStateDTO> goHome() {
+        GameStateDTO state = gameService.resetToHome();
+        return ResponseEntity.ok(state);
+    }
 }
